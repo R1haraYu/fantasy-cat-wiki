@@ -78,35 +78,29 @@ function atLevel(stats, level) {
   };
 }
 
-const STAT_ROWS = [
-  ["生命", "hp", "hp"],
-  ["防御力", "def", "def"],
-  ["攻击力", "atk", "atk"],
-  ["精准", "acc", ""],
-  ["精神力", "mind", "mind"],
-  ["暴击率", "crit", "crit"],
-  ["暴击伤害", "critDmg", ""],
-  ["速度", "spd", ""],
-];
-
-function growAmount(stats, key) {
-  if (key === "hp") return stats.hpGrow * 1.1;
-  if (key === "atk") return stats.atkGrow * 1.1;
-  if (key === "def") return stats.defGrow;
-  if (key === "mind") return stats.mindGrow;
-  if (key === "crit") return stats.critGrow * 100;
-  return 0;
-}
-
 function formatStat(key, value) {
   if (key === "crit" || key === "critDmg") return `${num(value)}%`;
   return num(value);
 }
 
-function formatGrow(key, value) {
-  if (!value) return "—";
-  return key === "crit" ? `+${num(value)}%` : `+${num(value)}`;
-}
+const BASE_ROWS = [
+  ["生命", "hp"],
+  ["防御力", "def"],
+  ["攻击力", "atk"],
+  ["精准", "acc"],
+  ["精神力", "mind"],
+  ["暴击率", "crit"],
+  ["暴击伤害", "critDmg"],
+  ["速度", "spd"],
+];
+
+const GROW_ROWS = [
+  ["生命", "hp"],
+  ["防御力", "def"],
+  ["攻击力", "atk"],
+  ["精神力", "mind"],
+  ["暴击率", "crit"],
+];
 
 function renderList() {
   const params = new URLSearchParams(location.hash.split("?")[1] || "");
@@ -160,67 +154,87 @@ function cardMarkup(c) {
 
 function renderDetail(id) {
   const c = roster.find((item) => item.id === id);
-  count.textContent = `${roster.length}`;
+  count.textContent = "";
   if (!c) {
+    document.body.classList.remove("detail");
     app.innerHTML = `<p class="empty">没有这个角色。</p><a class="back" href="#/">返回图鉴</a>`;
     return;
   }
+  document.body.classList.add("detail");
   document.title = `${c.name} · 角色图鉴`;
-  const field = (label, value) =>
-    value
-      ? `<div class="field"><div class="bar">${label}</div><div class="val">${value}</div></div>`
-      : "";
+  const profile = [
+    ["种族", c.race],
+    ["年龄", c.age ? `${c.age} 岁` : ""],
+    ["身高", c.height ? `${c.height} cm` : ""],
+    ["体重", c.weight ? `${c.weight} kg` : ""],
+    ["星座", c.constellation],
+    ["生日", c.birthday],
+  ].filter(([, value]) => value);
+  const growText = (key) => {
+    const amount = key === "hp" || key === "atk"
+      ? (key === "hp" ? c.stats.hpGrow : c.stats.atkGrow) * 1.1
+      : key === "crit" ? c.stats.critGrow * 100
+      : c.stats[`${key}Grow`];
+    return key === "crit" ? `${num(amount)}%` : num(amount);
+  };
   app.innerHTML = `
-    <a class="back" href="#/">返回图鉴</a>
-    <article class="sheet">
-      <h1>${escapeText(c.name)}</h1>
-      <div class="tabs" role="tablist">
-        <button type="button" class="tab on" data-tab="data">角色数据</button>
-        <button type="button" class="tab" data-tab="file">角色档案</button>
-      </div>
-      <div class="sheet-body">
-        <div class="hero">
-          <img src="${portrait(c.id, "bust")}" alt="${escapeText(c.name)}" onerror="this.parentElement.remove()">
+    <div class="fixed-bg parchment" aria-hidden="true"><img src="img/bg/paper.png" alt=""></div>
+    <div class="fixed-figure" aria-hidden="true">
+      <img src="${portrait(c.id, "bust")}" alt="" onerror="this.parentElement.remove()">
+    </div>
+    <main class="detail-sheet">
+      <div class="detail-head">
+        <p class="preview-tag"><a href="#/">返回图鉴</a></p>
+        <h1>${escapeText(c.name)}</h1>
+        <p class="meta">${escapeText(c.rarity)} ${stars(c.rarityRank)} · ${escapeText(c.element)} · ${escapeText(c.job)}</p>
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab on" data-tab="data">角色数据</button>
+          <button type="button" class="tab" data-tab="file">角色档案</button>
         </div>
-        <section class="pane on" data-pane="data">
-          ${field("名字", escapeText(c.name))}
-          ${field("初始稀有度", `${escapeText(c.rarity)} ${stars(c.rarityRank)}`)}
-          ${field("属性", escapeText(c.element))}
-          ${field("职业", escapeText(c.job))}
-          <div class="bar">基础属性</div>
-          <div class="level-line">
-            <label for="lv">等级</label>
-            <input id="lv" type="number" min="1" max="80" value="1">
-            <span>/ 80</span>
-            <input id="lv-range" type="range" min="1" max="80" value="1" aria-label="等级">
-          </div>
-          <table class="attr">
-            <thead>
-              <tr><th>属性</th><th>数值</th><th>成长</th></tr>
-            </thead>
-            <tbody>
-              ${STAT_ROWS.map(([label, key, grow]) => `<tr>
-                <th>${label}</th>
-                <td data-stat="${key}"></td>
-                <td class="grow">${formatGrow(grow, grow ? growAmount(c.stats, grow) : 0)}</td>
-              </tr>`).join("")}
-            </tbody>
-          </table>
-          <div class="bar">技能</div>
-          ${c.skills.map(skillBlock).join("")}
-        </section>
-        <section class="pane" data-pane="file">
-          ${field("种族", escapeText(c.race))}
-          ${field("年龄", c.age ? `${escapeText(c.age)} 岁` : "")}
-          ${field("星座", escapeText(c.constellation))}
-          ${field("生日", escapeText(c.birthday))}
-          ${field("身高", c.height ? `${c.height} cm` : "")}
-          ${field("体重", c.weight ? `${escapeText(c.weight)} kg` : "")}
-          <div class="bar">简介</div>
-          <p class="bio">${escapeText(c.bio)}</p>
-        </section>
       </div>
-    </article>`;
+      <div class="pane-wrap">
+        <div class="pane on" data-pane="data">
+          <section class="panel">
+            <h2>基础属性</h2>
+            <div class="level-line">
+              <label for="lv">等级</label>
+              <input id="lv" type="number" min="1" max="80" value="1">
+              <span>/ 80</span>
+              <input id="lv-range" type="range" min="1" max="80" value="1" aria-label="等级">
+            </div>
+            <table>
+              <tbody>
+                ${BASE_ROWS.map(([label, key]) => `<tr><th>${label}</th><td data-stat="${key}"></td></tr>`).join("")}
+              </tbody>
+            </table>
+          </section>
+          <section class="panel">
+            <h2>属性成长</h2>
+            <p class="level">每级</p>
+            <table>
+              <tbody>
+                ${GROW_ROWS.map(([label, key]) => `<tr><th>${label}</th><td>${growText(key)}</td></tr>`).join("")}
+              </tbody>
+            </table>
+          </section>
+          <section class="panel">
+            <h2>技能</h2>
+            ${c.skills.map(skillBlock).join("")}
+          </section>
+        </div>
+        <div class="pane" data-pane="file">
+          <section class="panel">
+            <h2>档案</h2>
+            <table>
+              <tbody>
+                ${profile.map(([label, value]) => `<tr><th>${label}</th><td>${escapeText(value)}</td></tr>`).join("")}
+              </tbody>
+            </table>
+          </section>
+          ${c.bio ? `<section class="panel"><h2>简介</h2><p class="bio">${escapeText(c.bio)}</p></section>` : ""}
+        </div>
+      </div>
+    </main>`;
   const lv = app.querySelector("#lv");
   const range = app.querySelector("#lv-range");
   const paintLevel = (level) => {
@@ -248,6 +262,7 @@ function route() {
   const id = Number(raw.split("?")[0]);
   if (id) renderDetail(id);
   else {
+    document.body.classList.remove("detail");
     document.title = "角色图鉴 · 幻想之都的黑猫";
     renderList();
   }
