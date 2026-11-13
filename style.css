@@ -203,6 +203,19 @@ button, input, select { font: inherit; color: inherit; }
   background: #fff;
 }
 .level-line input[type="range"] { width: 100%; accent-color: #8c4a32; }
+.star-line {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 2px 14px;
+}
+.star-line select {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 8px;
+  background: #fff;
+  color: inherit;
+}
 .attr thead th { font-size: 13px; font-weight: 500; padding-bottom: 4px; }
 .attr thead th:last-child { text-align: right; }
 .attr td.grow { text-align: right; color: var(--muted); }

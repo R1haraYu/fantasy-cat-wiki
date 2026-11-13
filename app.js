@@ -7,10 +7,6 @@ const jobs = [...new Set(roster.map((c) => c.job))];
 const RARITY_ORDER = ["N", "R", "SR", "SSR"];
 const rarities = RARITY_ORDER.filter((name) => roster.some((c) => c.rarity === name));
 
-function stars(rank) {
-  return "★".repeat(rank || 0);
-}
-
 function portrait(id, kind) {
   return `img/${kind}/${id}.png`;
 }
@@ -69,19 +65,22 @@ function rarityScale(rarity) {
   return 1;
 }
 
-function atLevel(stats, level, rarity) {
+const STAR_SCALE = [1, 1.1, 1.3, 1.6, 2, 2.5];
+
+function atLevel(stats, level, rarity, star) {
   const steps = Math.max(0, level - 1);
-  const scale = rarityScale(rarity);
-  const crit = Math.round((stats.crit + stats.critGrow * steps) * 1000) / 10;
+  const starScale = STAR_SCALE[star] ?? 1;
+  const scale = rarityScale(rarity) * starScale;
+  const crit = Math.round((stats.crit + stats.critGrow * steps) * starScale * 1000) / 10;
   return {
     hp: roundEven((stats.hp + stats.hpGrow * steps) * scale),
-    def: roundEven(stats.def + stats.defGrow * steps),
+    def: roundEven((stats.def + stats.defGrow * steps) * starScale),
     atk: roundEven((stats.atk + stats.atkGrow * steps) * scale),
-    acc: stats.acc,
-    mind: roundEven(stats.mind + stats.mindGrow * steps),
+    acc: roundEven(stats.acc * starScale),
+    mind: roundEven((stats.mind + stats.mindGrow * steps) * starScale),
     crit,
-    critDmg: Math.round(stats.critDmg * 1000) / 10,
-    spd: stats.spd,
+    critDmg: Math.round(stats.critDmg * starScale * 1000) / 10,
+    spd: roundEven(stats.spd * starScale),
   };
 }
 
@@ -178,7 +177,7 @@ function renderDetail(id) {
       <div class="detail-head">
         <p class="preview-tag"><a href="#/">返回图鉴</a></p>
         <h1>${escapeText(c.name)}</h1>
-        <p class="meta">${escapeText(c.rarity)} ${stars(c.rarityRank)} · ${escapeText(c.element)} · ${escapeText(c.job)}</p>
+        <p class="meta">${escapeText(c.rarity)} · ${escapeText(c.element)} · ${escapeText(c.job)}</p>
         <div class="tabs" role="tablist">
           <button type="button" class="tab on" data-tab="data">角色数据</button>
           <button type="button" class="tab" data-tab="file">角色档案</button>
@@ -193,6 +192,12 @@ function renderDetail(id) {
               <input id="lv" type="number" min="1" max="80" value="1">
               <span>/ 80</span>
               <input id="lv-range" type="range" min="1" max="80" value="1" aria-label="等级">
+            </div>
+            <div class="star-line">
+              <label for="star">星级</label>
+              <select id="star">
+                ${STAR_SCALE.map((rate, index) => `<option value="${index}">${index}星 · ${Math.round(rate * 100)}%</option>`).join("")}
+              </select>
             </div>
             <table>
               <tbody>
@@ -220,17 +225,21 @@ function renderDetail(id) {
     </main>`;
   const lv = app.querySelector("#lv");
   const range = app.querySelector("#lv-range");
+  const star = app.querySelector("#star");
   const paintLevel = (level) => {
     const n = Math.min(80, Math.max(1, Math.round(Number(level)) || 1));
+    const rank = Math.min(STAR_SCALE.length - 1, Math.max(0, Math.round(Number(star.value)) || 0));
     lv.value = String(n);
     range.value = String(n);
-    const cur = atLevel(c.stats, n, c.rarity);
+    star.value = String(rank);
+    const cur = atLevel(c.stats, n, c.rarity, rank);
     app.querySelectorAll("[data-stat]").forEach((cell) => {
       cell.textContent = formatStat(cell.dataset.stat, cur[cell.dataset.stat]);
     });
   };
   lv.addEventListener("input", () => paintLevel(lv.value));
   range.addEventListener("input", () => paintLevel(range.value));
+  star.addEventListener("change", () => paintLevel(lv.value));
   paintLevel(1);
   app.querySelectorAll(".tab").forEach((button) => {
     button.addEventListener("click", () => {
