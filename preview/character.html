@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>辛德瑞拉 · 预览</title>
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body class="detail">
+  <div class="fixed-bg parchment" aria-hidden="true">
+    <img src="asset/T_UI_Backgroud_A1.png" alt="">
+  </div>
+  <div class="fixed-figure" aria-hidden="true">
+    <img src="../img/bust/10002.png" alt="">
+  </div>
+  <main class="detail-sheet">
+    <div class="detail-head">
+      <p class="preview-tag"><a href="home.html">预览</a> · <a href="home.html">返回主页</a></p>
+      <h1>辛德瑞拉</h1>
+      <p class="meta">SSR ★★★★ · 权杖 · 干扰</p>
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab on" data-tab="data">角色数据</button>
+        <button type="button" class="tab" data-tab="file">角色档案</button>
+      </div>
+    </div>
+    <div class="pane-wrap">
+    <div class="pane on" data-pane="data">
+    <section class="panel">
+      <h2>基础属性</h2>
+      <div class="level-line">
+        <label for="lv">等级</label>
+        <input id="lv" type="number" min="1" max="80" value="1">
+        <span>/ 80</span>
+        <input id="lv-range" type="range" min="1" max="80" value="1" aria-label="等级">
+      </div>
+      <table>
+        <tbody>
+          <tr><th>生命</th><td data-stat="hp">2640</td></tr>
+          <tr><th>防御力</th><td data-stat="def">120</td></tr>
+          <tr><th>攻击力</th><td data-stat="atk">434</td></tr>
+          <tr><th>精准</th><td data-stat="acc">82</td></tr>
+          <tr><th>精神力</th><td data-stat="mind">240</td></tr>
+          <tr><th>暴击率</th><td data-stat="crit">14%</td></tr>
+          <tr><th>暴击伤害</th><td data-stat="critDmg">150%</td></tr>
+          <tr><th>速度</th><td data-stat="spd">100</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="panel">
+      <h2>属性成长</h2>
+      <p class="level">每级</p>
+      <table>
+        <tbody>
+          <tr><th>生命</th><td>61.6</td></tr>
+          <tr><th>防御力</th><td>2.8</td></tr>
+          <tr><th>攻击力</th><td>10.13</td></tr>
+          <tr><th>精神力</th><td>5.6</td></tr>
+          <tr><th>暴击率</th><td>0.06%</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="panel">
+      <h2>技能</h2>
+      <article>
+        <p class="slot">技能 A</p>
+        <h3>女仆的职责</h3>
+        <p>优秀的女仆连清理战场也是易如反掌。对攻击力最高的敌方单位造成相当于自身攻击力 <b>265%/270%/275%/283%/295%</b> 的伤害，并赋予其【疲惫】效果，使其攻击力降低 <b>20%/25%/30%/35%/40%</b>，持续 12 秒。</p>
+      </article>
+      <article>
+        <p class="slot">技能 B</p>
+        <h3>严阵以待</h3>
+        <p>做好万全准备，赋予自身【敏捷】效果，使自身速度提高 <b>10%/12%/14%/16%/20%</b>，并赋予攻击力最高的敌方单位【蹒跚】效果，使其速度降低 <b>10%/12%/14%/16%/20%</b>，持续 12 秒。</p>
+      </article>
+      <article>
+        <p class="slot">终结技</p>
+        <h3>玻璃舞会之梦</h3>
+        <p>无论命运如何流转，水晶鞋始终映出那段翩翩起舞的时光。对攻击力最高的敌方单位造成相当于自身攻击力 <b>315%/320%/325%/333%/345%</b> 的伤害，并赋予其【恍惚】效果，使其暴击率降低 <b>6%/7%/8%/9%/10%</b>，持续 18 秒。</p>
+      </article>
+    </section>
+    </div>
+    <div class="pane" data-pane="file">
+    <section class="panel">
+      <h2>档案</h2>
+      <table>
+        <tbody>
+          <tr><th>种族</th><td>人类</td></tr>
+          <tr><th>年龄</th><td>19 岁</td></tr>
+          <tr><th>身高</th><td>161 cm</td></tr>
+          <tr><th>体重</th><td>47 kg</td></tr>
+          <tr><th>星座</th><td>双子座</td></tr>
+          <tr><th>生日</th><td>6月20日</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="panel">
+      <h2>简介</h2>
+      <p>温柔勤奋的家政女仆，曾是弦音林区的一名舞者。战火、灾难、病痛……辛德瑞拉的人生曲折而坎坷，但为了深爱的人们，坚强的少女总能重新振作起来，再一次大大方方地露出微笑。</p>
+      <p>辛德瑞拉性格谦逊，从不大肆张扬。但她那超乎寻常的勇气与韧性，不知不觉间已经鼓舞了许许多多的人，甚至被最古板的贵族们所认可。</p>
+    </section>
+    </div>
+    </div>
+  </main>
+  <script>
+    const stats = {
+      hp: 2400, hpGrow: 56, def: 120, defGrow: 2.8, atk: 395, atkGrow: 9.205,
+      acc: 82, mind: 240, mindGrow: 5.6, crit: 0.14, critGrow: 0.0006, critDmg: 1.5, spd: 100,
+    };
+    function roundEven(n) {
+      const scaled = Math.round(n * 1000);
+      const whole = Math.trunc(scaled / 1000);
+      const frac = ((scaled % 1000) + 1000) % 1000;
+      if (frac > 500 || (frac === 500 && Math.abs(whole % 2) === 1)) return whole + 1;
+      return whole;
+    }
+    function atLevel(level) {
+      const steps = Math.max(0, level - 1);
+      const crit = Math.round((stats.crit + stats.critGrow * steps) * 1000) / 10;
+      return {
+        hp: roundEven((stats.hp + stats.hpGrow * steps) * 1.1),
+        def: roundEven(stats.def + stats.defGrow * steps),
+        atk: roundEven((stats.atk + stats.atkGrow * steps) * 1.1),
+        acc: stats.acc,
+        mind: roundEven(stats.mind + stats.mindGrow * steps),
+        crit: Number.isInteger(crit) ? String(crit) : String(crit),
+        critDmg: String(Math.round(stats.critDmg * 1000) / 10),
+        spd: stats.spd,
+      };
+    }
+    const lv = document.querySelector("#lv");
+    const range = document.querySelector("#lv-range");
+    function paintLevel(level) {
+      const n = Math.min(80, Math.max(1, Math.round(Number(level)) || 1));
+      lv.value = String(n);
+      range.value = String(n);
+      const cur = atLevel(n);
+      document.querySelectorAll("[data-stat]").forEach((cell) => {
+        const key = cell.dataset.stat;
+        const value = cur[key];
+        cell.textContent = key === "crit" || key === "critDmg" ? `${value}%` : String(value);
+      });
+    }
+    lv.addEventListener("input", () => paintLevel(lv.value));
+    range.addEventListener("input", () => paintLevel(range.value));
+    document.querySelectorAll(".tab").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("on", tab === button));
+        document.querySelectorAll(".pane").forEach((pane) => pane.classList.toggle("on", pane.dataset.pane === button.dataset.tab));
+      });
+    });
+  </script>
+</body>
+</html>
