@@ -63,13 +63,20 @@ function roundEven(n) {
   return whole;
 }
 
-function atLevel(stats, level) {
+function rarityScale(rarity) {
+  if (rarity === "SSR") return 1.1;
+  if (rarity === "SR") return 1.05;
+  return 1;
+}
+
+function atLevel(stats, level, rarity) {
   const steps = Math.max(0, level - 1);
+  const scale = rarityScale(rarity);
   const crit = Math.round((stats.crit + stats.critGrow * steps) * 1000) / 10;
   return {
-    hp: roundEven((stats.hp + stats.hpGrow * steps) * 1.1),
+    hp: roundEven((stats.hp + stats.hpGrow * steps) * scale),
     def: roundEven(stats.def + stats.defGrow * steps),
-    atk: roundEven((stats.atk + stats.atkGrow * steps) * 1.1),
+    atk: roundEven((stats.atk + stats.atkGrow * steps) * scale),
     acc: stats.acc,
     mind: roundEven(stats.mind + stats.mindGrow * steps),
     crit,
@@ -92,14 +99,6 @@ const BASE_ROWS = [
   ["暴击率", "crit"],
   ["暴击伤害", "critDmg"],
   ["速度", "spd"],
-];
-
-const GROW_ROWS = [
-  ["生命", "hp"],
-  ["防御力", "def"],
-  ["攻击力", "atk"],
-  ["精神力", "mind"],
-  ["暴击率", "crit"],
 ];
 
 function renderList() {
@@ -166,17 +165,10 @@ function renderDetail(id) {
     ["种族", c.race],
     ["年龄", c.age ? `${c.age} 岁` : ""],
     ["身高", c.height ? `${c.height} cm` : ""],
-    ["体重", c.weight ? `${c.weight} kg` : ""],
+    ["体重", c.weight ? `${c.weight} kg` : "???"],
     ["星座", c.constellation],
     ["生日", c.birthday],
   ].filter(([, value]) => value);
-  const growText = (key) => {
-    const amount = key === "hp" || key === "atk"
-      ? (key === "hp" ? c.stats.hpGrow : c.stats.atkGrow) * 1.1
-      : key === "crit" ? c.stats.critGrow * 100
-      : c.stats[`${key}Grow`];
-    return key === "crit" ? `${num(amount)}%` : num(amount);
-  };
   app.innerHTML = `
     <div class="fixed-bg parchment" aria-hidden="true"><img src="img/bg/paper.png" alt=""></div>
     <div class="fixed-figure" aria-hidden="true">
@@ -209,15 +201,6 @@ function renderDetail(id) {
             </table>
           </section>
           <section class="panel">
-            <h2>属性成长</h2>
-            <p class="level">每级</p>
-            <table>
-              <tbody>
-                ${GROW_ROWS.map(([label, key]) => `<tr><th>${label}</th><td>${growText(key)}</td></tr>`).join("")}
-              </tbody>
-            </table>
-          </section>
-          <section class="panel">
             <h2>技能</h2>
             ${c.skills.map(skillBlock).join("")}
           </section>
@@ -241,7 +224,7 @@ function renderDetail(id) {
     const n = Math.min(80, Math.max(1, Math.round(Number(level)) || 1));
     lv.value = String(n);
     range.value = String(n);
-    const cur = atLevel(c.stats, n);
+    const cur = atLevel(c.stats, n, c.rarity);
     app.querySelectorAll("[data-stat]").forEach((cell) => {
       cell.textContent = formatStat(cell.dataset.stat, cur[cell.dataset.stat]);
     });
