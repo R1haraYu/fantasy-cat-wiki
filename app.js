@@ -59,28 +59,33 @@ function roundEven(n) {
   return whole;
 }
 
-function rarityScale(rarity) {
-  if (rarity === "SSR") return 1.1;
-  if (rarity === "SR") return 1.05;
-  return 1;
+function rarityBonus(rarity) {
+  if (rarity === "SSR") return 0.1;
+  if (rarity === "SR") return 0.05;
+  return 0;
 }
 
 const STAR_SCALE = [1, 1.1, 1.3, 1.6, 2, 2.5];
 
+function grownInt(base, grow, steps) {
+  return base + roundEven((grow || 0) * steps);
+}
+
 function atLevel(stats, level, rarity, star) {
   const steps = Math.max(0, level - 1);
   const starScale = STAR_SCALE[star] ?? 1;
-  const scale = rarityScale(rarity) * starScale;
-  const crit = Math.round((stats.crit + stats.critGrow * steps) * starScale * 1000) / 10;
+  const hpAtk = starScale + rarityBonus(rarity);
+  const crit = (stats.crit + (stats.critGrow || 0) * steps) * 100;
+  const critDmg = (stats.critDmg + (stats.critDmgGrow || 0) * steps) * 100;
   return {
-    hp: roundEven((stats.hp + stats.hpGrow * steps) * scale),
-    def: roundEven((stats.def + stats.defGrow * steps) * starScale),
-    atk: roundEven((stats.atk + stats.atkGrow * steps) * scale),
-    acc: roundEven(stats.acc * starScale),
-    mind: roundEven((stats.mind + stats.mindGrow * steps) * starScale),
-    crit,
-    critDmg: Math.round(stats.critDmg * starScale * 1000) / 10,
-    spd: roundEven(stats.spd * starScale),
+    hp: roundEven(grownInt(stats.hp, stats.hpGrow, steps) * hpAtk),
+    def: roundEven(grownInt(stats.def, stats.defGrow, steps) * starScale),
+    atk: roundEven(grownInt(stats.atk, stats.atkGrow, steps) * hpAtk),
+    acc: stats.acc,
+    mind: roundEven(grownInt(stats.mind, stats.mindGrow, steps) * starScale),
+    crit: Math.round(crit * 10) / 10,
+    critDmg: Math.round(critDmg * 10) / 10,
+    spd: grownInt(stats.spd, stats.spdGrow, steps),
   };
 }
 
