@@ -47,6 +47,13 @@ button, input, select { font: inherit; color: inherit; }
   font-family: "Palatino Linotype", "Songti SC", serif;
 }
 .count { margin: 0 0 4px; color: var(--muted); font-size: 13px; }
+.codex-nav { display: flex; gap: 22px; margin: 0 0 4px; }
+.codex-nav a {
+  color: var(--muted);
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+.codex-nav a.on { color: var(--ink); border-bottom-color: var(--accent); }
 #app { padding: 20px 0 72px; }
 
 .page-title {
