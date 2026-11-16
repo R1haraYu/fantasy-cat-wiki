@@ -4,6 +4,7 @@ const app = document.getElementById("app");
 const count = document.getElementById("count");
 
 const state = { q: "", type: "", chapter: "" };
+state.q = new URLSearchParams(location.search).get("q") || "";
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -23,14 +24,14 @@ function rewardChips(list, first) {
 }
 
 function enemyChips(list) {
-  if (!list || !list.length) return `<p class="card-meta">无敌人数据</p>`;
-  return `<div class="lineup">${list.map((e) => `<span class="lineup-chip">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}<span>${esc(e.name)}</span>${e.lv != null ? `<em>Lv ${esc(e.lv)}</em>` : ""}</span>`).join("")}</div>`;
+  if (!list || !list.length) return "";
+  return `<div class="lineup">${list.map((e) => `<span class="lineup-chip">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}<span>${esc(e.name)}</span>${e.lv != null ? `<em>${esc(e.lv)} 级</em>` : ""}</span>`).join("")}</div>`;
 }
 
 function stageCard(s) {
   const flags = [];
-  if (s.ap != null) flags.push(badge(`AP ${s.ap}`));
-  if (s.isBoss) flags.push(badge("BOSS", "hidden-tag"));
+  if (s.ap != null) flags.push(badge(`体力 ${s.ap}`));
+  if (s.isBoss) flags.push(badge("首领", "hidden-tag"));
   if (s.isStory) flags.push(badge("剧情"));
   flags.push(badge(`${s.type} ${s.code}`));
   return `<details class="stage">
@@ -42,8 +43,7 @@ function stageCard(s) {
         ${s.expAvatar ? badge(`角色经验 ${s.expAvatar}`) : ""}
         ${s.favor ? badge(`好感 ${s.favor}`) : ""}
       </div>
-      <h4 class="mini-title">敌人</h4>
-      ${enemyChips(s.enemies)}
+      ${s.enemies && s.enemies.length ? `<h4 class="mini-title">敌人</h4>${enemyChips(s.enemies)}` : ""}
       ${s.rewards && s.rewards.length ? `<h4 class="mini-title">掉落</h4>${rewardChips(s.rewards)}` : ""}
       ${s.firstRewards && s.firstRewards.length ? `<p class="first-clear">首通奖励：</p>${rewardChips(s.firstRewards, true)}` : ""}
     </div>
@@ -64,14 +64,14 @@ function matchesFilter(s) {
 
 function renderRuins() {
   return STAGES.ruins.map((r) => `<details class="stage">
-    <summary><span class="stage-code">难度${esc(r.difficulty)}</span><span class="stage-name">${esc(r.name)}</span><span class="chips-inline">${badge(`推荐 Lv ${r.recommendLv}`)}${badge(`等级限制 Lv ${r.limitLv}`)}</span></summary>
+    <summary><span class="stage-code">难度${esc(r.difficulty)}</span><span class="stage-name">${esc(r.name)}</span><span class="chips-inline">${badge(`推荐等级 ${r.recommendLv}`)}${badge(`等级限制 ${r.limitLv}`)}</span></summary>
     <div class="stage-body">
       <p class="stage-desc">${esc(r.titleNormal)}</p>
       <p class="stage-desc">${esc(r.descNormal)}</p>
       ${r.titleBoss ? `<p class="stage-desc"><b>${esc(r.titleBoss)}</b><br>${esc(r.descBoss)}</p>` : ""}
       <h4 class="mini-title">敌人出现层级</h4>
       <div class="table-wrap"><table class="data-table"><thead><tr><th>敌人</th><th>层级</th><th>等级</th></tr></thead><tbody>
-        ${r.enemies.map((e) => `<tr><td><span class="lineup-chip">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}<span>${esc(e.name)}</span>${e.isBoss ? badge("BOSS", "hidden-tag") : ""}</span></td><td>${e.floors.map((f) => (f[0] === f[1] ? `${f[0]} 层` : `${f[0]}-${f[1]} 层`)).join("、")}</td><td class="num">Lv ${esc(e.lv)}</td></tr>`).join("")}
+        ${r.enemies.map((e) => `<tr><td><span class="lineup-chip">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}<span>${esc(e.name)}</span>${e.isBoss ? badge("BOSS", "hidden-tag") : ""}</span></td><td>${e.floors.map((f) => (f[0] === f[1] ? `${f[0]} 层` : `${f[0]}-${f[1]} 层`)).join("、")}</td><td class="num">${esc(e.lv)} 级</td></tr>`).join("")}
       </tbody></table></div>
     </div>
   </details>`).join("");

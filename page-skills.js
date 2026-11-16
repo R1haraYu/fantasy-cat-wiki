@@ -5,6 +5,7 @@ const countEl = document.getElementById("count");
 const tools = document.getElementById("tools");
 
 const state = { q: "", owner: "", job: "", element: "" };
+state.q = new URLSearchParams(location.search).get("q") || "";
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -33,11 +34,18 @@ function levelTable(skill) {
   ["T1", "T2", "T3"].forEach((name, index) => {
     const arr = skill.levels[index] || [];
     if (!arr.length) return;
-    rows.push(`<tr><th scope="row">${name}</th>${arr.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`);
+    rows.push(`<tr><th scope="row">数值${index + 1}</th>${arr.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`);
   });
   if (!rows.length) return "";
   const cols = Math.max(...skill.levels.map((a) => (a ? a.length : 0)));
-  return `<div class="table-wrap"><table class="data-table"><thead><tr><th>数值</th>${Array.from({ length: cols }, (_, i) => `<th>Lv${i + 1}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+  return `<div class="table-wrap"><table class="data-table"><thead><tr><th>数值</th>${Array.from({ length: cols }, (_, i) => `<th>${i + 1} 级</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table></div>`;
+}
+
+function fmtNum(n) {
+  const num = Number(n);
+  if (!Number.isFinite(num)) return n == null ? "" : String(n);
+  if (Number.isInteger(num)) return String(num);
+  return String(Math.round(num * 1000) / 1000);
 }
 
 function card(skill) {
@@ -46,10 +54,10 @@ function card(skill) {
   if (skill.slot) tags.push(`<span class="badge soft">${esc(skill.slot)}</span>`);
   if (skill.job) tags.push(`<span class="badge soft">${esc(skill.job)}</span>`);
   if (skill.rarity) tags.push(`<span class="badge ${skill.rarity}">${esc(skill.rarity)}</span>`);
-  const cd = skill.cooldownValue ? `<span class="badge soft">冷却 ${esc(skill.cooldownValue)}</span>` : "";
+  const cd = skill.cooldownValue ? `<span class="badge soft">冷却 ${esc(fmtNum(skill.cooldownValue))}</span>` : "";
   const lt = levelTable(skill);
   return `<article class="card clickable" data-owner="${esc(skill.ownerType)}" data-job="${esc(skill.job)}" data-element="${esc(skill.element)}">
-    <div class="card-art">${skill.icon ? `<img src="${esc(skill.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
+    ${skill.icon ? `<div class="card-art"><img src="${esc(skill.icon)}" alt="" loading="lazy" onerror="this.parentElement.remove()"></div>` : ""}
     <div class="card-body">
       <h3 class="card-title">${esc(skill.name)}</h3>
       <p class="card-meta">${esc(skill.ownerName || "技能")}${skill.slot ? " · " + esc(skill.slot) : ""}</p>
@@ -96,3 +104,15 @@ document.getElementById("f-job").addEventListener("change", (e) => { state.job =
 document.getElementById("f-element").addEventListener("change", (e) => { state.element = e.target.value; render(); });
 
 render();
+
+function renderBuffs() {
+  const grid = document.getElementById("buff-grid");
+  const buffs = window.BUFFS || [];
+  if (!grid) return;
+  const KIND_CLASS = { "增益": "R", "减益": "N", "控制": "SR", "持续伤害": "SSR", "恢复": "R", "特殊": "SSR", "其他": "soft" };
+  grid.innerHTML = `<div class="grid-cards">${buffs.map((b) => `<article class="card">
+    <div class="card-art">${b.icon ? `<img src="${b.icon}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
+    <div class="card-body"><h3 class="card-title">${b.name}</h3><p class="card-meta"><span class="badge ${KIND_CLASS[b.kind] || "soft"}">${b.kind}</span></p></div>
+  </article>`).join("")}</div>`;
+}
+renderBuffs();

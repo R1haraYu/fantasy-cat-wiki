@@ -5,6 +5,7 @@ const countEl = document.getElementById("count");
 const tools = document.getElementById("tools");
 
 const state = { q: "", group: "", rarity: "" };
+state.q = new URLSearchParams(location.search).get("q") || "";
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -20,7 +21,7 @@ function itemCard(item) {
   if (item.rarityName) tags.push(`<span class="badge ${esc(item.rarityName)}">${esc(item.rarityName)}</span>`);
   if (item.maxAmount) tags.push(`<span class="badge soft">上限 ${esc(item.maxAmount)}</span>`);
   return `<article class="card" data-group="${esc(item.group)}" data-rarity="${esc(item.rarityName)}">
-    <div class="card-art">${item.icon ? `<img src="${esc(item.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
+    ${item.icon ? `<div class="card-art"><img src="${esc(item.icon)}" alt="" loading="lazy" onerror="this.parentElement.remove()"></div>` : ""}
     <div class="card-body">
       <h3 class="card-title">${esc(item.name)}</h3>
       <p class="card-meta">${esc(item.group)}${item.catalog ? " · " + esc(item.catalog) : ""}</p>

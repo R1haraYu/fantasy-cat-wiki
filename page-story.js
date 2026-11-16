@@ -4,6 +4,7 @@ const count = document.getElementById("count");
 
 let dbCatalog = "";
 let dbQuery = "";
+dbQuery = new URLSearchParams(location.search).get("q") || "";
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -53,14 +54,14 @@ function dbEntry(e) {
     <summary><span class="stage-name">${esc(e.title)}</span><span class="chips-inline">${e.areaName ? badge(e.areaName) : ""}${e.unlock ? badge(e.unlock) : ""}</span></summary>
     <div class="stage-body">
       <p class="stage-desc">${esc(e.desc)}</p>
-      ${e.chapterName ? `<p class="card-meta">${esc(e.chapterName)}</p>` : ""}
+      ${e.chapterName && !/^[A-Z0-9_]+$/.test(e.chapterName) ? `<p class="card-meta">${esc(e.chapterName)}</p>` : ""}
     </div>
   </details>`;
 }
 
 function databankSection() {
   const catalogs = [...new Set(STORY.databank.map((e) => e.catalogName))];
-  const list = STORY.databank.filter((e) => {
+  const list = STORY.databank.filter((e) => e.desc && e.desc.trim()).filter((e) => {
     if (dbCatalog && e.catalogName !== dbCatalog) return false;
     if (!dbQuery.trim()) return true;
     return `${e.title}${e.desc}${e.areaName}`.includes(dbQuery.trim());

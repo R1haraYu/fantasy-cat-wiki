@@ -55,7 +55,7 @@ function num(value) {
   const n = Number(value);
   if (!Number.isFinite(n)) return escapeText(value);
   if (Number.isInteger(n)) return String(n);
-  return String(Math.round(n * 100) / 100);
+  return String(Math.round(n * 1000) / 1000);
 }
 
 function roundEven(n) {
@@ -181,13 +181,14 @@ function renderDetail(id) {
     ["种族", c.race],
     ["年龄", c.age ? `${c.age} 岁` : ""],
     ["身高", c.height ? `${c.height} cm` : ""],
-    ["体重", c.weight ? `${c.weight} kg` : "—"],
+    ...(c.weight ? [["体重", `${c.weight} kg`]] : []),
     ["星座", c.constellation],
     ["生日", c.birthday],
     ["所属城市", x.city],
     ["故乡", x.homeCity],
   ].filter(([, value]) => value);
   const battle = x.battle || {};
+  const battleBuilt = [];
   const skins = x.skins || [];
   const skillIcons = x.skillIcons || {};
   const skills = (c.skills || []).map((skill) => skillBlock(skill, skillIcons[skill.slot])).join("");
@@ -197,11 +198,13 @@ function renderDetail(id) {
         <div class="skin-body"><h4>${escapeText(s.name)}</h4><p>${escapeText(s.desc || "")}</p></div>
       </figure>`).join("")}</div>`
     : `<p class="empty">暂无皮肤数据。</p>`;
+  const hasSkins = skins.length > 0;
   const battleItems = [
     ["武器", battle.weaponName],
     ["武器说明", battle.weaponDesc],
     ["攻击距离", battle.combatDistanceName || (battle.combatDistanceType != null ? String(battle.combatDistanceType) : "")],
   ].filter(([, v]) => v);
+  const hasBattle = battleItems.length > 0;
   app.innerHTML = `
     <div class="fixed-bg parchment" aria-hidden="true"><img src="img/bg/paper.png" alt=""></div>
     <div class="fixed-figure" aria-hidden="true">
@@ -216,7 +219,7 @@ function renderDetail(id) {
         <div class="tabs" role="tablist">
           <button type="button" class="tab on" data-tab="data">角色数据</button>
           <button type="button" class="tab" data-tab="file">角色档案</button>
-          <button type="button" class="tab" data-tab="growth">养成 · 战斗</button>
+          ${(hasBattle || hasSkins) ? `<button type="button" class="tab" data-tab="growth">养成 · 战斗</button>` : ""}
         </div>
       </div>
       <div class="pane-wrap">
@@ -258,19 +261,19 @@ function renderDetail(id) {
           </section>
           ${c.bio ? `<section class="panel"><h2>简介</h2><p class="bio">${escapeText(c.bio)}</p></section>` : ""}
         </div>
-        <div class="pane" data-pane="growth">
-          <section class="panel">
+        ${(hasBattle || hasSkins) ? `<div class="pane" data-pane="growth">
+          ${hasBattle ? `<section class="panel">
             <h2>战斗数据</h2>
             <p class="stat-note">以下数据仅供参考，可能随版本调整。</p>
             <ul class="kv-list">
               ${battleItems.map(([k, v]) => `<li><b>${escapeText(k)}</b><span>${escapeText(v)}</span></li>`).join("") || `<li><span>暂无数据</span></li>`}
             </ul>
-          </section>
-          <section class="panel">
+          </section>` : ""}
+          ${hasSkins ? `<section class="panel">
             <h2>皮肤（${skins.length}）</h2>
             ${skinHtml}
-          </section>
-        </div>
+          </section>` : ""}
+        </div>` : ""}
       </div>
     </main>`;
   const lv = app.querySelector("#lv");

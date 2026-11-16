@@ -9,6 +9,7 @@ const countEl = document.getElementById("count");
 const tools = document.getElementById("tools");
 
 const state = { q: "", slot: "", rarity: "" };
+state.q = new URLSearchParams(location.search).get("q") || "";
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -29,7 +30,7 @@ function equipCard(e) {
       <h3 class="card-title">${esc(e.name)}</h3>
       <p class="card-meta">${esc(e.slotName)}${e.price ? " · 售价 " + esc(e.price) : ""}</p>
       <p class="card-text">${esc(e.text)}</p>
-      <div class="card-tags">${tags.join("")}${(e.traitTags || []).filter((t) => t.trim()).map((t) => `<span class="badge soft">${esc(t.trim())}</span>`).join("")}</div>
+      <div class="card-tags">${tags.join("")}${(e.traitTagsCn || []).map((t) => `<span class="badge soft">${esc(t)}</span>`).join("")}</div>
       ${e.obtain ? `<p class="card-meta">获取：${esc(e.obtain)}</p>` : ""}
     </div>
   </article>`;
@@ -66,10 +67,10 @@ function renderSets() {
 function renderTraits() {
   const rows = TRAITS.map((t) => `<tr>
     <th scope="row">${esc(t.index)}</th>
-    <td>${esc(t.tag)}</td>
+    <td>${esc(t.tagCn)}</td>
     <td>${esc(t.shortDesc)}</td>
     <td>${esc(t.longDesc)}</td>
-    <td class="num">${esc(t.min)}~${esc(t.max)}</td>
+    <td class="num">${esc(t.rangeText || "")}</td>
     <td class="num">${esc(t.weight)}</td>
   </tr>`).join("");
   traitsEl.innerHTML = `<div class="table-wrap"><table class="data-table">
@@ -101,6 +102,20 @@ document.getElementById("f-reset").addEventListener("click", () => {
   renderEquip();
 });
 
+function renderTagGuide() {
+  const el = document.getElementById("tag-guide");
+  const pools = window.EQUIP_TAGS || [];
+  if (!el) return;
+  const TAG_DESC = {
+    "普通": "防御力、精准、生命，以及部分战斗特殊效果",
+    "物理": "攻击力、暴击率、暴击伤害",
+    "精神": "精神力",
+    "材料": "特殊装备效果（分解获得装备部件）",
+  };
+  el.innerHTML = `<div class="table-wrap"><table class="data-table"><thead><tr><th>标签</th><th>可出现的词条</th><th>词条数量</th></tr></thead><tbody>${pools.map((p) => `<tr><td><span class="badge soft">${esc(p.tag)}</span></td><td>${esc(TAG_DESC[p.tag] || p.effects.join("、"))}</td><td class="num">${p.count}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
 renderEquip();
 renderSets();
 renderTraits();
+renderTagGuide();

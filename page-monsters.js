@@ -4,6 +4,7 @@ const app = document.getElementById("app");
 const count = document.getElementById("count");
 
 const state = { q: "", type: "", element: "", appear: "" };
+state.q = new URLSearchParams(location.search).get("q") || "";
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -18,7 +19,7 @@ function fmt(value) {
   const n = Number(value);
   if (!Number.isFinite(n)) return esc(value);
   if (Number.isInteger(n)) return String(n);
-  return String(Math.round(n * 100) / 100);
+  return String(Math.round(n * 1000) / 1000);
 }
 
 function badge(text, cls) {
@@ -32,7 +33,7 @@ function monsterCard(m) {
   return `<a class="index-card monster-card" href="#/${m.id}">
     <span class="index-art"><img src="${esc(m.icon)}" alt="" loading="lazy" onerror="this.remove()"></span>
     <span class="index-name">${esc(m.name)}</span>
-    <span class="index-sub">${esc(m.element)} · ${m.isBoss ? "首领" : "Lv " + esc(m.initialLevel)}</span>
+    <span class="index-sub">${esc(m.element)} · ${m.isBoss ? "首领" : "等级 " + esc(m.initialLevel)}</span>
   </a>`;
 }
 
@@ -79,7 +80,7 @@ function appearanceList(m) {
     <div class="appear-group">
       <h4>${esc(kind)}</h4>
       <div class="appear-lines">
-        ${list.map((a) => `<span class="appear-line"><b>${esc(a.code)}</b> ${esc(a.stage)}${a.lv != null ? ` <em>Lv ${esc(a.lv)}</em>` : ""}${a.floors ? ` <em>${a.floors[0]}-${a.floors[1]} 层</em>` : ""}</span>`).join("")}
+        ${list.map((a) => `<span class="appear-line"><b>${esc(a.code)}</b> ${esc(a.stage)}${a.lv != null ? ` <em>${esc(a.lv)} 级</em>` : ""}${a.floors ? ` <em>${a.floors[0]}-${a.floors[1]} 层</em>` : ""}</span>`).join("")}
       </div>
     </div>`).join("");
 }
