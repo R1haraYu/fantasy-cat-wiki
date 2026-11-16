@@ -68,7 +68,7 @@ function renderArena() {
   const ranks = (a.ranks || []).map((r) => {
     const low = Math.min(Number(r.low) || 0, Number(r.high) || 0);
     const high = Math.max(Number(r.low) || 0, Number(r.high) || 0);
-    return `<tr><td>${esc(r.name)}</td><td class="num">${esc(fmt(r.lv))}</td><td class="num">${esc(fmt(low))} ~ ${esc(fmt(high))}</td><td>${chips(r.rewards)}</td><td class="num">${esc(fmt(r.coinDaily))}</td><td class="num">${esc(fmt(r.coinWin))}</td></tr>`;
+    return `<tr><td>${esc(r.name)}</td><td class="num">${esc(fmt(r.lv))}</td><td class="num">${esc(fmt(low))} ~ ${esc(fmt(high))} 名</td><td>${chips(r.rewards)}</td><td class="num">${esc(fmt(r.coinDaily))}</td><td class="num">${esc(fmt(r.coinWin))}</td></tr>`;
   }).join("");
   const exchange = (a.exchange || []).map((r) => `<tr><td>${chips([r])}</td><td class="num">${esc(fmt(r.coin))} ${esc(a.coin?.name || "竞技币")}</td><td class="num">${esc(fmt(r.limit))}</td><td>${esc(r.periodName || r.period || "")}</td></tr>`).join("");
   return panel("竞技场规则", kv([
@@ -76,7 +76,7 @@ function renderArena() {
     ["重置消耗", (d.resetCost || []).join(" / ")], ["重置次数上限", d.resetLimit],
     ["竞技币", a.coin?.name || ""], ["竞技点", a.pt?.name || ""],
   ]))
-    + panel("段位", table(["段位", "等级", "积分范围", "赛季奖励", "每日币", "胜利币"], ranks), "赛季奖励按赛季结算时的最终段位发放。")
+    + panel("段位", table(["段位", "等级", "排名范围", "赛季奖励", "每日币", "胜利币"], ranks), "段位按竞技场排名划分，排名越靠前段位越高；赛季奖励按赛季结算时的最终段位发放。")
     + panel("竞技场兑换", table(["奖励", "消耗", "限购", "刷新周期"], exchange));
 }
 
