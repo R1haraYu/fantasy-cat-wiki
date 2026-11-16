@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>装备 · 幻想之都的黑猫</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">图鉴</span>
+      <span><strong>幻想之都的黑猫</strong><em>攻略资料站</em></span>
+    </a>
+    <nav class="codex-nav">
+      <a href="index.html">角色</a>
+      <a href="skills.html">技能</a>
+      <a class="on" href="equipment.html">装备</a>
+      <a href="items.html">道具</a>
+      <a href="monsters.html">怪物</a>
+    </nav>
+    <p id="count" class="count"></p>
+  </header>
+  <main class="page">
+    <p class="crumbs"><a href="index.html">首页</a> / 装备</p>
+    <h1 class="page-title">装备</h1>
+    <p class="lead">五个部位的全部装备、套装效果与随机词条池。</p>
+    <p class="note"><strong>仅供参考：</strong>装备名称、图标与基础价格来自客户端表；词条数值为随机池定义，实际掉落属性受随机权重影响，仅供参考。</p>
+    <div class="toolbar" id="tools"></div>
+    <h2 class="section-title">装备列表</h2>
+    <div id="list"></div>
+    <h2 class="section-title">套装效果</h2>
+    <p class="section-sub">同一套装穿戴 2 件 / 5 件时触发对应词条。</p>
+    <div id="sets"></div>
+    <h2 class="section-title">装备词条</h2>
+    <p class="section-sub">装备的随机词条池：标签、效果说明、数值范围与权重。</p>
+    <div id="traits"></div>
+  </main>
+  <footer class="footer">
+    <p>《幻想之都的黑猫》攻略资料站 · 数据来自客户端拆包解析，仅供参考，请以游戏内实际内容为准。</p>
+    <p>图鉴：<a href="index.html">角色</a> · <a href="skills.html">技能</a> · <a href="equipment.html">装备</a> · <a href="items.html">道具</a> · <a href="monsters.html">怪物</a></p>
+  </footer>
+  <script src="data/meta.js"></script>
+  <script src="data/equipment.js"></script>
+  <script src="data/equipment_sets.js"></script>
+  <script src="data/equipment_traits.js"></script>
+  <script src="page-equipment.js"></script>
+</body>
+</html>

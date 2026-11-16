@@ -1,4 +1,5 @@
 const roster = window.CODEX || [];
+const CHAR_EXTRA = window.CHAR_EXTRA || {};
 const app = document.getElementById("app");
 const count = document.getElementById("count");
 
@@ -9,6 +10,10 @@ const rarities = RARITY_ORDER.filter((name) => roster.some((c) => c.rarity === n
 
 function portrait(id, kind) {
   return `img/${kind}/${id}.png`;
+}
+
+function extraOf(id) {
+  return CHAR_EXTRA[String(id)] || {};
 }
 
 function levelGroups(skill) {
@@ -34,9 +39,11 @@ function escapeText(text) {
     .replaceAll(">", "&gt;");
 }
 
-function skillBlock(skill) {
+function skillBlock(skill, icon) {
   const groups = levelGroups(skill);
+  const img = icon ? `<span class="slot-art"><img src="${escapeText(icon)}" alt="" loading="lazy" onerror="this.remove()"></span>` : "";
   return `<article class="skill">
+    ${img}
     <div class="slot">${escapeText(skill.slot)}</div>
     <h3>${escapeText(skill.name)}</h3>
     <p>${renderDesc(skill.desc, groups)}</p>
@@ -105,6 +112,15 @@ const BASE_ROWS = [
   ["速度", "spd"],
 ];
 
+function cardMarkup(c) {
+  const sub = `${c.rarity} · ${c.element}`;
+  return `<a class="index-card" href="#/${c.id}">
+    <span class="index-art"><img src="${portrait(c.id, "icon")}" alt="" loading="lazy" onerror="this.remove()"></span>
+    <span class="index-name">${escapeText(c.name)}</span>
+    <span class="index-sub">${escapeText(sub)}</span>
+  </a>`;
+}
+
 function renderList() {
   const params = new URLSearchParams(location.hash.split("?")[1] || "");
   const q = (params.get("q") || "").trim();
@@ -118,12 +134,13 @@ function renderList() {
     if (rarity && c.rarity !== rarity) return false;
     return true;
   });
-  count.textContent = `${filtered.length} 条目`;
+  count.textContent = `${filtered.length} 名角色`;
   const options = (list, current) =>
     `<option value="">全部</option>` +
     list.map((item) => `<option value="${escapeText(item)}" ${item === current ? "selected" : ""}>${escapeText(item)}</option>`).join("");
   app.innerHTML = `
     <h1 class="page-title">角色</h1>
+    <p class="lead">《幻想之都的黑猫》角色图鉴：点击角色查看属性、技能、皮肤与好感度资料。属性与战斗数据均标注为仅供参考。</p>
     <form class="filter-panel" id="filters">
       <div class="filter-grid">
         <label>名字<input class="search" name="q" value="${escapeText(q)}" autocomplete="off"></label>
@@ -134,8 +151,9 @@ function renderList() {
       <button class="query" type="submit">查询</button>
     </form>
     <section class="index-grid" id="grid">${
-      filtered.length ? filtered.map(cardMarkup).join("") : `<p class="empty">没有符合条件的角色。</p>`
-    }</section>`;
+      filtered.length ? filtered.map((c) => cardMarkup(c)).join("") : `<p class="empty">没有符合条件的角色。</p>`
+    }</section>
+`;
   document.getElementById("filters").addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -148,13 +166,6 @@ function renderList() {
   });
 }
 
-function cardMarkup(c) {
-  return `<a class="index-card" href="#/${c.id}">
-    <span class="index-art"><img src="${portrait(c.id, "icon")}" alt="" onerror="this.remove()"></span>
-    <span class="index-name">${escapeText(c.name)}</span>
-  </a>`;
-}
-
 function renderDetail(id) {
   const c = roster.find((item) => item.id === id);
   count.textContent = "";
@@ -163,6 +174,7 @@ function renderDetail(id) {
     app.innerHTML = `<p class="empty">没有这个角色。</p><a class="back" href="#/">返回图鉴</a>`;
     return;
   }
+  const x = extraOf(c.id);
   document.body.classList.add("detail");
   document.title = `${c.name} · 角色图鉴`;
   const profile = [
@@ -172,26 +184,46 @@ function renderDetail(id) {
     ["体重", c.weight ? `${c.weight} kg` : "???"],
     ["星座", c.constellation],
     ["生日", c.birthday],
+    ["所属城市", x.city],
+    ["故乡", x.homeCity],
   ].filter(([, value]) => value);
+  const battle = x.battle || {};
+  const skins = x.skins || [];
+  const skillIcons = x.skillIcons || {};
+  const skills = (c.skills || []).map((skill) => skillBlock(skill, skillIcons[skill.slot])).join("");
+  const skinHtml = skins.length
+    ? `<div class="skin-list">${skins.map((s) => `<figure class="skin-item">
+        <div class="skin-art">${s.avatar ? `<img src="${escapeText(s.avatar)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
+        <div class="skin-body"><h4>${escapeText(s.name)}</h4><p>${escapeText(s.desc || "")}</p></div>
+      </figure>`).join("")}</div>`
+    : `<p class="empty">暂无皮肤数据。</p>`;
+  const battleItems = [
+    ["武器", battle.weaponName],
+    ["武器说明", battle.weaponDesc],
+    ["攻击距离", battle.combatDistanceName || (battle.combatDistanceType != null ? String(battle.combatDistanceType) : "")],
+  ].filter(([, v]) => v);
   app.innerHTML = `
     <div class="fixed-bg parchment" aria-hidden="true"><img src="img/bg/paper.png" alt=""></div>
     <div class="fixed-figure" aria-hidden="true">
       <img src="${portrait(c.id, "bust")}" alt="" onerror="this.parentElement.remove()">
     </div>
     <main class="detail-sheet">
+      <div class="sheet-figure-mobile"><img src="${portrait(c.id, "bust")}" alt="" onerror="this.parentElement.remove()"></div>
       <div class="detail-head">
-        <p class="preview-tag"><a href="#/">返回图鉴</a></p>
+        <p class="preview-tag"><a href="#/">← 返回角色图鉴</a></p>
         <h1>${escapeText(c.name)}</h1>
         <p class="meta">${escapeText(c.rarity)} · ${escapeText(c.element)} · ${escapeText(c.job)}</p>
         <div class="tabs" role="tablist">
           <button type="button" class="tab on" data-tab="data">角色数据</button>
           <button type="button" class="tab" data-tab="file">角色档案</button>
+          <button type="button" class="tab" data-tab="growth">养成 · 战斗</button>
         </div>
       </div>
       <div class="pane-wrap">
         <div class="pane on" data-pane="data">
           <section class="panel">
             <h2>基础属性</h2>
+            <p class="stat-note">本页属性为基础值按等级、星级推算的参考数据，仅供参考，实际数值以游戏内为准。</p>
             <div class="level-line">
               <label for="lv">等级</label>
               <input id="lv" type="number" min="1" max="80" value="1">
@@ -204,27 +236,40 @@ function renderDetail(id) {
                 ${STAR_SCALE.map((rate, index) => `<option value="${index}">${index}星 · ${Math.round(rate * 100)}%</option>`).join("")}
               </select>
             </div>
-            <table>
+            <div class="table-wrap"><table class="data-table">
               <tbody>
-                ${BASE_ROWS.map(([label, key]) => `<tr><th>${label}</th><td data-stat="${key}"></td></tr>`).join("")}
+                ${BASE_ROWS.map(([label, key]) => `<tr><th scope="row">${label}</th><td data-stat="${key}" class="num"></td></tr>`).join("")}
               </tbody>
-            </table>
+            </table></div>
           </section>
           <section class="panel">
             <h2>技能</h2>
-            ${c.skills.map(skillBlock).join("")}
+            ${skills || `<p class="empty">暂无技能数据。</p>`}
           </section>
         </div>
         <div class="pane" data-pane="file">
           <section class="panel">
             <h2>档案</h2>
-            <table>
+            <div class="table-wrap"><table class="data-table">
               <tbody>
-                ${profile.map(([label, value]) => `<tr><th>${label}</th><td>${escapeText(value)}</td></tr>`).join("")}
+                ${profile.map(([label, value]) => `<tr><th scope="row">${escapeText(label)}</th><td>${escapeText(value)}</td></tr>`).join("")}
               </tbody>
-            </table>
+            </table></div>
           </section>
           ${c.bio ? `<section class="panel"><h2>简介</h2><p class="bio">${escapeText(c.bio)}</p></section>` : ""}
+        </div>
+        <div class="pane" data-pane="growth">
+          <section class="panel">
+            <h2>战斗数据</h2>
+            <p class="stat-note">以下为客户端表解析数据，仅供参考，可能随版本调整。</p>
+            <ul class="kv-list">
+              ${battleItems.map(([k, v]) => `<li><b>${escapeText(k)}</b><span>${escapeText(v)}</span></li>`).join("") || `<li><span>暂无数据</span></li>`}
+            </ul>
+          </section>
+          <section class="panel">
+            <h2>皮肤（${skins.length}）</h2>
+            ${skinHtml}
+          </section>
         </div>
       </div>
     </main>`;
@@ -260,7 +305,7 @@ function route() {
   if (id) renderDetail(id);
   else {
     document.body.classList.remove("detail");
-    document.title = "角色图鉴 · 幻想之都的黑猫";
+    document.title = "角色 · 幻想之都的黑猫";
     renderList();
   }
 }

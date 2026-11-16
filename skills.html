@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>技能 · 幻想之都的黑猫</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">图鉴</span>
+      <span><strong>幻想之都的黑猫</strong><em>攻略资料站</em></span>
+    </a>
+    <nav class="codex-nav">
+      <a href="index.html">角色</a>
+      <a class="on" href="skills.html">技能</a>
+      <a href="equipment.html">装备</a>
+      <a href="items.html">道具</a>
+      <a href="monsters.html">怪物</a>
+    </nav>
+    <p id="count" class="count"></p>
+  </header>
+  <main class="page">
+    <p class="crumbs"><a href="index.html">首页</a> / 技能</p>
+    <h1 class="page-title">技能</h1>
+    <p class="lead">角色与敌人的全部技能：效果描述、逐级数值与冷却。角色技能按角色归属排序，可筛选职业与属性。</p>
+    <p class="note"><strong>仅供参考：</strong>技能文本与数值由客户端规则表解析得到，{$T1}/{$T2} 等占位符已替换为 Lv1 数值；等级数值表列出各技能等级对应的实际数值，最终以游戏内为准。</p>
+    <div class="toolbar" id="tools"></div>
+    <div id="list"></div>
+  </main>
+  <footer class="footer">
+    <p>《幻想之都的黑猫》攻略资料站 · 数据来自客户端拆包解析，仅供参考，请以游戏内实际内容为准。</p>
+    <p>图鉴：<a href="index.html">角色</a> · <a href="skills.html">技能</a> · <a href="equipment.html">装备</a> · <a href="items.html">道具</a> · <a href="monsters.html">怪物</a></p>
+  </footer>
+  <script src="data/meta.js"></script>
+  <script src="data/skills.js"></script>
+  <script src="page-skills.js"></script>
+</body>
+</html>
