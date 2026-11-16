@@ -203,6 +203,7 @@ function renderDetail(id) {
     ["武器", battle.weaponName],
     ["武器说明", battle.weaponDesc],
     ["攻击距离", battle.combatDistanceName || (battle.combatDistanceType != null ? String(battle.combatDistanceType) : "")],
+    ["站位权重", battle.atpPriority != null ? String(battle.atpPriority) : ""],
   ].filter(([, v]) => v);
   const hasBattle = battleItems.length > 0;
   app.innerHTML = `
