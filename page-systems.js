@@ -65,14 +65,18 @@ function renderShop() {
 function renderArena() {
   const a = SYSTEMS.arena || {};
   const d = a.defines || {};
-  const ranks = (a.ranks || []).map((r) => `<tr><td>${esc(r.name)}</td><td class="num">${esc(fmt(r.lv))}</td><td class="num">${esc(fmt(r.low))} ~ ${esc(fmt(r.high))}</td><td>${chips(r.rewards)}</td><td class="num">${esc(fmt(r.coinDaily))}</td><td class="num">${esc(fmt(r.coinWin))}</td></tr>`).join("");
+  const ranks = (a.ranks || []).map((r) => {
+    const low = Math.min(Number(r.low) || 0, Number(r.high) || 0);
+    const high = Math.max(Number(r.low) || 0, Number(r.high) || 0);
+    return `<tr><td>${esc(r.name)}</td><td class="num">${esc(fmt(r.lv))}</td><td class="num">${esc(fmt(low))} ~ ${esc(fmt(high))}</td><td>${chips(r.rewards)}</td><td class="num">${esc(fmt(r.coinDaily))}</td><td class="num">${esc(fmt(r.coinWin))}</td></tr>`;
+  }).join("");
   const exchange = (a.exchange || []).map((r) => `<tr><td>${chips([r])}</td><td class="num">${esc(fmt(r.coin))} ${esc(a.coin?.name || "竞技币")}</td><td class="num">${esc(fmt(r.limit))}</td><td>${esc(r.periodName || r.period || "")}</td></tr>`).join("");
   return panel("竞技场规则", kv([
     ["房间规模", d.roomSize], ["机器人数量", d.botAmount], ["最低等级", d.minLevel], ["每日挑战次数", d.dailyChallenge],
     ["重置消耗", (d.resetCost || []).join(" / ")], ["重置次数上限", d.resetLimit],
     ["竞技币", a.coin?.name || ""], ["竞技点", a.pt?.name || ""],
   ]))
-    + panel("段位", table(["段位", "等级", "积分范围", "每日奖励", "每日币", "胜利币"], ranks))
+    + panel("段位", table(["段位", "等级", "积分范围", "赛季奖励", "每日币", "胜利币"], ranks), "赛季奖励按赛季结算时的最终段位发放。")
     + panel("竞技场兑换", table(["奖励", "消耗", "限购", "刷新周期"], exchange));
 }
 
