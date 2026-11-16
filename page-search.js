@@ -25,7 +25,7 @@ function render(q) {
     resultsEl.innerHTML = `
       <div class="search-tips">
         <p class="section-sub">热门入口</p>
-        <p>${["艾琳娜", "技能", "回声之森", "祈愿", "主线"].map((w) => `<a class="chip" href="search.html?q=${encodeURIComponent(w)}">${esc(w)}</a>`).join(" ")}</p>
+        <p>${["艾琳娜", "技能", "回声之森", "战令", "主线"].map((w) => `<a class="chip" href="search.html?q=${encodeURIComponent(w)}">${esc(w)}</a>`).join(" ")}</p>
       </div>`;
     return;
   }

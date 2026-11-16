@@ -2,7 +2,7 @@ const SYSTEMS = window.SYSTEMS || {};
 const app = document.getElementById("app");
 const count = document.getElementById("count");
 
-const TABS = ["祈愿", "战令", "商店", "竞技场", "家园", "雇员", "成就", "收藏"];
+const TABS = ["战令", "商店", "竞技场", "家园", "雇员", "成就", "收藏"];
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -37,13 +37,6 @@ function panel(title, inner, note) {
 }
 function table(headers, rows) {
   return `<div class="table-wrap"><table class="data-table"><thead><tr>${headers.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
-}
-
-function renderGacha() {
-  const g = SYSTEMS.gacha || {};
-  return panel("祈愿卡池", `<div class="grid-cards">${(g.pools || []).map((p) => `<article class="card"><div class="card-body"><h3 class="card-title">${esc(p.name)}</h3><p class="card-meta">祈愿卡池</p></div></article>`).join("")}</div>`, "卡池包含可获取角色与道具；具体概率以游戏内公示为准。")
-    + panel("祈愿点兑换", table(["奖励", "所需祈愿点"], (g.exchange || []).map((r) => `<tr><td>${chips([r])}</td><td class="num">${esc(fmt(r.point))}</td></tr>`).join("")))
-    + panel("SSR 角色兑换", table(["角色", "稀有度", "价格"], (g.ssr || []).map((r) => `<tr><td>${esc(r.charName)}</td><td>${badge(r.rarity === 4 ? "SSR" : r.rarity === 3 ? "SR" : r.rarity === 2 ? "R" : "N")}</td><td>${itemChip(r.currency)} × ${esc(fmt(r.price))}</td></tr>`).join("")));
 }
 
 function renderBattlePass() {
@@ -154,13 +147,13 @@ function renderCollection() {
 }
 
 const RENDER = {
-  "祈愿": renderGacha, "战令": renderBattlePass, "商店": renderShop, "竞技场": renderArena,
+  "战令": renderBattlePass, "商店": renderShop, "竞技场": renderArena,
   "家园": renderHome, "雇员": renderLabor, "成就": renderAchievements, "收藏": renderCollection,
 };
 
 function currentTab() {
   const key = decodeURIComponent((location.hash || "").replace(/^#\/?/, ""));
-  return RENDER[key] ? key : "祈愿";
+  return RENDER[key] ? key : "战令";
 }
 
 function render() {
@@ -168,7 +161,7 @@ function render() {
   count.textContent = "玩法系统";
   app.innerHTML = `
     <h1 class="page-title">玩法系统</h1>
-    <p class="lead">祈愿、战令、商店、竞技场、家园、雇员、成就与收藏等系统资料。</p>
+    <p class="lead">战令、商店、竞技场、家园、雇员、成就与收藏等系统资料。</p>
     <p class="note"><strong>仅供参考：</strong>系统规则与数值整理自游戏内容，部分会随版本/活动调整，以游戏内为准。</p>
     <div class="sys-tabs">${TABS.map((name) => `<a class="tab ${name === tab ? "on" : ""}" href="#${encodeURIComponent(name)}">${esc(name)}</a>`).join("")}</div>
     <div id="sys-body">${RENDER[tab]()}</div>`;
