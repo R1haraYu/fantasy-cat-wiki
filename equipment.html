@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>装备 · 幻想之都的黑猫</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">图鉴</span>
+      <span><strong>幻想之都的黑猫</strong><em>攻略资料站</em></span>
+    </a>
+    <nav class="codex-nav">
+      <a href="index.html">角色</a>
+      <a class="on" href="equipment.html">装备</a>
+      <a href="items.html">道具</a>
+      <a href="monsters.html">怪物</a>
+      <a href="stages.html">关卡</a>
+      <a href="world.html">世界</a>
+      <a href="story.html">剧情</a>
+      <a href="quests.html">任务</a>
+      <a href="systems.html">系统</a>
+      <a href="mechanics.html">机制</a>
+    </nav>
+    <form class="top-search" action="search.html" role="search">
+      <input name="q" type="search" placeholder="搜索" aria-label="全站搜索">
+    </form>
+    <p id="count" class="count"></p>
+  </header>
+  <main class="page">
+    <div id="list-view">
+      <p class="crumbs"><a href="index.html">首页</a> / 装备</p>
+      <h1 class="page-title">装备</h1>
+      <p class="lead">五个部位的全部装备、套装效果与随机词条池。点击单件装备可查看该装备的词条概率。</p>
+      <p class="note"><strong>仅供参考：</strong>装备名称、图标与基础价格为游戏内资料；词条数值为随机池定义，实际掉落属性受随机权重影响，仅供参考。</p>
+      <div class="toolbar" id="tools"></div>
+      <h2 class="section-title">装备列表</h2>
+      <div id="list"></div>
+      <h2 class="section-title">套装效果</h2>
+      <p class="section-sub">同一套装穿戴 2 件 / 5 件时触发对应词条。</p>
+      <div id="sets"></div>
+      <h2 class="section-title">词条标签说明</h2>
+      <p class="section-sub">装备可出现的词条由其标签决定：带「物理」标签的装备才会出现攻击力、暴击率、暴击伤害词条；「精神」标签只对应精神力词条。</p>
+      <div id="tag-guide"></div>
+      <h2 class="section-title">装备词条</h2>
+      <p class="section-sub">装备的随机词条池：标签与效果说明。词条概率因单件装备的可用词条组数量不同而不同，点击单件装备查看。</p>
+      <div id="traits"></div>
+    </div>
+    <div id="detail-view" hidden></div>
+  </main>
+  <footer class="footer">
+    <p>《幻想之都的黑猫》攻略资料站 · 资料整理自游戏内容，仅供参考，请以游戏内实际内容为准。</p>
+    <p>页面：<a href="index.html">角色</a> · <a href="equipment.html">装备</a> · <a href="items.html">道具</a> · <a href="monsters.html">怪物</a> · <a href="stages.html">关卡</a> · <a href="world.html">世界</a> · <a href="story.html">剧情</a> · <a href="quests.html">任务</a> · <a href="systems.html">系统</a> · <a href="mechanics.html">机制</a> · <a href="search.html">搜索</a></p>
+  </footer>
+  <script src="data/meta.js"></script>
+  <script src="data/equipment.js"></script>
+  <script src="data/equipment_sets.js"></script>
+  <script src="data/equipment_traits.js"></script>
+  <script src="data/equipment_tags.js"></script>
+  <script src="page-equipment.js"></script>
+</body>
+</html>
