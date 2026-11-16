@@ -30,22 +30,25 @@
     <p id="count" class="count"></p>
   </header>
   <main class="page">
-    <p class="crumbs"><a href="index.html">首页</a> / 装备</p>
-    <h1 class="page-title">装备</h1>
-    <p class="lead">五个部位的全部装备、套装效果与随机词条池。</p>
-    <p class="note"><strong>仅供参考：</strong>装备名称、图标与基础价格为游戏内资料；词条数值为随机池定义，实际掉落属性受随机权重影响，仅供参考。</p>
-    <div class="toolbar" id="tools"></div>
-    <h2 class="section-title">装备列表</h2>
-    <div id="list"></div>
-    <h2 class="section-title">套装效果</h2>
-    <p class="section-sub">同一套装穿戴 2 件 / 5 件时触发对应词条。</p>
-    <div id="sets"></div>
-    <h2 class="section-title">词条标签说明</h2>
-    <p class="section-sub">装备可出现的词条由其标签决定：带「物理」标签的装备才会出现攻击力、暴击率、暴击伤害词条；「精神」标签只对应精神力词条。</p>
-    <div id="tag-guide"></div>
-    <h2 class="section-title">装备词条</h2>
-    <p class="section-sub">装备的随机词条池：标签、效果说明、数值范围与权重。</p>
-    <div id="traits"></div>
+    <div id="list-view">
+      <p class="crumbs"><a href="index.html">首页</a> / 装备</p>
+      <h1 class="page-title">装备</h1>
+      <p class="lead">五个部位的全部装备、套装效果与随机词条池。点击单件装备可查看该装备的词条概率。</p>
+      <p class="note"><strong>仅供参考：</strong>装备名称、图标与基础价格为游戏内资料；词条数值为随机池定义，实际掉落属性受随机权重影响，仅供参考。</p>
+      <div class="toolbar" id="tools"></div>
+      <h2 class="section-title">装备列表</h2>
+      <div id="list"></div>
+      <h2 class="section-title">套装效果</h2>
+      <p class="section-sub">同一套装穿戴 2 件 / 5 件时触发对应词条。</p>
+      <div id="sets"></div>
+      <h2 class="section-title">词条标签说明</h2>
+      <p class="section-sub">装备可出现的词条由其标签决定：带「物理」标签的装备才会出现攻击力、暴击率、暴击伤害词条；「精神」标签只对应精神力词条。</p>
+      <div id="tag-guide"></div>
+      <h2 class="section-title">装备词条</h2>
+      <p class="section-sub">装备的随机词条池：标签与效果说明。词条概率因单件装备的可用词条组数量不同而不同，点击单件装备查看。</p>
+      <div id="traits"></div>
+    </div>
+    <div id="detail-view" hidden></div>
   </main>
   <footer class="footer">
     <p>《幻想之都的黑猫》攻略资料站 · 资料整理自游戏内容，仅供参考，请以游戏内实际内容为准。</p>

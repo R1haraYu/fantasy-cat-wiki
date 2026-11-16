@@ -2,6 +2,8 @@ const EQUIPMENT = window.EQUIPMENT || [];
 const SETS = window.EQUIP_SETS || [];
 const TRAITS = window.EQUIP_TRAITS || [];
 const META = window.SITE_META || {};
+const listView = document.getElementById("list-view");
+const detailView = document.getElementById("detail-view");
 const listEl = document.getElementById("list");
 const setsEl = document.getElementById("sets");
 const traitsEl = document.getElementById("traits");
@@ -23,7 +25,7 @@ function equipCard(e) {
   const tags = [`<span class="badge soft">${esc(e.slotName)}</span>`];
   if (e.rarityName) tags.push(`<span class="badge ${esc(e.rarityName)}">${esc(e.rarityName)}</span>`);
   if (e.price) tags.push(`<span class="badge soft">${esc(e.price)} 金</span>`);
-  return `<article class="card" data-slot="${esc(e.slotName)}" data-rarity="${esc(e.rarityName)}">
+  return `<article class="card equip-card" data-id="${esc(e.id)}" tabindex="0" role="button" aria-label="查看 ${esc(e.name)} 的词条概率">
     <div class="card-art">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
     <div class="card-body">
       <h3 class="card-title">${esc(e.name)}</h3>
@@ -31,8 +33,19 @@ function equipCard(e) {
       <p class="card-text">${esc(e.text)}</p>
       <div class="card-tags">${tags.join("")}${(e.traitTagsCn || []).map((t) => `<span class="badge soft">${esc(t)}</span>`).join("")}</div>
       ${e.obtain ? `<p class="card-meta">获取：${esc(e.obtain)}</p>` : ""}
+      <p class="card-meta">词条概率：点击查看 →</p>
     </div>
   </article>`;
+}
+
+function bindCards() {
+  listEl.querySelectorAll(".equip-card").forEach((el) => {
+    const go = () => { location.hash = "#/" + el.dataset.id; };
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); go(); }
+    });
+  });
 }
 
 function renderEquip() {
@@ -41,12 +54,13 @@ function renderEquip() {
     if (state.slot && e.slotName !== state.slot) return false;
     if (state.rarity && e.rarityName !== state.rarity) return false;
     if (!q) return true;
-    return `${e.name} ${e.text} ${e.itemId} ${e.slotName}`.toLowerCase().includes(q);
+    return `${e.name} ${e.text} ${e.slotName}`.toLowerCase().includes(q);
   });
   countEl.textContent = `${rows.length} 件装备`;
   listEl.innerHTML = rows.length
     ? `<div class="grid-cards grid-wide">${rows.map(equipCard).join("")}</div>`
     : `<p class="empty">没有符合条件的装备。</p>`;
+  bindCards();
 }
 
 function renderSets() {
@@ -69,12 +83,10 @@ function renderTraits() {
     <td>${esc(t.tagCn)}</td>
     <td>${esc(t.shortDesc)}</td>
     <td>${esc(t.longDesc)}</td>
-    <td class="num">${esc(t.rangeText || "")}</td>
-    <td class="num">${esc(t.weight)}</td>
   </tr>`).join("");
   traitsEl.innerHTML = `<div class="table-wrap"><table class="data-table">
-    <thead><tr><th>编号</th><th>标签</th><th>简述</th><th>效果</th><th>数值范围</th><th>权重</th></tr></thead>
-    <tbody>${rows}</tbody></table></div><p class="stat-note">权重为 0 的词条为固定/特殊效果，不会在随机强化中出现；固定数值类词条（攻击、防御、生命、精神力、精准）按数值显示，暴击率/暴击伤害按百分比显示。</p>`;
+    <thead><tr><th>编号</th><th>标签</th><th>简述</th><th>效果</th></tr></thead>
+    <tbody>${rows}</tbody></table></div><p class="stat-note">套装特效词条在套装效果中展示，不列入本表；词条概率因单件装备的可用词条组数量不同而不同，点击单件装备查看。</p>`;
 }
 
 function options(values, current, label = "全部") {
@@ -89,7 +101,6 @@ tools.innerHTML = `
   <label>部位<select id="f-slot">${options(slots, state.slot)}</select></label>
   <label>稀有度<select id="f-rarity">${options(rarities, state.rarity)}</select></label>
   <label>&nbsp;<button class="query" id="f-reset" type="button" style="max-width:none">重置</button></label>`;
-
 document.getElementById("f-q").addEventListener("input", (e) => { state.q = e.target.value; renderEquip(); });
 document.getElementById("f-slot").addEventListener("change", (e) => { state.slot = e.target.value; renderEquip(); });
 document.getElementById("f-rarity").addEventListener("change", (e) => { state.rarity = e.target.value; renderEquip(); });
@@ -111,10 +122,70 @@ function renderTagGuide() {
     "精神": "精神力",
     "材料": "特殊装备效果（分解获得装备部件）",
   };
-  el.innerHTML = `<div class="table-wrap"><table class="data-table"><thead><tr><th>标签</th><th>可出现的词条</th><th>随机词条</th><th>固定词条</th></tr></thead><tbody>${pools.map((p) => `<tr><td><span class="badge soft">${esc(p.tag)}</span></td><td>${esc(TAG_DESC[p.tag] || p.effects.join("、"))}</td><td class="num">${p.randomCount}</td><td class="num">${p.fixedCount}</td></tr>`).join("")}</tbody></table></div>`;
+  el.innerHTML = `<div class="table-wrap"><table class="data-table"><thead><tr><th>标签</th><th>可出现的词条</th><th>随机词条数</th></tr></thead><tbody>${pools.map((p) => `<tr><td><span class="badge soft">${esc(p.tag)}</span></td><td>${esc(TAG_DESC[p.tag] || "")}</td><td class="num">${p.count}</td></tr>`).join("")}</tbody></table></div><p class="stat-note">套装特效词条只出现在套装效果中，不列入随机词条池。</p>`;
 }
 
-renderEquip();
-renderSets();
-renderTraits();
-renderTagGuide();
+function detailHtml(e) {
+  const tags = [];
+  tags.push(`<span class="badge soft">${esc(e.slotName)}</span>`);
+  if (e.rarityName) tags.push(`<span class="badge ${esc(e.rarityName)}">${esc(e.rarityName)}</span>`);
+  if (e.price) tags.push(`<span class="badge soft">售价 ${esc(e.price)} 金</span>`);
+  (e.traitTagsCn || []).forEach((t) => tags.push(`<span class="badge soft">标签：${esc(t)}</span>`));
+  const rows = (e.traitRoll || []).map((t) => `<tr>
+    <td>${esc(t.tagCn)}</td>
+    <td>${esc(t.shortDesc)}</td>
+    <td>${esc(t.longDesc)}</td>
+    <td class="num">${esc(t.chance)}%</td>
+  </tr>`).join("");
+  return `<p class="crumbs"><a href="index.html">首页</a> / <a href="equipment.html">装备</a> / ${esc(e.name)}</p>
+    <a class="back-link" href="equipment.html">← 返回装备列表</a>
+    <div class="equip-detail-head">
+      <div class="equip-detail-art">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
+      <div class="equip-detail-main">
+        <h1 class="page-title">${esc(e.name)}</h1>
+        <div class="card-tags">${tags.join("")}</div>
+        <p class="card-text">${esc(e.text)}</p>
+        ${e.obtain ? `<p class="card-meta">获取：${esc(e.obtain)}</p>` : ""}
+      </div>
+    </div>
+    <h2 class="section-title">词条概率（鉴定 / 开箱）</h2>
+    <p class="section-sub">该装备可用词条组共 ${esc(e.traitGroups)} 组。单次鉴定从可用组中等概率抽 1 组，再按组内档位概率抽 1 条；表中概率 = 100% ÷ ${esc(e.traitGroups)} × 组内档位概率。强化等级不改变词条。</p>
+    <div class="table-wrap"><table class="data-table">
+      <thead><tr><th>标签</th><th>词条</th><th>效果</th><th>单次概率</th></tr></thead>
+      <tbody>${rows || `<tr><td colspan="4">暂无可用词条</td></tr>`}</tbody>
+    </table></div>
+    <p class="stat-note">概率按当前客户端规则计算：可用词条组等概率、组内按权重抽档位；实际以游戏内鉴定/开箱结果为准。</p>`;
+}
+
+function showDetail(id) {
+  const e = EQUIPMENT.find((x) => String(x.id) === String(id));
+  listView.hidden = true;
+  detailView.hidden = false;
+  if (!e) {
+    detailView.innerHTML = `<p class="empty">没有找到这件装备。</p><a class="back-link" href="equipment.html">← 返回装备列表</a>`;
+    countEl.textContent = "装备详情";
+    return;
+  }
+  countEl.textContent = e.name;
+  detailView.innerHTML = detailHtml(e);
+  window.scrollTo(0, 0);
+}
+
+function showList() {
+  detailView.hidden = true;
+  listView.hidden = false;
+  renderSets();
+  renderTraits();
+  renderTagGuide();
+  renderEquip();
+  window.scrollTo(0, 0);
+}
+
+function route() {
+  const m = (location.hash || "").match(/^#\/(\d+)/);
+  if (m) showDetail(Number(m[1]));
+  else showList();
+}
+
+window.addEventListener("hashchange", route);
+route();
