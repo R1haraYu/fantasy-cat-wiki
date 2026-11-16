@@ -49,10 +49,10 @@ function card(skill) {
   const cd = skill.cooldownValue ? `<span class="badge soft">冷却 ${esc(skill.cooldownValue)}</span>` : "";
   const lt = levelTable(skill);
   return `<article class="card clickable" data-owner="${esc(skill.ownerType)}" data-job="${esc(skill.job)}" data-element="${esc(skill.element)}">
-    <div class="card-art">${skill.icon ? `<img src="${esc(skill.icon)}" alt="" loading="lazy" onerror="this.remove()">` : "?"}</div>
+    <div class="card-art">${skill.icon ? `<img src="${esc(skill.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
     <div class="card-body">
       <h3 class="card-title">${esc(skill.name)}</h3>
-      <p class="card-meta">${esc(skill.ownerName || skill.skillId)}${skill.slot ? " · " + esc(skill.slot) : ""} · <code>${esc(skill.skillId)}</code></p>
+      <p class="card-meta">${esc(skill.ownerName || "技能")}${skill.slot ? " · " + esc(skill.slot) : ""}</p>
       <p class="card-text">${renderDesc(skill)}</p>
       <div class="card-tags">${tags.join("")}${cd}</div>
       <details class="fold" style="margin-top:10px;padding:0 10px">

@@ -503,3 +503,129 @@ body.detail .skill .slot, body.detail .skill h3, body.detail .skill p { grid-col
   .index-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .page-title { font-size: 25px; }
 }
+
+/* ---------- monsters / stages (P2) ---------- */
+.monster-card .index-art img { object-fit: contain; }
+.monster-head { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 10px; }
+.monster-art-box {
+  width: min(220px, 42vw);
+  aspect-ratio: 1;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex: none;
+}
+.monster-art-box img { width: 100%; height: 100%; object-fit: contain; }
+.appear-group { margin: 0 0 12px; }
+.appear-group h4 { margin: 0 0 5px; font-size: 14px; color: var(--accent); letter-spacing: 0.08em; }
+.appear-lines { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.appear-line { font-size: 13px; }
+.appear-line b { color: var(--ink); font-weight: 600; }
+.appear-line em { font-style: normal; color: var(--muted); }
+.stage-list { display: flex; flex-direction: column; gap: 10px; }
+.stage { border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.stage > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+.stage > summary::-webkit-details-marker { display: none; }
+.stage > summary::before { content: "▸"; color: var(--accent); font-size: 12px; }
+.stage[open] > summary::before { content: "▾"; }
+.stage-code { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; min-width: 3.2em; }
+.stage-name { font-weight: 600; }
+.chips-inline { display: inline-flex; flex-wrap: wrap; gap: 5px; margin-left: auto; }
+.stage-body { padding: 0 14px 14px; border-top: 1px dashed var(--line); }
+.stage-desc { white-space: pre-line; color: #4a3d31; font-size: 13.5px; margin: 10px 0; }
+.stage-meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.mini-title { margin: 10px 0 6px; font-size: 13px; color: var(--muted); letter-spacing: 0.12em; font-weight: 600; }
+.lineup { display: flex; flex-wrap: wrap; gap: 6px; }
+.lineup-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 2px 9px 2px 3px;
+  font-size: 12.5px;
+}
+.lineup-chip img { width: 22px; height: 22px; border-radius: 50%; object-fit: contain; background: var(--accent-soft); }
+.lineup-chip em { font-style: normal; color: var(--muted); }
+.rewards { display: flex; flex-wrap: wrap; gap: 6px; }
+.reward-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 8px;
+  padding: 3px 8px;
+  font-size: 12.5px;
+}
+.reward-chip img { width: 26px; height: 26px; object-fit: contain; }
+.reward-chip em { font-style: normal; color: var(--muted); }
+.first-clear { margin: 10px 0 6px; color: var(--accent); font-size: 12.5px; }
+@media (max-width: 760px) {
+  .monster-head { flex-direction: column; }
+  .chips-inline { margin-left: 0; width: 100%; }
+  .stage > summary { padding: 9px 11px; }
+  .stage-body { padding: 0 11px 12px; }
+}
+
+/* ---------- world & story (P3) ---------- */
+.city-card { align-items: flex-start; }
+.city-art {
+  flex: none;
+  width: 84px;
+  height: 84px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.city-art img { width: 100%; height: 100%; object-fit: contain; }
+.story-chapter { margin: 16px 0 8px; font-size: 15px; color: var(--accent); letter-spacing: 0.08em; }
+.npc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 8px;
+}
+.npc-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  min-width: 0;
+}
+.npc-avatar {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--accent-soft);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+.npc-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+.npc-body { min-width: 0; display: flex; flex-direction: column; line-height: 1.35; }
+.npc-body b { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.npc-body em { font-style: normal; font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.db-entry .stage-body { padding-top: 2px; }
+@media (max-width: 760px) {
+  .npc-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .city-art { width: 64px; height: 64px; }
+}

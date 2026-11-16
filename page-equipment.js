@@ -24,10 +24,10 @@ function equipCard(e) {
   if (e.price) tags.push(`<span class="badge soft">${esc(e.price)} 金</span>`);
   if (e.isGacha) tags.push(`<span class="badge soft">祈愿</span>`);
   return `<article class="card" data-slot="${esc(e.slotName)}" data-rarity="${esc(e.rarityName)}">
-    <div class="card-art">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : "?"}</div>
+    <div class="card-art">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
     <div class="card-body">
       <h3 class="card-title">${esc(e.name)}</h3>
-      <p class="card-meta">${esc(e.itemId)} · ${esc(e.slotName)}${e.price ? " · 售价 " + esc(e.price) : ""}</p>
+      <p class="card-meta">${esc(e.slotName)}${e.price ? " · 售价 " + esc(e.price) : ""}</p>
       <p class="card-text">${esc(e.text)}</p>
       <div class="card-tags">${tags.join("")}${(e.traitTags || []).filter((t) => t.trim()).map((t) => `<span class="badge soft">${esc(t.trim())}</span>`).join("")}</div>
       ${e.obtain ? `<p class="card-meta">获取：${esc(e.obtain)}</p>` : ""}
@@ -52,7 +52,7 @@ function renderEquip() {
 function renderSets() {
   setsEl.innerHTML = SETS.map((s) => `
     <article class="card">
-      <div class="card-art">${s.icon ? `<img src="${esc(s.icon)}" alt="" loading="lazy" onerror="this.remove()">` : "?"}</div>
+      <div class="card-art">${s.icon ? `<img src="${esc(s.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
       <div class="card-body">
         <h3 class="card-title">${esc(s.title)}</h3>
         <p class="card-meta">2 件套：${esc(s.trait2.short || s.trait2.text)}</p>

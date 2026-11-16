@@ -20,10 +20,10 @@ function itemCard(item) {
   if (item.rarityName) tags.push(`<span class="badge ${esc(item.rarityName)}">${esc(item.rarityName)}</span>`);
   if (item.maxAmount) tags.push(`<span class="badge soft">上限 ${esc(item.maxAmount)}</span>`);
   return `<article class="card" data-group="${esc(item.group)}" data-rarity="${esc(item.rarityName)}">
-    <div class="card-art">${item.icon ? `<img src="${esc(item.icon)}" alt="" loading="lazy" onerror="this.remove()">` : "?"}</div>
+    <div class="card-art">${item.icon ? `<img src="${esc(item.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
     <div class="card-body">
       <h3 class="card-title">${esc(item.name)}</h3>
-      <p class="card-meta">${esc(item.itemId)} · ${esc(item.group)}${item.catalog ? " · " + esc(item.catalog) : ""}</p>
+      <p class="card-meta">${esc(item.group)}${item.catalog ? " · " + esc(item.catalog) : ""}</p>
       <p class="card-text">${esc(item.text)}</p>
       <div class="card-tags">${tags.join("")}</div>
       ${item.obtain ? `<p class="card-meta">获取：${esc(item.obtain)}</p>` : ""}

@@ -29,7 +29,7 @@ function renderDesc(text, groups) {
     if (!value) return;
     html = html.replaceAll(`{$T${index + 1}}`, `<span class="vals">${escapeText(value)}</span>`);
   });
-  return html;
+  return html.replace(/\{\$T\d+\}/g, "");
 }
 
 function escapeText(text) {
@@ -181,7 +181,7 @@ function renderDetail(id) {
     ["种族", c.race],
     ["年龄", c.age ? `${c.age} 岁` : ""],
     ["身高", c.height ? `${c.height} cm` : ""],
-    ["体重", c.weight ? `${c.weight} kg` : "???"],
+    ["体重", c.weight ? `${c.weight} kg` : "—"],
     ["星座", c.constellation],
     ["生日", c.birthday],
     ["所属城市", x.city],
@@ -261,7 +261,7 @@ function renderDetail(id) {
         <div class="pane" data-pane="growth">
           <section class="panel">
             <h2>战斗数据</h2>
-            <p class="stat-note">以下为客户端表解析数据，仅供参考，可能随版本调整。</p>
+            <p class="stat-note">以下数据仅供参考，可能随版本调整。</p>
             <ul class="kv-list">
               ${battleItems.map(([k, v]) => `<li><b>${escapeText(k)}</b><span>${escapeText(v)}</span></li>`).join("") || `<li><span>暂无数据</span></li>`}
             </ul>
