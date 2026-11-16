@@ -84,7 +84,7 @@ function options(values, current, label = "全部") {
 }
 
 const slots = (META.slots || []).map((s) => s.name);
-const rarities = ["N", "R", "SR", "SSR"];
+const rarities = ["R", "SR", "SSR"];
 tools.innerHTML = `
   <label>搜索<input id="f-q" value="${esc(state.q)}" placeholder="名称 / 描述 / 部位" autocomplete="off"></label>
   <label>部位<select id="f-slot">${options(slots, state.slot)}</select></label>
