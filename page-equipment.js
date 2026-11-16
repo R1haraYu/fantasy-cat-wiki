@@ -23,7 +23,6 @@ function equipCard(e) {
   const tags = [`<span class="badge soft">${esc(e.slotName)}</span>`];
   if (e.rarityName) tags.push(`<span class="badge ${esc(e.rarityName)}">${esc(e.rarityName)}</span>`);
   if (e.price) tags.push(`<span class="badge soft">${esc(e.price)} 金</span>`);
-  if (e.isGacha) tags.push(`<span class="badge soft">祈愿</span>`);
   return `<article class="card" data-slot="${esc(e.slotName)}" data-rarity="${esc(e.rarityName)}">
     <div class="card-art">${e.icon ? `<img src="${esc(e.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
     <div class="card-body">
@@ -75,7 +74,7 @@ function renderTraits() {
   </tr>`).join("");
   traitsEl.innerHTML = `<div class="table-wrap"><table class="data-table">
     <thead><tr><th>编号</th><th>标签</th><th>简述</th><th>效果</th><th>数值范围</th><th>权重</th></tr></thead>
-    <tbody>${rows}</tbody></table></div>`;
+    <tbody>${rows}</tbody></table></div><p class="stat-note">权重为 0 的词条为固定/特殊效果，不会在随机强化中出现；固定数值类词条（攻击、防御、生命、精神力、精准）按数值显示，暴击率/暴击伤害按百分比显示。</p>`;
 }
 
 function options(values, current, label = "全部") {
@@ -112,7 +111,7 @@ function renderTagGuide() {
     "精神": "精神力",
     "材料": "特殊装备效果（分解获得装备部件）",
   };
-  el.innerHTML = `<div class="table-wrap"><table class="data-table"><thead><tr><th>标签</th><th>可出现的词条</th><th>词条数量</th></tr></thead><tbody>${pools.map((p) => `<tr><td><span class="badge soft">${esc(p.tag)}</span></td><td>${esc(TAG_DESC[p.tag] || p.effects.join("、"))}</td><td class="num">${p.count}</td></tr>`).join("")}</tbody></table></div>`;
+  el.innerHTML = `<div class="table-wrap"><table class="data-table"><thead><tr><th>标签</th><th>可出现的词条</th><th>随机词条</th><th>固定词条</th></tr></thead><tbody>${pools.map((p) => `<tr><td><span class="badge soft">${esc(p.tag)}</span></td><td>${esc(TAG_DESC[p.tag] || p.effects.join("、"))}</td><td class="num">${p.randomCount}</td><td class="num">${p.fixedCount}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
 renderEquip();

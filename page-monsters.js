@@ -56,7 +56,7 @@ function renderList() {
   app.innerHTML = `
     <h1 class="page-title">怪物</h1>
     <p class="lead">全部 ${MONSTERS.length} 种怪物的属性、技能与出现地点；点击怪物查看详情。</p>
-    <p class="note"><strong>仅供参考：</strong>属性与技能整理自游戏内容，并按出现关卡标出等级；实际数值以游戏内为准。</p>
+    <p class="note"><strong>仅供参考：</strong>属性与技能整理自游戏内容，并按出现关卡标出等级；本页仅收录已实装内容，未实装怪物不展示；实际数值以游戏内为准。</p>
     <div class="toolbar">
       <label>搜索<input id="f-q" value="${esc(state.q)}" placeholder="名称 / 代号" autocomplete="off"></label>
       <label>类型<select id="f-type">${options([["boss", "首领"], ["normal", "普通"]].map((x) => x[1]), state.type === "boss" ? "首领" : state.type === "normal" ? "普通" : "")}</select></label>

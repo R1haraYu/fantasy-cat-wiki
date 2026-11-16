@@ -4,7 +4,7 @@ const resultsEl = document.getElementById("results");
 const hintEl = document.getElementById("hint");
 const countEl = document.getElementById("count");
 
-const TYPE_ORDER = ["角色", "技能", "装备", "道具", "怪物", "关卡", "世界", "剧情", "资料库", "任务", "状态", "系统"];
+const TYPE_ORDER = ["角色", "装备", "道具", "怪物", "关卡", "世界", "剧情", "资料库", "任务", "系统"];
 
 function esc(text) {
   return String(text == null ? "" : text)
@@ -25,7 +25,7 @@ function render(q) {
     resultsEl.innerHTML = `
       <div class="search-tips">
         <p class="section-sub">热门入口</p>
-        <p>${["艾琳娜", "技能", "回声之森", "战令", "主线"].map((w) => `<a class="chip" href="search.html?q=${encodeURIComponent(w)}">${esc(w)}</a>`).join(" ")}</p>
+        <p>${["艾琳娜", "装备", "回声之森", "战令", "主线"].map((w) => `<a class="chip" href="search.html?q=${encodeURIComponent(w)}">${esc(w)}</a>`).join(" ")}</p>
       </div>`;
     return;
   }

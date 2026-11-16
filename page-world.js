@@ -55,9 +55,9 @@ function pointsFold() {
   return `<details class="fold">
     <summary>探索点与宝箱（${WORLD.points.length}）</summary>
     <div class="fold-body">
-      <p class="note">世界探索中的宝箱、修复点与采集点，部分点位随主线/困难/支线进度解锁。</p>
-      <div class="table-wrap"><table class="data-table"><thead><tr><th>类型</th><th>需求素材</th><th>奖励</th></tr></thead><tbody>
-        ${WORLD.points.map((p) => `<tr><td>${esc(p.type)}</td><td>${p.request.length ? p.request.map((x) => `${esc(x.name)}×${esc(x.amount)}`).join("、") : "无需素材"}</td><td><div class="rewards">${p.rewards.length ? p.rewards.map(rewardChip).join("") : "无物品奖励"}</div></td></tr>`).join("")}
+      <p class="note">世界探索中的宝箱、修复点与采集点，部分点位随主线/困难/支线进度解锁；点位名称与位置未包含在数据中，具体位置以游戏内地图为准。</p>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>序号</th><th>类型</th><th>需求素材</th><th>奖励</th></tr></thead><tbody>
+        ${WORLD.points.map((p, i) => `<tr><td class="num">${i + 1}</td><td>${esc(p.type)}</td><td>${p.request.length ? p.request.map((x) => `${esc(x.name)}×${esc(x.amount)}`).join("、") : "无需素材"}</td><td><div class="rewards">${p.rewards.length ? p.rewards.map(rewardChip).join("") : "无物品奖励"}</div></td></tr>`).join("")}
       </tbody></table></div>
     </div>
   </details>`;
