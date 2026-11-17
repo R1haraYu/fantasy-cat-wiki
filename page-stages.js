@@ -117,7 +117,7 @@ function render() {
 
   if (show("委托")) {
     const list = STAGES.resource.filter((s) => matchesFilter(s));
-    html += `<p class="section-sub">冒险者委托关卡未配置体力消耗，具体进入条件以游戏内为准。</p>`;
+    html += `<p class="section-sub">冒险者委托关卡未配置体力消耗。</p>`;
     ["寻书之旅", "探宝之旅", "淬炼之旅"].forEach((cat) => {
       const group = list.filter((s) => s.catalog === cat);
       if (group.length) html += stageGroup(`冒险者委托 · ${cat}`, group);

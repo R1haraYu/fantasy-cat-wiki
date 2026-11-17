@@ -454,13 +454,42 @@ body.detail .skill .slot, body.detail .skill h3, body.detail .skill p { grid-col
 .vals { color: #14568f; font-weight: 600; }
 .bio { margin: 0; white-space: pre-line; }
 .stat-note { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
-.skin-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-.skin-item { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--card); }
-.skin-item .skin-art { aspect-ratio: 1; background: var(--accent-soft); display: grid; place-items: center; }
-.skin-item .skin-art img { width: 100%; height: 100%; object-fit: cover; }
-.skin-item .skin-body { padding: 8px 10px; }
-.skin-item h4 { margin: 0 0 2px; font-size: 14px; }
-.skin-item p { margin: 0; color: var(--muted); font-size: 12px; }
+.skin-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; align-items: stretch; }
+.skin-card {
+  display: flex; flex-direction: column;
+  position: relative; border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  background: #fffaf2; box-shadow: 0 1px 0 rgba(80, 50, 20, 0.04);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.skin-card:hover { transform: translateY(-2px); box-shadow: 0 7px 18px rgba(80, 50, 20, .12); border-color: #cdb99d; }
+.skin-art {
+  position: relative; aspect-ratio: 1 / 1; overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #f7ead6 0%, #efe0c8 65%, #e7d5ba 100%);
+}
+.skin-art img { width: 100%; height: 100%; object-fit: cover; object-position: center 16%; transition: transform .35s ease; }
+.skin-card:hover .skin-art img { transform: scale(1.035); }
+.skin-tag {
+  position: absolute; top: 8px; left: 8px; z-index: 2;
+  border-radius: 999px; padding: 2px 8px; font-size: 11px; line-height: 1.6;
+  color: #fff8ea; background: rgba(47, 39, 31, .78); border: 1px solid rgba(255, 248, 234, .35);
+  backdrop-filter: blur(2px);
+}
+.skin-body { flex: 1 1 auto; padding: 9px 11px 11px; }
+.skin-body h4 { margin: 0; font-size: 15px; line-height: 1.4; }
+.skin-body p {
+  margin: 4px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+@media (max-width: 520px) {
+  .skin-list { grid-template-columns: 1fr; gap: 10px; }
+  .skin-card { display: grid; grid-template-columns: 92px minmax(0, 1fr); align-items: stretch; }
+  .skin-art { aspect-ratio: auto; min-height: 92px; }
+  .skin-art img { object-position: center 20%; }
+  .skin-body { padding: 9px 11px; }
+  .skin-body h4 { font-size: 14px; }
+  .skin-body p { font-size: 12px; -webkit-line-clamp: 3; }
+  .skin-tag { top: 6px; left: 6px; font-size: 10px; padding: 1px 6px; }
+}
 .kv-list { margin: 0; padding: 0; list-style: none; }
 .kv-list li { display: flex; gap: 10px; padding: 5px 0; border-bottom: 1px dashed rgba(120, 84, 42, 0.16); font-size: 13.5px; }
 .kv-list li:last-child { border-bottom: 0; }
@@ -592,6 +621,7 @@ body.detail .skill .slot, body.detail .skill h3, body.detail .skill p { grid-col
   overflow: hidden;
 }
 .city-art img { width: 100%; height: 100%; object-fit: contain; }
+.city-initial { font-family: "Palatino Linotype", "Songti SC", serif; font-size: 30px; color: #8c6a4a; opacity: .65; }
 .story-chapter { margin: 16px 0 8px; font-size: 15px; color: var(--accent); letter-spacing: 0.08em; }
 .npc-grid {
   display: grid;

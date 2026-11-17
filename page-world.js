@@ -24,7 +24,7 @@ function rewardChip(r) {
 function cityCard(c) {
   const tags = [c.size, c.citizen, c.rating].filter((t) => t && !/^[?？。\s]+$/.test(t)).map((t) => badge(t));
   return `<article class="card city-card">
-    <div class="city-art">${c.logo ? `<img src="${esc(c.logo)}" alt="" loading="lazy" onerror="this.remove()">` : c.areaIcon ? `<img src="${esc(c.areaIcon)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
+    <div class="city-art">${c.logo ? `<img src="${esc(c.logo)}" alt="" loading="lazy" onerror="this.remove()">` : c.areaIcon ? `<img src="${esc(c.areaIcon)}" alt="" loading="lazy" onerror="this.remove()">` : `<span class="city-initial">${esc((c.name || "?").slice(0, 1))}</span>`}</div>
     <div class="card-body">
       <h3 class="card-title">${esc(c.name)}</h3>
       <p class="card-meta">${esc(c.homeName)}</p>

@@ -193,10 +193,17 @@ function renderDetail(id) {
   const skillIcons = x.skillIcons || {};
   const skills = (c.skills || []).map((skill) => skillBlock(skill, skillIcons[skill.slot])).join("");
   const skinHtml = skins.length
-    ? `<div class="skin-list">${skins.map((s) => `<figure class="skin-item">
-        <div class="skin-art">${s.avatar ? `<img src="${escapeText(s.avatar)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</div>
-        <div class="skin-body"><h4>${escapeText(s.name)}</h4><p>${escapeText(s.desc || "")}</p></div>
-      </figure>`).join("")}</div>`
+    ? `<div class="skin-list">${skins.map((s) => {
+        const tag = s.unlockMethod === 0 ? "初始" : s.unlockMethod === 1 ? `${s.unlockParam || ""}★突破` : s.unlockMethod === 3 ? "特殊" : "";
+        const art = s.bust || s.avatar || "";
+        return `<figure class="skin-card">
+          <div class="skin-art">
+            ${art ? `<img src="${escapeText(art)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+            ${tag ? `<span class="skin-tag">${escapeText(tag)}</span>` : ""}
+          </div>
+          <figcaption class="skin-body"><h4>${escapeText(s.name)}</h4>${s.desc ? `<p>${escapeText(s.desc)}</p>` : ""}</figcaption>
+        </figure>`;
+      }).join("")}</div>`
     : `<p class="empty">暂无皮肤数据。</p>`;
   const hasSkins = skins.length > 0;
   const battleItems = [

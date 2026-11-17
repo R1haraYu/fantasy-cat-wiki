@@ -84,7 +84,6 @@ function equipCard(e) {
       <p class="card-text">${esc(e.text)}</p>
       <div class="card-tags">${tags.join("")}${(e.traitTagsCn || []).map((t) => `<span class="badge soft">${esc(t)}</span>`).join("")}</div>
       ${e.obtain ? `<p class="card-meta">获取：${esc(e.obtain)}</p>` : ""}
-      <p class="card-meta">词条概率</p>
     </div>
   </article>`;
 }

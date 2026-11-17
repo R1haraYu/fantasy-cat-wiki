@@ -89,7 +89,7 @@ function listHtml(rows) {
 }
 
 function detailHtml(m) {
-  if (!m) return `<p class="map-detail-empty">点击地图标记或右侧列表查看详情。</p>`;
+  if (!m) return `<p class="map-detail-empty">选择点位查看详情。</p>`;
   return `<span class="map-detail-kind">${esc(markerKindLabel(m.kind))}</span>
     <h3>${esc(m.name)}</h3>
     <p class="map-detail-meta">${esc(m.meta)}</p>
