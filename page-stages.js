@@ -87,7 +87,6 @@ function render() {
   let html = `
     <h1 class="page-title">关卡</h1>
     <p class="lead">主线、困难、支线、活动与冒险者委托的全部关卡：消耗、敌人阵容、掉落与首通奖励。</p>
-    <p class="note"><strong>仅供参考：</strong>关卡掉落概率为游戏内配置值，实际以游戏内结算为准；活动关卡开放时间以游戏内活动为准；不同难度/类型关卡可能共用编号（如 1-1），请以类型和名称区分。</p>
     <div class="toolbar">
       <label>搜索<input id="f-q" value="${esc(state.q)}" placeholder="关卡名 / 编号 / 描述" autocomplete="off"></label>
       <label>类型<select id="f-type"><option value="">全部</option>${kinds.map((k) => `<option value="${k}" ${k === state.type ? "selected" : ""}>${k}</option>`).join("")}</select></label>

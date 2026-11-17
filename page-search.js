@@ -1,10 +1,10 @@
-const INDEX = window.SEARCH_INDEX || [];
+const INDEX = (window.SEARCH_INDEX || []).concat(window.MAP_SEARCH_INDEX || []);
 const qInput = document.getElementById("q");
 const resultsEl = document.getElementById("results");
 const hintEl = document.getElementById("hint");
 const countEl = document.getElementById("count");
 
-const TYPE_ORDER = ["角色", "装备", "道具", "怪物", "关卡", "世界", "剧情", "资料库", "任务", "系统"];
+const TYPE_ORDER = ["角色", "装备", "道具", "怪物", "关卡", "世界", "地图", "剧情", "资料库", "任务", "系统"];
 
 function esc(text) {
   return String(text == null ? "" : text)

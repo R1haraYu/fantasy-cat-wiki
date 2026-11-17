@@ -83,7 +83,6 @@ function render() {
   app.innerHTML = `
     <h1 class="page-title">剧情</h1>
     <p class="lead">主线、困难、支线、活动剧情的回顾，以及游戏内资料库（地理建筑 / 人物组织 / 冒险回顾 / 历史人文）。</p>
-    <p class="note"><strong>仅供参考：</strong>剧情梗概与资料库内容整理自游戏内容，可能包含未在当前版本开放的内容。</p>
     ${dramaSection()}
     <h2 class="section-title">资料库</h2>
     ${databankSection()}`;

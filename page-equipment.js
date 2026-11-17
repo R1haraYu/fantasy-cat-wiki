@@ -84,7 +84,7 @@ function equipCard(e) {
       <p class="card-text">${esc(e.text)}</p>
       <div class="card-tags">${tags.join("")}${(e.traitTagsCn || []).map((t) => `<span class="badge soft">${esc(t)}</span>`).join("")}</div>
       ${e.obtain ? `<p class="card-meta">获取：${esc(e.obtain)}</p>` : ""}
-      <p class="card-meta">词条概率：点击查看 →</p>
+      <p class="card-meta">词条概率</p>
     </div>
   </article>`;
 }
@@ -137,7 +137,7 @@ function renderTraits() {
   </tr>`).join("");
   traitsEl.innerHTML = `<div class="table-wrap"><table class="data-table">
     <thead><tr><th>编号</th><th>标签</th><th>简述</th><th>效果</th></tr></thead>
-    <tbody>${rows}</tbody></table></div><p class="stat-note">套装特效词条在套装效果中展示，不列入本表；词条概率因单件装备的可用词条组数量不同而不同，点击单件装备查看。</p>`;
+    <tbody>${rows}</tbody></table></div>`;
 }
 
 function options(values, current, label = "全部") {
@@ -173,7 +173,7 @@ function renderTagGuide() {
     "精神": "精神力",
     "材料": "特殊装备效果（分解获得装备部件）",
   };
-  el.innerHTML = `<div class="table-wrap"><table class="data-table"><thead><tr><th>标签</th><th>可出现的词条</th><th>随机词条数</th></tr></thead><tbody>${pools.map((p) => `<tr><td><span class="badge soft">${esc(p.tag)}</span></td><td>${esc(TAG_DESC[p.tag] || "")}</td><td class="num">${p.count}</td></tr>`).join("")}</tbody></table></div><p class="stat-note">套装特效词条只出现在套装效果中，不列入随机词条池。</p>`;
+  el.innerHTML = `<div class="table-wrap"><table class="data-table"><thead><tr><th>标签</th><th>可出现的词条</th><th>随机词条数</th></tr></thead><tbody>${pools.map((p) => `<tr><td><span class="badge soft">${esc(p.tag)}</span></td><td>${esc(TAG_DESC[p.tag] || "")}</td><td class="num">${p.count}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
 function detailHtml(e) {
@@ -207,7 +207,7 @@ function detailHtml(e) {
       <thead><tr><th>标签</th><th>词条</th><th>效果</th><th>单次概率</th></tr></thead>
       <tbody>${rows || `<tr><td colspan="4">暂无可用词条</td></tr>`}</tbody>
     </table></div>
-    <p class="stat-note">概率按当前客户端规则计算：可用词条组等概率、组内按权重抽档位；实际以游戏内鉴定/开箱结果为准。</p>`;
+    `;
 }
 
 function showDetail(id) {

@@ -58,7 +58,6 @@ function render() {
   app.innerHTML = `
     <h1 class="page-title">任务</h1>
     <p class="lead">主线任务、支线任务、委托板与角色升阶任务的目标与奖励。</p>
-    <p class="note"><strong>仅供参考：</strong>任务内容整理自游戏内容，正式服任务可能随版本调整。</p>
     <div class="toolbar" style="grid-template-columns:minmax(0,1fr)">
       <label>搜索任务<input id="q" type="search" value="${esc(query)}" placeholder="任务名 / 目标 / 描述" autocomplete="off"></label>
     </div>

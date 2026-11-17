@@ -55,8 +55,7 @@ function renderList() {
   const elements = [...new Set(MONSTERS.map((m) => m.element))];
   app.innerHTML = `
     <h1 class="page-title">怪物</h1>
-    <p class="lead">全部 ${MONSTERS.length} 种怪物的属性、技能与出现地点；点击怪物查看详情。</p>
-    <p class="note"><strong>仅供参考：</strong>属性与技能整理自游戏内容，并按出现关卡标出等级；本页仅收录已实装内容，未实装怪物不展示；实际数值以游戏内为准。</p>
+    <p class="lead">全部 ${MONSTERS.length} 种怪物的属性、技能与出现地点。</p>
     <div class="toolbar">
       <label>搜索<input id="f-q" value="${esc(state.q)}" placeholder="名称 / 代号" autocomplete="off"></label>
       <label>类型<select id="f-type">${options([["boss", "首领"], ["normal", "普通"]].map((x) => x[1]), state.type === "boss" ? "首领" : state.type === "normal" ? "普通" : "")}</select></label>
@@ -126,7 +125,6 @@ function renderDetail(id) {
         </p>
       </div>
     </div>
-    <p class="note"><strong>仅供参考：</strong>属性为初始等级的基础值，成长值为每级增量；实际战斗数值受关卡等级影响，以游戏内为准。</p>
     <h2 class="section-title">属性</h2>
     <div class="table-wrap"><table class="data-table"><tbody>
       ${rows.filter(([, v]) => v !== "" && v != null).map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td class="num">${esc(fmt(v))}</td></tr>`).join("")}

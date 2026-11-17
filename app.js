@@ -140,7 +140,7 @@ function renderList() {
     list.map((item) => `<option value="${escapeText(item)}" ${item === current ? "selected" : ""}>${escapeText(item)}</option>`).join("");
   app.innerHTML = `
     <h1 class="page-title">角色</h1>
-    <p class="lead">《幻想之都的黑猫》角色图鉴：点击角色查看属性、技能、皮肤与好感度资料。属性与战斗数据均标注为仅供参考。</p>
+    <p class="lead">《幻想之都的黑猫》角色图鉴：属性、技能、皮肤与好感度资料。</p>
     <form class="filter-panel" id="filters">
       <div class="filter-grid">
         <label>名字<input class="search" name="q" value="${escapeText(q)}" autocomplete="off"></label>
@@ -227,7 +227,6 @@ function renderDetail(id) {
         <div class="pane on" data-pane="data">
           <section class="panel">
             <h2>基础属性</h2>
-            <p class="stat-note">本页属性为基础值按等级、星级推算的参考数据，仅供参考，实际数值以游戏内为准。</p>
             <div class="level-line">
               <label for="lv">等级</label>
               <input id="lv" type="number" min="1" max="80" value="1">
@@ -265,7 +264,6 @@ function renderDetail(id) {
         ${(hasBattle || hasSkins) ? `<div class="pane" data-pane="growth">
           ${hasBattle ? `<section class="panel">
             <h2>战斗数据</h2>
-            <p class="stat-note">以下数据仅供参考，可能随版本调整。</p>
             <ul class="kv-list">
               ${battleItems.map(([k, v]) => `<li><b>${escapeText(k)}</b><span>${escapeText(v)}</span></li>`).join("") || `<li><span>暂无数据</span></li>`}
             </ul>

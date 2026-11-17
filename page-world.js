@@ -55,7 +55,6 @@ function pointsFold() {
   return `<details class="fold">
     <summary>探索点与宝箱（${WORLD.points.length}）</summary>
     <div class="fold-body">
-      <p class="note">世界探索中的宝箱、修复点与采集点，部分点位随主线/困难/支线进度解锁；点位名称与位置未包含在数据中，具体位置以游戏内地图为准。</p>
       <div class="table-wrap"><table class="data-table"><thead><tr><th>序号</th><th>类型</th><th>需求素材</th><th>奖励</th></tr></thead><tbody>
         ${WORLD.points.map((p, i) => `<tr><td class="num">${i + 1}</td><td>${esc(p.type)}</td><td>${p.request.length ? p.request.map((x) => `${esc(x.name)}×${esc(x.amount)}`).join("、") : "无需素材"}</td><td><div class="rewards">${p.rewards.length ? p.rewards.map(rewardChip).join("") : "无物品奖励"}</div></td></tr>`).join("")}
       </tbody></table></div>
@@ -68,7 +67,6 @@ function render() {
   app.innerHTML = `
     <h1 class="page-title">世界</h1>
     <p class="lead">大陆上的城市与区域、城镇 NPC，以及世界探索中的宝箱与采集点。</p>
-    <p class="note"><strong>仅供参考：</strong>世界信息整理自游戏内容；解锁条件与点位奖励以游戏内实际版本为准。</p>
     <h2 class="section-title">城市</h2>
     <div class="grid-cards grid-wide">${WORLD.cities.map(cityCard).join("")}</div>
     <h2 class="section-title">区域</h2>

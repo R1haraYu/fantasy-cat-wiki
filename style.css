@@ -687,3 +687,18 @@ body.detail .skill .slot, body.detail .skill h3, body.detail .skill p { grid-col
   .equip-detail-head { flex-direction: column; }
   .equip-detail-art { width: 120px; }
 }
+
+
+/* ---------- responsive top navigation (added with map page) ---------- */
+@media (max-width: 860px) {
+  .topbar { gap: 10px 12px; align-items: center; }
+  .topbar .brand { flex: 1 1 auto; }
+  .topbar .top-search { flex: 1 1 100%; }
+  .topbar .top-search input { width: 100%; }
+  .topbar .codex-nav {
+    order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto;
+    gap: 16px; padding: 2px 0 5px; -webkit-overflow-scrolling: touch;
+  }
+  .topbar .codex-nav::-webkit-scrollbar { display: none; }
+  .topbar .count { order: 4; flex: 1 0 100%; text-align: right; }
+}

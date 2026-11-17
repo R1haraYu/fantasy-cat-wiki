@@ -33,7 +33,7 @@ function kv(rows) {
   return `<ul class="kv-list">${rows.map(([k, v]) => `<li><b>${esc(k)}</b><span>${esc(v)}</span></li>`).join("")}</ul>`;
 }
 function panel(title, inner, note) {
-  return `<section class="panel"><h2>${esc(title)}</h2>${note ? `<p class="stat-note">${esc(note)}</p>` : ""}${inner}</section>`;
+  return `<section class="panel"><h2>${esc(title)}</h2>${note ? `` : ""}${inner}</section>`;
 }
 function table(headers, rows) {
   return `<div class="table-wrap"><table class="data-table"><thead><tr>${headers.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
@@ -166,7 +166,6 @@ function render() {
   app.innerHTML = `
     <h1 class="page-title">玩法系统</h1>
     <p class="lead">战令、商店、竞技场、家园、雇员、成就与收藏等系统资料。</p>
-    <p class="note"><strong>仅供参考：</strong>系统规则与数值整理自游戏内容，部分会随版本/活动调整，以游戏内为准。</p>
     <div class="sys-tabs">${TABS.map((name) => `<a class="tab ${name === tab ? "on" : ""}" href="#${encodeURIComponent(name)}">${esc(name)}</a>`).join("")}</div>
     <div id="sys-body">${RENDER[tab]()}</div>`;
   window.scrollTo(0, 0);
