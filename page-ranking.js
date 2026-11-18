@@ -97,7 +97,6 @@
   }
   function render() {
     activeRows = outputData()[activeOutput];
-    document.getElementById("count").textContent = `${DATA.counts.characters} 名角色 · 1 个榜单`;
     $("#app").innerHTML = `
       <section class="rank-hero">
         <div>
@@ -107,11 +106,6 @@
         </div>
         <div class="rank-hero-side">
           ${champion()}
-          <div class="rank-stats">
-            <div class="rank-stat"><b>${DATA.counts.characters}</b><span>已实装</span></div>
-            <div class="rank-stat"><b>1</b><span>榜单类别</span></div>
-            <div class="rank-stat"><b>${esc(DATA.version.replace(/^V/, ""))}</b><span>数据版本</span></div>
-          </div>
         </div>
       </section>
       ${outputTabs()}
