@@ -1,0 +1,209 @@
+/* Shared rank math + turn-based battle engine.
+ * Works in the browser (window.RankCore) and in Node (module.exports).
+ */
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  else root.RankCore = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+  "use strict";
+  const POW_MAX = 1000;
+
+  function roundEven(n) {
+    const scaled = Math.round(n * 1000);
+    const whole = Math.trunc(scaled / 1000);
+    const frac = ((scaled % 1000) + 1000) % 1000;
+    if (frac > 500 || (frac === 500 && Math.abs(whole % 2) === 1)) return whole + 1;
+    return whole;
+  }
+  function grownInt(base, grow, steps) {
+    return base + roundEven((grow || 0) * steps);
+  }
+
+  // In-game panel formula:
+  // HP/ATK: (initial + rounded growth) * (star + rarity)
+  // DEF/MIND: (initial + rounded growth) * star
+  // CRIT/CRITDMG/SPD: initial + rounded growth
+  function panelStats(row, level = 80) {
+    const steps = Math.max(0, level - 1);
+    const star = Number((row.StarLevel_f || [1])[0] ?? 1);
+    const rarity = Number((row.RarityLevel_f || [])[Math.max(0, Number(row.InitialRarityLevel || 1) - 1)] ?? 0);
+    const hpAtk = star + rarity;
+    return {
+      hp: roundEven(grownInt(row.Hp, row.Hp_f, steps) * hpAtk),
+      atk: roundEven(grownInt(row.Atk, row.Atk_f, steps) * hpAtk),
+      defense: roundEven(grownInt(row.Def, row.Def_f, steps) * star),
+      mind: roundEven(grownInt(row.Mind, row.Mind_f, steps) * star),
+      spd: grownInt(row.Spd, row.Spd_f, steps),
+      crit: grownInt(row.CrtChance, row.CrtChance_f, steps),
+      critDmg: grownInt(row.CrtRatio, row.CrtRatio_f, steps),
+    };
+  }
+
+  function bossAt(base, level) {
+    return {
+      name: base.name, enemyId: base.enemyId, level,
+      hp: Math.round(base.hp + base.hpF * (level - 1)),
+      def: Math.round(base.def + base.defF * (level - 1)),
+      atk: Math.round(base.atk + base.atkF * (level - 1)),
+      spd: base.spd,
+      element: base.element,
+    };
+  }
+
+  function hitDamage(atk, ratio, crit, defense, reduction = 0) {
+    const mitigation = 1145 + 3.5 * Math.max(0, defense);
+    return Math.max(0, atk * ratio * crit * (1000 / mitigation) * (1 - Math.max(0, Math.min(.95, reduction))));
+  }
+
+  const ELEMENT_CHAIN = [1, 2, 3, 4, 0, -1, -1];
+  function elementMultiplier(attacker, defender, advantage = 1.25) {
+    if (attacker == null || defender == null) return 1;
+    if (Number(attacker) === 6 || Number(defender) === 6) return 1;
+    if (ELEMENT_CHAIN[Number(attacker)] === Number(defender)) return advantage;
+    if (ELEMENT_CHAIN[Number(defender)] === Number(attacker)) return 1;
+    return 1;
+  }
+
+  function battleOutput(character, boss, count) {
+    const b = character.base;
+    const states = Array.from({ length: count }, (_, i) => ({
+      index: i, maxHp: boss.hp, hp: boss.hp, def: boss.def,
+      alive: true, effects: [], dots: new Map(),
+    }));
+    const skills = new Map((character.skills || []).map((s) => [s.slot, s]));
+    const playerEffects = [];
+    const aliveStates = () => states.filter((s) => s.alive);
+    const firstAlive = () => states.find((s) => s.alive) || null;
+    const sumEffect = (list, stat) => (list || []).filter((e) => e.remaining > 0 && e.stat === stat).reduce((n, e) => n + Number(e.value || 0), 0);
+    const applyEffect = (list, effect) => {
+      const duration = Number(effect.duration || 0);
+      if (!duration) return;
+      const idx = list.findIndex((e) => e.stat === effect.stat && e.name === effect.name && e.remaining > 0);
+      if (idx >= 0) list.splice(idx, 1);
+      list.push({ ...effect, remaining: duration });
+    };
+    const tickEffects = (list, dt) => {
+      for (const e of list) e.remaining -= dt;
+      for (let i = list.length - 1; i >= 0; i -= 1) if (list[i].remaining <= 0) list.splice(i, 1);
+    };
+    let effective = 0, dot = 0, direct = 0;
+    let killed = false, killTime = null, time = 0, tp = 100, pow = 0, actionIndex = 0;
+    function currentDef(st) { return st.def * (1 - Math.max(0, Math.min(.95, sumEffect(st.effects, "defPct")))); }
+    function snapshot() {
+      const atk = b.atk * (1 + sumEffect(playerEffects, "atkPct"));
+      const critChance = Math.max(0, Math.min(.95, b.crit + sumEffect(playerEffects, "crtPct")));
+      const critDmg = b.critDmg + sumEffect(playerEffects, "cdPct") + sumEffect(playerEffects, "critDmgPct");
+      const speed = Math.max(1, b.spd * (1 + sumEffect(playerEffects, "spdPct")));
+      return { atk, critMult: 1 + critChance * (critDmg - 1), speed, dmgDealt: Math.max(0, 1 + sumEffect(playerEffects, "dmgDealtPct")) };
+    }
+    function applyDamage(st, amount, kind) {
+      if (!st || !st.alive || amount <= 0) return;
+      const use = Math.min(amount, st.hp);
+      effective += use;
+      if (kind === "direct") direct += use; else if (kind === "dot") dot += use;
+      st.hp -= use;
+      if (st.hp <= 0) {
+        st.hp = 0; st.alive = false; st.dots.clear(); st.effects.length = 0;
+        if (states.every((x) => !x.alive)) { killed = true; killTime = time; }
+      }
+    }
+    function tickDots(dt) {
+      for (const st of states) {
+        if (!st.alive) continue;
+        for (const [key, ds] of st.dots) {
+          const useTime = Math.min(dt, ds.remaining);
+          if (useTime <= 0) continue;
+          const taken = Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct"));
+          applyDamage(st, st.maxHp * ds.rate * useTime * taken * elementMultiplier(character.element, boss.element), "dot");
+          ds.remaining -= useTime;
+          if (ds.remaining <= 0) st.dots.delete(key);
+          if (!st.alive) break;
+        }
+      }
+    }
+    function chooseAction() {
+      if (pow >= POW_MAX && skills.has("S")) return "S";
+      const first = firstAlive();
+      const targetHp = first ? first.hp / first.maxHp * 100 : 0;
+      for (const r of character.tactics?.rules || []) {
+        if (r.first && actionIndex !== 0) continue;
+        if (r.turn && actionIndex + 1 < Number(r.turn)) continue;
+        if (r.time && time + 1e-9 < Number(r.time)) continue;
+        if (r.selfHp) {
+          const p = 100;
+          if (r.selfHp.op === "Less" && !(p < r.selfHp.value)) continue;
+          if (r.selfHp.op === "Greater" && !(p > r.selfHp.value)) continue;
+        }
+        if (r.targetHp) {
+          if (r.targetHp.op === "Less" && !(targetHp < r.targetHp.value)) continue;
+          if (r.targetHp.op === "Greater" && !(targetHp > r.targetHp.value)) continue;
+        }
+        if (r.action === "A" && tp >= 20 && skills.has("A")) return "A";
+        if (r.action === "B" && tp >= 30 && skills.has("B")) return "B";
+      }
+      if (!(character.tactics?.rules || []).length) {
+        if (tp >= 20 && skills.has("A")) return "A";
+        if (tp >= 30 && skills.has("B")) return "B";
+      }
+      return "normal";
+    }
+    while (!killed && time < 90) {
+      const p0 = snapshot();
+      const interval = chargeTime(p0.speed);
+      const at = time + interval;
+      if (at > 90 + 1e-9) break;
+      tickDots(interval);
+      if (killed) break;
+      tickEffects(playerEffects, interval);
+      for (const st of states) if (st.alive) tickEffects(st.effects, interval);
+      time = at;
+      tp = Math.min(200, tp + interval * 5);
+      const choice = chooseAction();
+      const skill = choice === "normal" ? null : skills.get(choice);
+      const p = snapshot();
+      if (skill) {
+        const targets = skill.targets === "all" ? aliveStates() : ([firstAlive()].filter(Boolean));
+        if (Number(skill.damage || 0) > 0) {
+          for (const st of targets) {
+            const dmg = hitDamage(p.atk, Number(skill.damage), p.critMult, currentDef(st)) * p.dmgDealt * Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct")) * elementMultiplier(character.element, boss.element);
+            applyDamage(st, dmg, "direct");
+          }
+        }
+        if (!killed) {
+          for (const effect of skill.effects || []) {
+            if (effect.target === "self" || effect.target === "all_allies") applyEffect(playerEffects, effect);
+            else {
+              const ts = effect.target === "enemy_all" ? aliveStates() : (targets[0]?.alive ? [targets[0]] : []);
+              for (const st of ts) applyEffect(st.effects, effect);
+            }
+          }
+          if (Number(skill.defDown || 0) > 0 && Number(skill.defDownDuration || 0) > 0) {
+            for (const st of targets) applyEffect(st.effects, { name: "破防", stat: "defPct", value: Number(skill.defDown), duration: Number(skill.defDownDuration) });
+          }
+          if (skill.dot && Number(skill.dot.rate || 0) > 0 && Number(skill.dot.duration || 0) > 0) {
+            const ds = skill.dot.targets === "all" ? aliveStates() : (targets[0]?.alive ? [targets[0]] : []);
+            for (const st of ds) st.dots.set(String(skill.slot), { rate: Number(skill.dot.rate), remaining: Number(skill.dot.duration) });
+          }
+        }
+        if (choice === "A") tp -= 20;
+        else if (choice === "B") tp -= 30;
+        else if (choice === "S") pow = 0;
+      }
+      if (killed) break;
+      pow = Math.min(POW_MAX, pow + 150);
+      actionIndex += 1;
+    }
+    return { dps: +(effective / Math.max(1, killTime || time)).toFixed(1), effective: Math.round(effective), killed, killTime: killTime ? +killTime.toFixed(2) : null, direct: Math.round(direct), dot: Math.round(dot) };
+  }
+
+  function chargeTime(spd) {
+    if (spd <= 0) return 1.6666666;
+    if (spd <= 100) return 100 / spd;
+    if (spd <= 160) return 100 / (100 + (spd - 100) * 1.66);
+    if (spd <= 200) return 100 / (200 + (spd - 160) * .1);
+    return .41666666;
+  }
+
+  return { POW_MAX, roundEven, grownInt, panelStats, bossAt, hitDamage, elementMultiplier, chargeTime, battleOutput };
+});

@@ -3,10 +3,11 @@ const CHAR_EXTRA = window.CHAR_EXTRA || {};
 const app = document.getElementById("app");
 const count = document.getElementById("count");
 
-const elements = [...new Set(roster.map((c) => c.element))];
-const jobs = [...new Set(roster.map((c) => c.job))];
+const visibleRoster = roster.filter((c) => !c.hidden);
+const elements = [...new Set(visibleRoster.map((c) => c.element))];
+const jobs = [...new Set(visibleRoster.map((c) => c.job))];
 const RARITY_ORDER = ["N", "R", "SR", "SSR"];
-const rarities = RARITY_ORDER.filter((name) => roster.some((c) => c.rarity === name));
+const rarities = RARITY_ORDER.filter((name) => visibleRoster.some((c) => c.rarity === name));
 
 function portrait(id, kind) {
   return `img/${kind}/${id}.png`;
@@ -78,6 +79,10 @@ function grownInt(base, grow, steps) {
   return base + roundEven((grow || 0) * steps);
 }
 
+function grownStat(base, grow, steps, coefficient) {
+  return roundEven(base + roundEven((grow || 0) * steps * coefficient));
+}
+
 function atLevel(stats, level, rarity, star) {
   const steps = Math.max(0, level - 1);
   const starScale = STAR_SCALE[star] ?? 1;
@@ -127,7 +132,7 @@ function renderList() {
   const element = params.get("el") || "";
   const job = params.get("job") || "";
   const rarity = params.get("r") || "";
-  const filtered = roster.filter((c) => {
+  const filtered = visibleRoster.filter((c) => {
     if (q && !`${c.name}${c.element}${c.job}${c.race}`.includes(q)) return false;
     if (element && c.element !== element) return false;
     if (job && c.job !== job) return false;
