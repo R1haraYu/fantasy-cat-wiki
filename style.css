@@ -732,3 +732,9 @@ body.detail .skill .slot, body.detail .skill h3, body.detail .skill p { grid-col
   .topbar .codex-nav::-webkit-scrollbar { display: none; }
   .topbar .count { order: 4; flex: 1 0 100%; text-align: right; }
 }
+
+
+/* Character index additions */
+.index-card{position:relative}
+.index-card .hidden-badge{position:absolute;top:8px;right:8px;z-index:2;padding:3px 7px;border-radius:999px;background:#8f6b70;color:#fff7e8;font:600 10px/1 "Microsoft YaHei";letter-spacing:.08em}
+.card-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:120px;background:#ded2bf;color:#7c6a50;font:700 42px/1 Georgia,serif}

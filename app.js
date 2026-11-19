@@ -3,14 +3,19 @@ const CHAR_EXTRA = window.CHAR_EXTRA || {};
 const app = document.getElementById("app");
 const count = document.getElementById("count");
 
-const visibleRoster = roster.filter((c) => !c.hidden);
+const includeHidden = new URLSearchParams(location.search).get('hidden') === '1';
+const visibleRoster = includeHidden ? roster : roster.filter((c) => !c.hidden);
 const elements = [...new Set(visibleRoster.map((c) => c.element))];
 const jobs = [...new Set(visibleRoster.map((c) => c.job))];
 const RARITY_ORDER = ["N", "R", "SR", "SSR"];
 const rarities = RARITY_ORDER.filter((name) => visibleRoster.some((c) => c.rarity === name));
 
+const CHAR_ASSETS = window.CHARACTER_ASSETS || {};
 function portrait(id, kind) {
-  return `img/${kind}/${id}.png`;
+  const asset = CHAR_ASSETS[String(id)] || {};
+  if (kind === "icon") return asset.icon || (asset.skins && asset.skins[0] && asset.skins[0].avatar) || "";
+  if (kind === "bust") return (asset.skins && asset.skins[0] && (asset.skins[0].bust || asset.skins[0].avatar)) || "";
+  return "";
 }
 
 function extraOf(id) {
@@ -119,8 +124,9 @@ const BASE_ROWS = [
 
 function cardMarkup(c) {
   const sub = `${c.rarity} · ${c.element}`;
-  return `<a class="index-card" href="#/${c.id}">
-    <span class="index-art"><img src="${portrait(c.id, "icon")}" alt="" loading="lazy" onerror="this.remove()"></span>
+  return `<a class="index-card" href="character_detail.html?id=${c.id}">
+    ${c.hidden ? '<span class="hidden-badge">未实装</span>' : ''}
+    <span class="index-art">${portrait(c.id, "icon") ? `<img src="${escapeText(portrait(c.id, "icon"))}" alt="" loading="lazy" onerror="this.remove()">` : `<span class="card-placeholder">${escapeText(c.name.slice(0, 1))}</span>`}</span>
     <span class="index-name">${escapeText(c.name)}</span>
     <span class="index-sub">${escapeText(sub)}</span>
   </a>`;
@@ -177,6 +183,12 @@ function renderDetail(id) {
   if (!c) {
     document.body.classList.remove("detail");
     app.innerHTML = `<p class="empty">没有这个角色。</p><a class="back" href="#/">返回图鉴</a>`;
+    return;
+  }
+  if (c.hidden) {
+    document.body.classList.remove("detail");
+    app.innerHTML = `<p class="empty">该角色尚未实装，图鉴暂不展示。</p><a class="back" href="#/">返回图鉴</a>`;
+    count.textContent = "";
     return;
   }
   const x = extraOf(c.id);
