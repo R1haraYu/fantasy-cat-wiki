@@ -67,7 +67,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
 /* skill controls */
 .skill-ctl{display:flex;align-items:center;gap:4px}.skill-ctl button{width:19px;height:19px;border:1px solid rgba(176,138,78,.35);border-radius:5px;background:transparent;color:#8b6a39;font:12px/1 Georgia;cursor:pointer;line-height:1;padding:0}.skill-ctl button:disabled{opacity:.3;cursor:default}.skill-ctl span{min-width:29px;text-align:center;font:700 8px/1 Georgia;color:#8b6a39}
 /* skin */
-.skin-showcase{position:relative;height:320px;border:1px solid var(--line);border-radius:11px;background:linear-gradient(160deg,rgba(255,250,240,.6),rgba(238,228,210,.55));overflow:hidden;margin-bottom:9px}.skin-showcase img{position:absolute;inset:5px 44px;width:calc(100% - 88px);height:calc(100% - 10px);object-fit:contain;object-position:center}.skin-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:28px;height:38px;border:1px solid rgba(176,138,78,.3);border-radius:7px;background:rgba(255,250,240,.72);color:#8b6a39;font:22px/1 Georgia;cursor:pointer}.skin-arrow.left{left:8px}.skin-arrow.right{right:8px}.skin-caption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.skin-caption b{font:600 11px/1.4 "Microsoft YaHei";color:var(--green2)}.skin-caption small{font-size:8px;color:var(--muted)}.skin-desc{font-size:8px;line-height:1.7;color:#746d5e;margin:0 0 8px;padding:0 2px}.skin-dots{display:flex;gap:5px;justify-content:center}.skin-dots button{width:18px;height:4px;border:0;border-radius:99px;background:#d8cbb6;cursor:pointer;padding:0}.skin-dots button.on{background:#a9864f}
+.skin-showcase{position:relative;height:500px;border:1px solid var(--line);border-radius:11px;background:linear-gradient(160deg,rgba(255,250,240,.6),rgba(238,228,210,.55));overflow:hidden;margin-bottom:9px}.skin-showcase img{position:absolute;inset:5px 44px;width:calc(100% - 88px);height:calc(100% - 10px);object-fit:contain;object-position:center}.skin-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:28px;height:38px;border:1px solid rgba(176,138,78,.3);border-radius:7px;background:rgba(255,250,240,.72);color:#8b6a39;font:22px/1 Georgia;cursor:pointer}.skin-arrow.left{left:8px}.skin-arrow.right{right:8px}.skin-caption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.skin-caption b{font:600 11px/1.4 "Microsoft YaHei";color:var(--green2)}.skin-caption small{font-size:8px;color:var(--muted)}.skin-desc{font-size:8px;line-height:1.7;color:#746d5e;margin:0 0 8px;padding:0 2px}.skin-dots{display:flex;gap:5px;justify-content:center}.skin-dots button{width:18px;height:4px;border:0;border-radius:99px;background:#d8cbb6;cursor:pointer;padding:0}.skin-dots button.on{background:#a9864f}
 /* spine */
 .spine-box{position:absolute;z-index:3;left:50%;transform:translateX(-50%);pointer-events:none}.spine-full{width:640px;height:940px;bottom:-3%}.spine-mini{width:420px;height:560px;bottom:3%}.spine-box canvas{display:block;max-width:100%;max-height:100%}
 .fallback{transition:opacity .3s}
@@ -79,7 +79,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
 /* 右侧舞台皮肤切换 */
 .stage-skin-switch{position:absolute;top:116px;right:22px;z-index:7;display:flex;gap:4px;padding:4px;background:rgba(24,39,30,.72);border:1px solid rgba(225,202,160,.3);border-radius:9px;backdrop-filter:blur(5px)}.stage-skin-switch[hidden]{display:none}.stage-skin-switch button{border:0;background:transparent;color:#cfc0a3;font:8px/1 "Microsoft YaHei";letter-spacing:.05em;padding:6px 8px;border-radius:6px;cursor:pointer}.stage-skin-switch button.on{background:#e4d0a7;color:#21362a}
 @media(max-width:1250px){.app{grid-template-columns:180px minmax(0,1fr) 46%}.content{padding:16px 18px}.roleline{gap:12px;font-size:7px}.hero-main .tags{max-width:300px}}
-@media(max-width:900px){.app{grid-template-columns:150px minmax(0,1fr) 45%}.side{padding:16px 10px}.nav button{padding:10px 8px;font-size:10px}.title-logo{width:120px}.content{padding:12px}.stats{grid-template-columns:1fr}.stats:after{display:none}.statcol+.statcol{border-left:0;padding-left:0;padding-top:9px;border-top:1px solid var(--line);margin-top:6px}.roleline{position:static!important;display:flex;flex-wrap:wrap;margin-top:8px}.bottom-info{grid-template-columns:1fr}.skin-showcase{height:260px}}
+@media(max-width:900px){.app{grid-template-columns:150px minmax(0,1fr) 45%}.side{padding:16px 10px}.nav button{padding:10px 8px;font-size:10px}.title-logo{width:120px}.content{padding:12px}.stats{grid-template-columns:1fr}.stats:after{display:none}.statcol+.statcol{border-left:0;padding-left:0;padding-top:9px;border-top:1px solid var(--line);margin-top:6px}.roleline{position:static!important;display:flex;flex-wrap:wrap;margin-top:8px}.bottom-info{grid-template-columns:1fr}.skin-showcase{height:390px}}
 .mode-switch[hidden]{display:none!important}.stage-skin-switch[hidden]{display:none!important}
 .skill-icon-fallback{width:37px;height:37px;border-radius:7px;background:rgba(233,220,199,.65);border:1px solid rgba(176,138,78,.22)}
 
@@ -151,12 +151,13 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
   .skill img{width:30px;height:30px}
   .skill-ctl{gap:2px}
   .skill-ctl button{width:18px;height:18px}
-  .skin-showcase{height:260px}
+  .skin-showcase{height:390px}
   .voice-line{font-size:9px}
   .switch-dialog{width:94vw}
   .switch-grid{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));padding:10px 12px 14px}
 }
 @media(min-width:1700px){.app{grid-template-columns:214px minmax(0,1fr) clamp(600px,37.5vw,760px)}}
+#skinPreviewRender{position:fixed;left:-10000px;top:0;width:640px;height:940px;overflow:hidden;pointer-events:none;z-index:-1}
 </style><style>
 .char-placeholder{display:flex;align-items:center;justify-content:center;background:rgba(221,207,183,.65);border:1px dashed rgba(140,112,70,.45);color:#766244;font:700 28px/1 Georgia,serif;letter-spacing:.05em}
 .stage-char.static{object-fit:contain;object-position:center bottom;height:88%;bottom:0}
@@ -238,12 +239,13 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
   .skill img{width:30px;height:30px}
   .skill-ctl{gap:2px}
   .skill-ctl button{width:18px;height:18px}
-  .skin-showcase{height:260px}
+  .skin-showcase{height:390px}
   .voice-line{font-size:9px}
   .switch-dialog{width:94vw}
   .switch-grid{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));padding:10px 12px 14px}
 }
 @media(min-width:1700px){.app{grid-template-columns:214px minmax(0,1fr) clamp(600px,37.5vw,760px)}}
+#skinPreviewRender{position:fixed;left:-10000px;top:0;width:640px;height:940px;overflow:hidden;pointer-events:none;z-index:-1}
 </style>
 </head>
 <body>
@@ -291,6 +293,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
   <div class="stage-copy"><div><small id="stageId">ID · —</small><strong id="stageName">—</strong><span id="stageMeta"></span></div><div class="seal"><span><b id="sealRarity">—</b><span id="sealElement">—</span></span></div></div>
  </aside>
 </div>
+<div id="skinPreviewRender" aria-hidden="true"></div>
 <div class="switch-modal" id="switchModal" hidden>
   <div class="switch-dialog" role="dialog" aria-modal="true" aria-label="切换角色">
     <div class="switch-head"><b>切换角色</b><button type="button" id="switchClose" aria-label="关闭">×</button></div>
@@ -298,6 +301,6 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
     <div class="switch-grid" id="switchList"></div>
   </div>
 </div>
-<script src="data.js?v=16"></script><script src="data/characters_extra.js?v=16"></script><script src="data/character_assets.js?v=16"></script><script src="data/characters_voice.js?v=16"></script><script src="vendor/spine-player.min.js"></script><script src="character_detail_generic.js?v=16"></script>
+<script src="data.js?v=17"></script><script src="data/characters_extra.js?v=17"></script><script src="data/character_assets.js?v=17"></script><script src="data/characters_voice.js?v=17"></script><script src="vendor/spine-player.min.js"></script><script src="character_detail_generic.js?v=17"></script>
 </body></html>
 </html>
