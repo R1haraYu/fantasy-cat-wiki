@@ -156,6 +156,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
   .switch-dialog{width:94vw}
   .switch-grid{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));padding:10px 12px 14px}
 }
+@media(min-width:1700px){.app{grid-template-columns:214px minmax(0,1fr) clamp(600px,37.5vw,760px)}}
 </style><style>
 .char-placeholder{display:flex;align-items:center;justify-content:center;background:rgba(221,207,183,.65);border:1px dashed rgba(140,112,70,.45);color:#766244;font:700 28px/1 Georgia,serif;letter-spacing:.05em}
 .stage-char.static{object-fit:contain;object-position:center bottom;height:88%;bottom:0}
@@ -242,13 +243,14 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
   .switch-dialog{width:94vw}
   .switch-grid{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));padding:10px 12px 14px}
 }
+@media(min-width:1700px){.app{grid-template-columns:214px minmax(0,1fr) clamp(600px,37.5vw,760px)}}
 </style>
 </head>
 <body>
 <div class="app">
  <aside class="side">
   <div class="side-actions"><a href="index.html">← 返回图鉴</a><button type="button" id="switchCharacter">切换角色</button></div>
-  <div class="brand"><img class="gameicon" src="img/omega/game_icon.jpg" alt=""><img class="title-logo" src="img/omega/game_title.png" alt="幻想之都的黑猫"><small>CHARACTER ARCHIVE / WIKI</small></div>
+  <div class="brand"><img class="gameicon" src="img/brand/game_icon.jpg" alt=""><img class="title-logo" src="img/brand/game_title.png" alt="幻想之都的黑猫"><small>CHARACTER ARCHIVE / WIKI</small></div>
   <nav class="nav"><button class="on" data-tab="info"><i>▤</i>资料</button><button data-tab="skin"><i>✦</i>皮肤</button><button data-tab="voice"><i>♪</i>语音</button></nav>
   <div class="side-foot"><b id="sideName">—</b><span id="sideMeta">—</span><br>数据来源：游戏内角色数据</div>
  </aside>
@@ -278,7 +280,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
   </div>
  </main>
  <aside class="stage">
-  <img class="stage-bg" src="img/omega/bg.png" alt="">
+  <img class="stage-bg" src="img/bg/character_stage.png" alt="">
   <div class="stage-top"><span>HERO PORTRAIT / 2.0</span><span class="live"><i></i><span id="stageLive">SPINE / LIVE 2D</span></span></div>
   <div class="mode-switch" id="modeSwitch"><button class="on" data-mode="full">立绘</button><button data-mode="mini">Q版</button></div>
   <div class="stage-skin-switch" id="stageSkinSwitch"></div>
