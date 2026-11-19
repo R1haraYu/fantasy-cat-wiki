@@ -210,8 +210,22 @@
   function canSpine() { return !!(window.spine && typeof window.spine.SpinePlayer === 'function'); }
   const SPINE_ROOT = 'assets/spine/models/';
   function spinePath(base) { return base && base.indexOf('assets/') === 0 ? base : SPINE_ROOT + base + '/' + base; }
+  function applyModelSkin(player) {
+    if (!player || !player.skeleton || !player.skeleton.data || player.__skinApplied) return;
+    try {
+      const names = (player.skeleton.data.skins || []).map((s) => s.name);
+      // Game models use the full "normal" skin; the runtime defaults to an incomplete "default" skin.
+      const preferred = ['normal', 'default', 'hexie'].find((n) => names.includes(n));
+      if (preferred) {
+        player.skeleton.setSkinByName(preferred);
+        player.skeleton.setSlotsToSetupPose();
+      }
+      player.__skinApplied = true;
+    } catch (e) {}
+  }
   function playLoop(player) {
     if (!player || !player.skeleton || !player.skeleton.data) return false;
+    applyModelSkin(player);
     const name = firstAnimation(player);
     if (!name) return false;
     try {
@@ -390,6 +404,7 @@
       if (token !== skinPreviewToken) { clearInterval(timer); return; }
       const player = skinPreviewPlayer;
       if (!player || !player.skeleton || !player.skeleton.data) { if (++tries > 50) clearInterval(timer); return; }
+      applyModelSkin(player);
       const name = firstAnimation(player);
       if (name) player.setAnimation(name, true);
       if (typeof player.play === 'function') player.play();
