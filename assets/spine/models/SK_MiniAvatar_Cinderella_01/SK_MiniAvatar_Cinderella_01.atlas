@@ -1,0 +1,414 @@
+SK_MiniAvatar_Cinderella_01.png
+size:1024,1024
+filter:Linear,Linear
+1
+bounds:501,570,172,232
+offsets:0,0,172,233
+rotate:270
+2
+bounds:749,551,98,200
+offsets:0,1,98,203
+rotate:270
+3
+bounds:116,546,102,189
+offsets:0,0,103,189
+rotate:90
+4
+bounds:896,438,66,124
+offsets:0,2,66,126
+rotate:90
+5
+bounds:571,497,85,190
+rotate:90
+○中发
+bounds:903,734,147,111
+rotate:90
+○右大腿
+bounds:71,570,37,62
+offsets:2,3,41,67
+○右小腿
+bounds:692,561,29,42
+offsets:3,19,35,64
+○左大腿
+bounds:147,334,34,63
+offsets:2,2,38,67
+rotate:270
+○左小腿
+bounds:436,323,29,41
+offsets:3,19,34,63
+○身体（模板）
+bounds:897,386,65,88
+offsets:2,2,70,93
+rotate:90
+上衣
+bounds:211,346,63,62
+offsets:2,2,67,67
+rotate:90
+刘海
+bounds:300,441,78,91
+offsets:0,0,87,91
+rotate:270
+刷子1
+bounds:102,376,35,82
+offsets:4,4,43,90
+rotate:90
+刷子2
+bounds:635,700,32,56
+offsets:4,4,40,64
+前手 受击
+bounds:608,287,31,19
+offsets:4,4,39,27
+前手 握拳向前袖子 攻击
+bounds:67,376,31,27
+offsets:4,4,39,35
+rotate:90
+前手 攻击
+bounds:111,614,18,23
+offsets:4,4,26,31
+rotate:90
+前手腕 受击
+bounds:137,289,26,23
+offsets:4,4,34,31
+rotate:90
+右后翘毛
+bounds:601,314,39,93
+offsets:0,1,39,95
+rotate:270
+右大臂
+bounds:406,474,40,42
+offsets:4,4,48,50
+rotate:90
+右小臂
+bounds:829,314,31,37
+offsets:4,4,39,45
+rotate:90
+右手 握拳向前袖子
+bounds:970,291,30,26
+offsets:4,4,38,34
+右手 普通侧掌
+bounds:886,857,20,24
+offsets:4,4,28,32
+右手 魔法
+bounds:514,287,28,22
+offsets:4,4,36,30
+右手 魔法向前袖子
+bounds:297,290,29,26
+offsets:4,4,37,34
+右手掌
+bounds:443,291,18,24
+offsets:4,4,26,32
+右手握拳
+bounds:656,561,26,15
+offsets:4,4,34,23
+右手腕
+bounds:994,356,23,28
+offsets:4,4,32,36
+右袖花边
+bounds:170,303,24,36
+offsets:4,4,32,44
+rotate:90
+右长鬓上
+bounds:532,315,47,57
+offsets:1,1,48,61
+rotate:180
+右长鬓下
+bounds:4,469,106,163
+offsets:1,0,108,163
+右鞋子
+bounds:160,471,28,28
+offsets:3,3,34,34
+右鬓发
+bounds:785,445,109,124
+offsets:1,1,110,126
+rotate:90
+叶子
+bounds:4,640,201,115
+offsets:1,0,202,115
+后手 受击
+bounds:97,295,32,20
+offsets:4,4,40,28
+后手 向前袖子 攻击
+bounds:932,291,30,26
+offsets:4,4,38,34
+后手 攻击
+bounds:4,478,18,23
+offsets:4,4,26,31
+后手腕 受击
+bounds:648,284,25,23
+offsets:4,4,33,31
+嘴 待机
+bounds:886,817,9,4
+offsets:4,4,17,12
+嘴 思考
+bounds:675,740,7,2
+offsets:4,4,15,10
+嘴 摸头1
+bounds:886,829,8,5
+offsets:4,4,16,13
+嘴 摸头2
+bounds:725,616,17,14
+offsets:4,4,25,22
+嘴 普通
+bounds:930,729,13,3
+offsets:5,4,21,12
+嘴 特殊1
+bounds:914,877,13,4
+offsets:4,4,21,12
+嘴 犯困
+bounds:720,740,6,2
+offsets:4,4,14,10
+嘴 眯眼笑
+bounds:886,842,15,7
+offsets:4,3,23,13
+嘴C 摸头2
+bounds:905,728,17,14
+offsets:4,4,25,22
+围裙
+bounds:452,577,69,38
+offsets:1,2,72,43
+rotate:90
+头
+bounds:886,889,131,130
+offsets:4,4,139,138
+rotate:90
+头饰
+bounds:490,423,107,43
+offsets:4,4,115,51
+头饰蝴蝶结
+bounds:882,308,42,39
+offsets:4,4,50,47
+左后上一层
+bounds:907,510,113,219
+offsets:3,0,118,222
+左大臂
+bounds:4,313,32,43
+offsets:4,4,40,51
+rotate:90
+左小臂
+bounds:472,310,28,34
+offsets:4,15,38,53
+rotate:90
+左手 向前袖子
+bounds:858,461,30,26
+offsets:4,4,38,34
+左手 普通侧掌
+bounds:85,541,20,22
+offsets:4,4,28,30
+左手 魔法
+bounds:415,628,29,18
+offsets:4,4,37,26
+左手 魔法反
+bounds:374,626,33,20
+offsets:4,4,41,28
+左手掌
+bounds:769,523,18,24
+offsets:4,4,26,32
+左手握拳
+bounds:140,420,25,14
+offsets:4,4,33,22
+左手腕
+bounds:664,362,23,27
+offsets:4,4,31,35
+rotate:90
+左袖花边
+bounds:55,294,21,34
+offsets:4,4,29,42
+rotate:90
+左长鬓上
+bounds:278,395,52,107
+rotate:90
+左长鬓下
+bounds:612,447,55,144
+offsets:0,0,56,144
+rotate:90
+左鞋子
+bounds:572,294,29,27
+offsets:47,24,79,54
+左鬓发
+bounds:66,415,99,124
+offsets:0,0,100,124
+干净特效
+bounds:4,763,287,257
+offsets:4,4,295,265
+扶手前
+bounds:534,664,93,92
+offsets:4,4,101,100
+扶手后
+bounds:456,474,91,88
+offsets:4,4,99,96
+掸子
+bounds:194,471,81,98
+offsets:4,4,89,106
+rotate:90
+施法特效 攻击
+bounds:905,660,58,53
+offsets:4,4,66,61
+rotate:90
+桶把手
+bounds:555,474,61,45
+rotate:90
+椅背座
+bounds:741,647,156,154
+offsets:4,4,164,162
+水桶前
+bounds:4,353,52,52
+offsets:4,4,60,60
+水桶后
+bounds:4,413,52,56
+offsets:4,4,60,64
+水桶晃动特效
+bounds:396,411,86,55
+offsets:4,4,94,63
+水桶砸地特效
+bounds:701,323,56,21
+offsets:4,4,64,29
+水桶蝴蝶结
+bounds:261,289,27,28
+offsets:4,4,35,36
+rotate:90
+汗滴
+bounds:827,385,68,62
+offsets:4,4,76,70
+rotate:90
+灰尘特效
+bounds:213,670,75,85
+offsets:4,4,83,93
+眉毛 待机
+bounds:786,630,66,9
+offsets:4,4,74,17
+眉毛 摸头1
+bounds:334,294,67,6
+offsets:4,4,75,14
+眉毛 犯困
+bounds:334,294,67,6
+offsets:4,4,75,14
+眉毛 摸头2
+bounds:168,290,67,5
+offsets:4,4,75,13
+眉毛 普通
+bounds:681,291,66,6
+offsets:4,4,74,14
+眉毛 眯眼笑
+bounds:681,291,66,6
+offsets:4,4,74,14
+眉毛 特殊1
+bounds:850,293,66,7
+offsets:4,4,74,15
+眼皮 摸头1
+bounds:850,281,59,4
+offsets:4,4,67,12
+眼皮 摸头2
+bounds:675,750,57,6
+offsets:4,4,65,14
+眼皮 普通 副本 2
+bounds:4,282,59,4
+offsets:4,4,67,12
+眼皮 普通
+bounds:4,282,59,4
+offsets:4,4,67,12
+眼皮 普通 副本
+bounds:4,282,59,4
+offsets:4,4,67,12
+眼皮 特殊1
+bounds:334,282,59,4
+offsets:4,4,67,12
+眼皮 犯困
+bounds:764,457,58,5
+offsets:4,4,66,13
+rotate:90
+眼皮1
+bounds:1008,291,57,5
+offsets:4,4,65,13
+rotate:90
+眼皮2
+bounds:71,282,56,4
+offsets:4,4,64,12
+眼睑 待机
+bounds:351,308,84,11
+offsets:4,4,92,19
+眼睑 摸头1
+bounds:490,380,97,35
+眼睑 摸头2
+bounds:1009,529,84,11
+offsets:4,4,92,19
+rotate:90
+眼睑 普通 副本 2
+bounds:785,353,89,24
+offsets:4,4,97,32
+眼睑 普通
+bounds:785,353,89,24
+offsets:4,4,97,32
+眼睑 普通 副本
+bounds:785,353,89,24
+offsets:4,4,97,32
+眼睑 特殊1
+bounds:897,355,89,24
+offsets:4,4,97,32
+眼睑 犯困
+bounds:681,305,90,10
+offsets:4,4,98,18
+眼睑 眯眼笑
+bounds:55,323,85,11
+offsets:4,4,93,19
+眼睛 副本
+bounds:280,353,74,34
+眼睛 副本 2
+bounds:362,338,66,26
+offsets:4,4,74,34
+眼睛 副本 3
+bounds:64,342,68,26
+offsets:4,4,76,34
+眼睛 摸头1
+bounds:703,352,74,33
+眼睛 特殊1
+bounds:472,346,69,26
+offsets:4,4,77,34
+眼睛 犯困
+bounds:277,324,66,21
+offsets:4,4,74,29
+背后蝴蝶结
+bounds:595,346,61,39
+offsets:4,4,69,47
+脸阴影
+bounds:313,520,136,126
+offsets:0,1,137,129
+腰花
+bounds:785,310,36,35
+腰蝴蝶结针
+bounds:991,392,27,38
+腿环
+bounds:214,314,39,28
+蝴蝶
+bounds:299,654,227,102
+offsets:0,0,228,102
+蝴蝶 攻击
+bounds:741,809,211,137
+offsets:4,4,219,145
+rotate:90
+蝴蝶特效
+bounds:571,764,256,162
+offsets:4,4,264,170
+rotate:90
+蝴蝶特效 攻击
+bounds:299,764,264,256
+表情 受击
+bounds:718,393,83,47
+表情 攻击
+bounds:605,393,90,47
+表情 死亡
+bounds:380,372,84,31
+裙子
+bounds:167,408,112,55
+offsets:0,2,112,59
+领结
+bounds:64,448,27,14
+offsets:4,4,35,22
+（新增）眉毛 受击
+bounds:932,325,63,22
+offsets:4,4,71,30
+（新增）眉毛 攻击
+bounds:213,650,63,12
+offsets:4,4,71,20
+（新增）眉毛 死亡
+bounds:779,293,63,9
+offsets:4,4,71,17
