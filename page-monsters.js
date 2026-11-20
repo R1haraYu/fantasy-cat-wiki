@@ -62,7 +62,7 @@ function renderList() {
       <label>属性<select id="f-el">${options(elements, state.element)}</select></label>
       <label>出现于<select id="f-appear">${options(APPEAR_KINDS, state.appear)}</select></label>
     </div>
-    <section class="index-grid">${rows.map(monsterCard).join("") || `<p class="empty">没有符合条件的怪物。</p>`}</section>`;
+    <section class="index-grid">${rows.map(monsterCard).join("") || `<p class="empty"></p>`}</section>`;
   document.getElementById("f-q").addEventListener("input", (e) => { state.q = e.target.value; renderList(); });
   document.getElementById("f-type").addEventListener("change", (e) => { state.type = e.target.value; renderList(); });
   document.getElementById("f-el").addEventListener("change", (e) => { state.element = e.target.value; renderList(); });
@@ -88,7 +88,7 @@ function renderDetail(id) {
   const m = MONSTERS.find((x) => String(x.id) === String(id));
   count.textContent = "";
   if (!m) {
-    app.innerHTML = `<p class="empty">没有这个怪物。</p><a class="back" href="monsters.html">返回怪物图鉴</a>`;
+    app.innerHTML = `<a class="back" href="monsters.html">返回怪物图鉴</a>`;
     return;
   }
   document.title = `${m.name} · 怪物图鉴`;
@@ -111,7 +111,7 @@ function renderDetail(id) {
   ];
   const skills = m.skills.length
     ? m.skills.map((s) => `<article class="skill"><div class="slot">${esc(s.slot)}</div><h3>${esc(s.name)}</h3><p>${esc(s.desc)}</p></article>`).join("")
-    : `<p class="empty">暂无技能数据。</p>`;
+    : `<p class="empty"></p>`;
   app.innerHTML = `
     <p class="preview-tag"><a href="monsters.html">← 返回怪物图鉴</a></p>
     <div class="monster-head">

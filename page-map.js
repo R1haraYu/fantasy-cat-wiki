@@ -69,7 +69,7 @@ function filterChips() {
 
 function markerHtml(m, idx) {
   const kindClass = m.kind === "npc" ? "npc" : "point";
-  const icon = m.icon ? `<img src="${esc(m.icon)}" alt="" loading="lazy" onerror="this.remove()">` : `<span class="map-pin-initial">${esc((m.name || "?").slice(0, 1))}</span>`;
+  const icon = m.icon ? `<img src="${esc(m.icon)}" alt="" loading="lazy" onerror="this.remove()">` : '';
   return `<button class="map-pin ${kindClass} kind-${esc(m.kind)} ${state.selected && state.selected.id === m.id ? "sel" : ""}" data-idx="${idx}" style="left:${m.nx * 100}%;top:${m.ny * 100}%" title="${esc(m.name)}">
     <span class="map-pin-dot">${icon}</span>
     <span class="map-pin-label">${esc(m.name)}</span>
@@ -77,10 +77,10 @@ function markerHtml(m, idx) {
 }
 
 function listHtml(rows) {
-  if (!rows.length) return `<p class="empty">当前地图没有匹配的点位</p>`;
+  if (!rows.length) return `<p class="empty"></p>`;
   return rows.map((m) => {
     const active = state.selected && state.selected.id === m.id;
-    const icon = m.icon ? `<img src="${esc(m.icon)}" alt="" loading="lazy" onerror="this.remove()">` : `<span class="map-initial">${esc((m.name || "?").slice(0, 1))}</span>`;
+    const icon = m.icon ? `<img src="${esc(m.icon)}" alt="" loading="lazy" onerror="this.remove()">` : '';
     return `<button class="map-list-item ${active ? "on" : ""}" data-id="${esc(m.id)}">
       <span class="map-list-icon">${icon}</span>
       <span class="map-list-body"><b>${esc(m.name)}</b><em>${esc(m.meta)}</em></span>
@@ -99,7 +99,7 @@ function detailHtml(m) {
 function render() {
   const map = currentMap();
   if (!map) {
-    app.innerHTML = `<h1 class="page-title">地图</h1><p class="empty">暂无地图数据。</p>`;
+    app.innerHTML = `<h1 class="page-title">地图</h1><p class="empty"></p>`;
     return;
   }
   const rows = filtered();

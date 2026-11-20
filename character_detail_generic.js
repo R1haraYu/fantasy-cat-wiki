@@ -6,7 +6,7 @@
   const query = new URLSearchParams(location.search);
   const id = Number(query.get('id') || 10001);
   const c = CODEX.find((item) => item.id === id) || CODEX[0];
-  if (!c) { document.body.innerHTML = '<p style="padding:40px">没有角色数据。</p>'; return; }
+  if (!c) { document.body.innerHTML = ''; return; }
   if (c.hidden && query.get('includeHidden') !== '1') {
     document.title = '未实装角色 · 幻想之都的黑猫';
     document.body.innerHTML = '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f7efe2;color:#2f4c3d;font:16px/1.8 Microsoft YaHei,serif;text-align:center"><div><h1 style="font-size:28px;margin:0 0 10px">尚未实装</h1><p style="margin:0 0 18px;color:#8a7960">该角色目前未实装，图鉴暂不展示。</p><a href="index.html" style="color:#8f6b70">← 返回角色图鉴</a></div></div>';
@@ -20,13 +20,16 @@
   let mode = 'full';
   const $ = (s) => document.querySelector(s);
   const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-  const placeholder = (name) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"><rect width="100%" height="100%" fill="#ded2bf"/><text x="50%" y="52%" fill="#7c6a50" font-size="96" text-anchor="middle" font-family="serif">' + esc(String(name || '?').slice(0, 1)) + '</text></svg>'
-  );
-  const setImg = (el, path, fallbackName) => {
+  const fallbackIcon = 'img/icon/' + c.id + '.png';
+  const setImg = (el, path) => {
     if (!el) return;
-    el.onerror = () => { el.onerror = null; el.src = placeholder(fallbackName || c.name); };
-    el.src = path || placeholder(fallbackName || c.name);
+    el.onerror = () => {
+      el.onerror = null;
+      if (el.src.indexOf('/img/icon/') < 0) el.src = fallbackIcon;
+      else { el.removeAttribute('src'); el.style.visibility = 'hidden'; }
+    };
+    el.style.visibility = '';
+    el.src = path || fallbackIcon;
   };
   const elementIcon = (name) => ({ '王剑': 'Spade', '圣杯': 'Heart', '权杖': 'Club', '星穹': 'Diamond', '高塔': 'Joker', '愚者': 'Clown' }[name] || 'None');
   const jobIcon = (name) => ({ '勇者': 'Warrior', '战士': 'Fighter', '干扰': 'Saboteur', '游侠': 'Ranger', '疗愈': 'Healer', '界外': 'Outsider' }[name] || 'None');
@@ -125,7 +128,7 @@
   }
   function renderSkills() {
     const host = $('#skills');
-    if (!c.skills || !c.skills.length) { host.innerHTML = '<p class="empty">暂无技能数据。</p>'; return; }
+    if (!c.skills || !c.skills.length) { host.innerHTML = ''; return; }
     host.innerHTML = c.skills.map((sk, i) => {
       const icon = (x.skillIcons || {})[sk.slot] || '';
       const hasLevels = (sk.levels || []).length > 0;
@@ -147,7 +150,7 @@
   $('#weaponDesc').textContent = battle.weaponDesc || '—';
   $('#combatRange').textContent = battle.combatDistanceName || '—';
   $('#atp').textContent = battle.atpPriority != null ? battle.atpPriority : '—';
-  $('#profileText').innerHTML = (c.bio || '暂无角色档案。').split(/\n/).map((p) => p ? '<p>' + esc(p) + '</p>' : '').join('');
+  $('#profileText').innerHTML = (c.bio || '').split(/\n/).map((p) => p ? '<p>' + esc(p) + '</p>' : '').join('');
 
   // Skins
   let skinIndex = 0;
@@ -186,7 +189,7 @@
     rows.forEach((r) => { if (!groups.has(r.scene)) groups.set(r.scene, []); groups.get(r.scene).push(r); });
     $('#voiceList').innerHTML = groups.size ? [...groups.entries()].map(([scene, list]) =>
       '<div class="voice-group"><h4>' + esc(scene) + '</h4>' + list.map((r) => '<div class="voice-line"><span class="txt">' + esc(r.text) + '</span>' + (r.audio ? '<button type="button" class="voice-play" data-audio="' + esc(r.audio) + '" title="播放" aria-label="播放">▶</button>' : '') + '</div>').join('') + '</div>'
-    ).join('') : '<p class="empty">暂无游戏内台词记录。</p>';
+    ).join('') : '';
   })();
 
   // Tabs
@@ -338,8 +341,8 @@
     $('#spine-full').hidden = true; $('#spine-full-l2').hidden = true;
     $('#charStatic').hidden = true; note.hidden = false;
     const art = skin.art || skin.avatar || skin.bust;
-    if (art) { note.textContent = '静态立绘 / BUST'; $('#charStatic').hidden = false; setImg($('#charStatic'), art, c.name); $('#stageLive').textContent = 'STATIC / BUST'; }
-    else { note.textContent = '暂无立绘资源'; $('#stageLive').textContent = 'STATIC / NO ART'; }
+    if (art) { note.hidden = true; $('#charStatic').hidden = false; setImg($('#charStatic'), art); $('#stageLive').textContent = 'STATIC'; }
+    else { note.hidden = true; $('#stageLive').textContent = 'STATIC'; }
   }
   function cropSpineCanvas(canvas) {
     try {

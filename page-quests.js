@@ -65,7 +65,7 @@ function render() {
     ${group("支线任务", sub)}
     ${group("委托板", board, "每日/常驻委托，完成后可获得对应奖励。")}
     ${group("角色升阶任务", rarity, "角色升阶任务用于提升角色稀有度，不额外发放道具奖励。")}
-    ${main.length + sub.length + board.length + rarity.length ? "" : `<p class="empty">没有符合条件的任务。</p>`}`;
+    ${main.length + sub.length + board.length + rarity.length ? "" : `<p class="empty"></p>`}`;
   document.getElementById("q").addEventListener("input", (e) => {
     query = e.target.value;
     clearTimeout(window.__qt);

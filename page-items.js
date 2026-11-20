@@ -21,7 +21,7 @@ function itemCard(item) {
   if (item.rarityName) tags.push(`<span class="badge ${esc(item.rarityName)}">${esc(item.rarityName)}</span>`);
   if (item.maxAmount) tags.push(`<span class="badge soft">上限 ${esc(item.maxAmount)}</span>`);
   return `<article class="card" data-group="${esc(item.group)}" data-rarity="${esc(item.rarityName)}">
-    ${item.icon ? `<div class="card-art"><img src="${esc(item.icon)}" alt="" loading="lazy" onerror="this.parentElement.remove()"></div>` : `<div class="card-art card-art-fallback">${esc((item.name || "?").slice(0, 1))}</div>`}
+    <div class="card-art">${item.icon ? `<img src="${esc(item.icon)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>
     <div class="card-body">
       <h3 class="card-title">${esc(item.name)}</h3>
       <p class="card-meta">${esc(item.group)}${item.catalog ? " · " + esc(item.catalog) : ""}</p>
@@ -43,7 +43,7 @@ function render() {
   countEl.textContent = `${rows.length} 件道具`;
   listEl.innerHTML = rows.length
     ? `<div class="grid-cards">${rows.map(itemCard).join("")}</div>`
-    : `<p class="empty">没有符合条件的道具。</p>`;
+    : `<p class="empty"></p>`;
 }
 
 function options(values, current, label = "全部") {

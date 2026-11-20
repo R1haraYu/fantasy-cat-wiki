@@ -24,7 +24,7 @@ function rewardChip(r) {
 function cityCard(c) {
   const tags = [c.size, c.citizen, c.rating].filter((t) => t && !/^[?？。\s]+$/.test(t)).map((t) => badge(t));
   return `<article class="card city-card">
-    <div class="city-art">${c.logo ? `<img src="${esc(c.logo)}" alt="" loading="lazy" onerror="this.remove()">` : c.areaIcon ? `<img src="${esc(c.areaIcon)}" alt="" loading="lazy" onerror="this.remove()">` : `<span class="city-initial">${esc((c.name || "?").slice(0, 1))}</span>`}</div>
+    <div class="city-art">${c.logo ? `<img src="${esc(c.logo)}" alt="" loading="lazy" onerror="this.remove()">` : c.areaIcon ? `<img src="${esc(c.areaIcon)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>
     <div class="card-body">
       <h3 class="card-title">${esc(c.name)}</h3>
       <p class="card-meta">${esc(c.homeName)}</p>
@@ -46,7 +46,7 @@ function npcGrid() {
   const q = npcQuery.trim();
   const rows = WORLD.npcs.filter((n) => !q || `${n.name}${n.areaName}${n.npcId}`.includes(q));
   return `<p class="section-sub">共 ${rows.length} 名</p><div class="npc-grid">${rows.map((n) => `<div class="npc-card">
-    <span class="npc-avatar">${n.avatar ? `<img src="${esc(n.avatar)}" alt="" loading="lazy" onerror="this.remove()">` : esc((n.name || "?").slice(0, 1))}</span>
+    <span class="npc-avatar">${n.avatar ? `<img src="${esc(n.avatar)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</span>
     <span class="npc-body"><b>${esc(n.name)}</b>${n.areaName ? `<em>${esc(n.areaName)}</em>` : ""}</span>
   </div>`).join("")}</div>`;
 }

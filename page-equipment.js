@@ -109,7 +109,7 @@ function renderEquip() {
   countEl.textContent = `${rows.length} 件装备`;
   listEl.innerHTML = rows.length
     ? `<div class="grid-cards grid-wide">${rows.map(equipCard).join("")}</div>`
-    : `<p class="empty">没有符合条件的装备。</p>`;
+    : `<p class="empty"></p>`;
   bindCards();
 }
 
@@ -204,7 +204,7 @@ function detailHtml(e) {
     <p class="section-sub">该装备可用词条组共 ${esc(traitData.groups)} 组。单次鉴定从可用组中等概率抽 1 组，再按组内档位概率抽 1 条；表中概率 = 100% ÷ ${esc(traitData.groups)} × 组内档位概率。强化等级不改变词条。</p>
     <div class="table-wrap"><table class="data-table">
       <thead><tr><th>标签</th><th>词条</th><th>效果</th><th>单次概率</th></tr></thead>
-      <tbody>${rows || `<tr><td colspan="4">暂无可用词条</td></tr>`}</tbody>
+      <tbody>${rows}</tbody>
     </table></div>
     `;
 }
@@ -214,7 +214,7 @@ function showDetail(id) {
   listView.hidden = true;
   detailView.hidden = false;
   if (!e) {
-    detailView.innerHTML = `<p class="empty">没有找到这件装备。</p><a class="back-link" href="equipment.html">← 返回装备列表</a>`;
+    detailView.innerHTML = `<p class="empty"></p><a class="back-link" href="equipment.html">← 返回装备列表</a>`;
     countEl.textContent = "装备详情";
     return;
   }

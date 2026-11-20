@@ -32,7 +32,7 @@ function render(q) {
   hintEl.textContent = `找到 ${rows.length} 条与「${q}」相关的内容`;
   countEl.textContent = `${rows.length} 条结果`;
   if (!rows.length) {
-    resultsEl.innerHTML = `<p class="empty">没有找到相关内容，换个关键词试试。</p>`;
+    resultsEl.innerHTML = `<p class="empty"></p>`;
     return;
   }
   const groups = {};

@@ -75,7 +75,7 @@ function databankSection() {
       const entries = list.filter((e) => e.catalogName === g);
       const areas = [...new Set(entries.map((e) => e.areaName))];
       return `<h2 class="section-title">${esc(g)}</h2>` + areas.map((a) => `<h3 class="story-chapter">${esc(a || "其他")}</h3><div class="stage-list">${entries.filter((e) => e.areaName === a).map(dbEntry).join("")}</div>`).join("");
-    }).join("") : `<p class="empty">没有符合条件的资料。</p>`}</div>`;
+    }).join("") : `<p class="empty"></p>`}</div>`;
 }
 
 function render() {

@@ -119,9 +119,9 @@ function renderLabor() {
         <div class="fold-body">
           ${bustRow}
           <h4 class="mini-title">突破所需材料与任务</h4>
-          <div class="table-wrap"><table class="data-table"><thead><tr><th>突破阶段</th><th>所需材料</th><th>突破任务</th></tr></thead><tbody>${upRows || `<tr><td colspan="3">暂无突破数据</td></tr>`}</tbody></table></div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>突破阶段</th><th>所需材料</th><th>突破任务</th></tr></thead><tbody>${upRows}</tbody></table></div>
           <h4 class="mini-title">雇员能力（按稀有度）</h4>
-          <div class="table-wrap"><table class="data-table"><thead><tr><th>阶段</th><th>能力</th></tr></thead><tbody>${abRows || `<tr><td colspan="2">暂无能力数据</td></tr>`}</tbody></table></div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>阶段</th><th>能力</th></tr></thead><tbody>${abRows}</tbody></table></div>
         </div>
       </details>
     </article>`;

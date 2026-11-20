@@ -124,7 +124,7 @@ function render() {
     });
   }
 
-  if (!html) html += `<p class="empty">没有符合条件的关卡。</p>`;
+  if (!html) html += `<p class="empty"></p>`;
   app.innerHTML = html;
   const total = STAGES.main.length + STAGES.event.length + STAGES.resource.length;
   count.textContent = `${total} 个关卡`;

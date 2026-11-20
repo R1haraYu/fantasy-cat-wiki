@@ -124,9 +124,9 @@ const BASE_ROWS = [
 
 function cardMarkup(c) {
   const sub = `${c.rarity} · ${c.element}`;
-  return `<a class="index-card" href="character_detail.html?id=${c.id}">
+  return `<a class="index-card" data-rarity="${escapeText(c.rarity)}" href="character_detail.html?id=${c.id}">
     ${c.hidden ? '<span class="hidden-badge">未实装</span>' : ''}
-    <span class="index-art">${portrait(c.id, "icon") ? `<img src="${escapeText(portrait(c.id, "icon"))}" alt="" loading="lazy" onerror="this.remove()">` : `<span class="card-placeholder">${escapeText(c.name.slice(0, 1))}</span>`}</span>
+    <span class="index-art"><img src="${escapeText(portrait(c.id, "icon") || "img/icon/" + c.id + ".png")}" alt="" loading="lazy" onerror="this.remove()"><span class="index-rarity">${escapeText(c.rarity)}</span></span>
     <span class="index-name">${escapeText(c.name)}</span>
     <span class="index-sub">${escapeText(sub)}</span>
   </a>`;
@@ -162,7 +162,7 @@ function renderList() {
       <button class="query" type="submit">查询</button>
     </form>
     <section class="index-grid" id="grid">${
-      filtered.length ? filtered.map((c) => cardMarkup(c)).join("") : `<p class="empty">没有符合条件的角色。</p>`
+      filtered.length ? filtered.map((c) => cardMarkup(c)).join("") : `<p class="empty"></p>`
     }</section>
 `;
   document.getElementById("filters").addEventListener("submit", (event) => {
@@ -182,7 +182,7 @@ function renderDetail(id) {
   count.textContent = "";
   if (!c) {
     document.body.classList.remove("detail");
-    app.innerHTML = `<p class="empty">没有这个角色。</p><a class="back" href="#/">返回图鉴</a>`;
+    app.innerHTML = `<a class="back" href="#/">返回图鉴</a>`;
     return;
   }
   if (c.hidden) {
@@ -221,7 +221,7 @@ function renderDetail(id) {
           <figcaption class="skin-body"><h4>${escapeText(s.name)}</h4>${s.desc ? `<p>${escapeText(s.desc)}</p>` : ""}</figcaption>
         </figure>`;
       }).join("")}</div>`
-    : `<p class="empty">暂无皮肤数据。</p>`;
+    : `<p class="empty"></p>`;
   const hasSkins = skins.length > 0;
   const battleItems = [
     ["武器", battle.weaponName],
@@ -271,7 +271,7 @@ function renderDetail(id) {
           </section>
           <section class="panel">
             <h2>技能</h2>
-            ${skills || `<p class="empty">暂无技能数据。</p>`}
+            ${skills || ''}
           </section>
         </div>
         <div class="pane" data-pane="file">
@@ -289,7 +289,7 @@ function renderDetail(id) {
           ${hasBattle ? `<section class="panel">
             <h2>战斗数据</h2>
             <ul class="kv-list">
-              ${battleItems.map(([k, v]) => `<li><b>${escapeText(k)}</b><span>${escapeText(v)}</span></li>`).join("") || `<li><span>暂无数据</span></li>`}
+              ${battleItems.map(([k, v]) => `<li><b>${escapeText(k)}</b><span>${escapeText(v)}</span></li>`).join("") || ''}
             </ul>
           </section>` : ""}
           ${hasSkins ? `<section class="panel">
