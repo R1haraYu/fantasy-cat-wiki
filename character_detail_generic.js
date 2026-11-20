@@ -249,6 +249,13 @@
       return ['idle','idle_01','idle_02','idle_03','action_01','move','run'].find((n) => names.includes(n)) || names[0];
     } catch (e) { return null; }
   }
+  function applyStageLayout(player, base) {
+    if (!player || !player.canvas) return;
+    const cfg = (window.STAGE_LAYOUT || {})[base];
+    player.canvas.style.transformOrigin = '50% 100%';
+    if (!cfg) { player.canvas.style.transform = ''; return; }
+    player.canvas.style.transform = 'translate(' + cfg.dx + '%, ' + cfg.dy + '%) scale(' + cfg.s + ')';
+  }
   function createFull(base) {
     const box = $('#spine-full'); if (!box) return false;
     disposePlayer(fullPlayer); fullPlayer = null; box.innerHTML = '';
@@ -260,6 +267,7 @@
         alpha: true, width: 640, height: 940
       });
       fullBase = base;
+      applyStageLayout(fullPlayer, base);
       window.__charPlayers = window.__charPlayers || {}; window.__charPlayers.full = fullPlayer;
       waitAndLoop(fullPlayer);
       return true;
