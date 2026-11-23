@@ -8,6 +8,12 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
   const POW_MAX = 1000;
+  const TP_START = 50;
+  const TP_MAX = 100;
+  const TP_REGEN_PER_SEC = 5;
+  const GCD_COOL_TIME = 1.5;
+  const COST_A_DEFAULT = 20;
+  const COST_B_DEFAULT = 30;
 
   function roundEven(n) {
     const scaled = Math.round(n * 1000);
@@ -69,9 +75,13 @@
     const b = character.base;
     const states = Array.from({ length: count }, (_, i) => ({
       index: i, maxHp: boss.hp, hp: boss.hp, def: boss.def,
+      atk: Number(boss.atk || 0), spd: Number(boss.spd || 0),
+      element: boss.element,
       alive: true, effects: [], dots: new Map(),
     }));
     const skills = new Map((character.skills || []).map((s) => [s.slot, s]));
+    const tactics = character.tactics || {};
+    const conditions = Array.isArray(tactics.conditions) ? tactics.conditions : [];
     const playerEffects = [];
     const aliveStates = () => states.filter((s) => s.alive);
     const firstAlive = () => states.find((s) => s.alive) || null;
@@ -87,12 +97,21 @@
       for (const e of list) e.remaining -= dt;
       for (let i = list.length - 1; i >= 0; i -= 1) if (list[i].remaining <= 0) list.splice(i, 1);
     };
-    let effective = 0, dot = 0, direct = 0;
-    let killed = false, killTime = null, time = 0, tp = 100, pow = 0, actionIndex = 0;
+
+    const costA = Number(tactics.costA != null ? tactics.costA : (character.costA != null ? character.costA : COST_A_DEFAULT));
+    const costB = Number(tactics.costB != null ? tactics.costB : (character.costB != null ? character.costB : COST_B_DEFAULT));
+    const totalTp = Number(tactics.totalTp != null ? tactics.totalTp : TP_MAX);
+
+    let effective = 0, dot = 0, direct = 0, normal = 0;
+    let killed = false, killTime = null;
+    let time = 0, tp = TP_START, pow = 0, actionIndex = 0, gcdUntil = 0;
+    let chosenTarget = null;
+    const lastUse = new Map();
+
     function currentDef(st) { return st.def * (1 - Math.max(0, Math.min(.95, sumEffect(st.effects, "defPct")))); }
     function snapshot() {
       const atk = b.atk * (1 + sumEffect(playerEffects, "atkPct"));
-      const critChance = Math.max(0, Math.min(.95, b.crit + sumEffect(playerEffects, "crtPct")));
+      const critChance = Math.max(0, Math.min(.95, b.crit + sumEffect(playerEffects, "critPct") + sumEffect(playerEffects, "crtPct")));
       const critDmg = b.critDmg + sumEffect(playerEffects, "cdPct") + sumEffect(playerEffects, "critDmgPct");
       const speed = Math.max(1, b.spd * (1 + sumEffect(playerEffects, "spdPct")));
       return { atk, critMult: 1 + critChance * (critDmg - 1), speed, dmgDealt: Math.max(0, 1 + sumEffect(playerEffects, "dmgDealtPct")) };
@@ -101,7 +120,7 @@
       if (!st || !st.alive || amount <= 0) return;
       const use = Math.min(amount, st.hp);
       effective += use;
-      if (kind === "direct") direct += use; else if (kind === "dot") dot += use;
+      if (kind === "direct") direct += use; else if (kind === "dot") dot += use; else if (kind === "normal") normal += use;
       st.hp -= use;
       if (st.hp <= 0) {
         st.hp = 0; st.alive = false; st.dots.clear(); st.effects.length = 0;
@@ -115,39 +134,94 @@
           const useTime = Math.min(dt, ds.remaining);
           if (useTime <= 0) continue;
           const taken = Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct"));
-          applyDamage(st, st.maxHp * ds.rate * useTime * taken * elementMultiplier(character.element, boss.element), "dot");
+          applyDamage(st, st.maxHp * ds.rate * useTime * taken * elementMultiplier(character.element, st.element), "dot");
           ds.remaining -= useTime;
           if (ds.remaining <= 0) st.dots.delete(key);
           if (!st.alive) break;
         }
       }
     }
-    function chooseAction() {
-      if (pow >= POW_MAX && skills.has("S")) return "S";
-      const first = firstAlive();
-      const targetHp = first ? first.hp / first.maxHp * 100 : 0;
-      for (const r of character.tactics?.rules || []) {
-        if (r.first && actionIndex !== 0) continue;
-        if (r.turn && actionIndex + 1 < Number(r.turn)) continue;
-        if (r.time && time + 1e-9 < Number(r.time)) continue;
-        if (r.selfHp) {
-          const p = 100;
-          if (r.selfHp.op === "Less" && !(p < r.selfHp.value)) continue;
-          if (r.selfHp.op === "Greater" && !(p > r.selfHp.value)) continue;
-        }
-        if (r.targetHp) {
-          if (r.targetHp.op === "Less" && !(targetHp < r.targetHp.value)) continue;
-          if (r.targetHp.op === "Greater" && !(targetHp > r.targetHp.value)) continue;
-        }
-        if (r.action === "A" && tp >= 20 && skills.has("A")) return "A";
-        if (r.action === "B" && tp >= 30 && skills.has("B")) return "B";
+
+    function hpPercent(st) { return st && st.maxHp > 0 ? (st.hp / st.maxHp) * 100 : 0; }
+    function pickTarget(type) {
+      const alive = aliveStates();
+      if (!alive.length) return null;
+      const t = String(type || "Foe");
+      const by = (fn) => alive.slice().sort(fn)[0];
+      if (t.startsWith("Ally") || t === "Self") return null;
+      if (t === "Foe_Random") return alive[0];
+      if (t === "Foe_HighestAtk") return by((a, b) => Number(b.atk) - Number(a.atk) || a.index - b.index);
+      if (t === "Foe_LowestAtk") return by((a, b) => Number(a.atk) - Number(b.atk) || a.index - b.index);
+      if (t === "Foe_HighestDef") return by((a, b) => Number(b.def) - Number(a.def) || a.index - b.index);
+      if (t === "Foe_LowestDef") return by((a, b) => Number(a.def) - Number(b.def) || a.index - b.index);
+      if (t === "Foe_HighestHP") return by((a, b) => hpPercent(b) - hpPercent(a) || a.index - b.index);
+      if (t === "Foe_LowestHP") return by((a, b) => hpPercent(a) - hpPercent(b) || a.index - b.index);
+      if (t === "Foe_HighestSpeed") return by((a, b) => Number(b.spd) - Number(a.spd) || a.index - b.index);
+      if (t === "Foe_LowestSpeed") return by((a, b) => Number(a.spd) - Number(b.spd) || a.index - b.index);
+      return alive[0];
+    }
+    function selfConditionOk(node) {
+      const s = String(node.self || "Any");
+      if (s === "Any") return true;
+      let m = s.match(/^HP_Less_(\d+)$/);
+      if (m) return false; // 单人模拟/木桩不攻击，自身始终 100%
+      m = s.match(/^HP_Greater_(\d+)$/);
+      if (m) return 100 > Number(m[1]);
+      if (s === "TP_Full") return tp >= totalTp;
+      m = s.match(/^TP_Less_(\d+)$/);
+      if (m) return (tp / Math.max(1, totalTp)) * 100 < Number(m[1]);
+      if (s === "Pow_Full") return pow >= POW_MAX;
+      m = s.match(/^Pow_Less_(\d+)$/);
+      if (m) return (pow / POW_MAX) * 100 < Number(m[1]);
+      return true;
+    }
+    function unitConditionOk(node, target) {
+      const u = String(node.unit || "Any");
+      if (u === "Any") return true;
+      if (!target) return false;
+      let m = u.match(/^HP_Less_(\d+)$/);
+      if (m) return hpPercent(target) < Number(m[1]);
+      m = u.match(/^HP_Greater_(\d+)$/);
+      if (m) return hpPercent(target) > Number(m[1]);
+      return true;
+    }
+    function turnConditionOk(node) {
+      const t = String(node.turn || "Any");
+      if (t === "Any") return true;
+      if (t === "FirstTurn") return actionIndex === 0;
+      if (t === "Manual") return false;
+      let m = t.match(/^TurnStep(\d+)$/);
+      if (m) { const n = Number(m[1]); return actionIndex >= 1 && actionIndex % n === 0; }
+      m = t.match(/^Time(\d+)Sec$/);
+      if (m) {
+        const n = Number(m[1]);
+        const last = Number(lastUse.get(node.action) || 0);
+        return actionIndex >= 1 && time - last >= n;
       }
-      if (!(character.tactics?.rules || []).length) {
-        if (tp >= 20 && skills.has("A")) return "A";
-        if (tp >= 30 && skills.has("B")) return "B";
+      return true;
+    }
+    function chooseAction() {
+      chosenTarget = null;
+      if (pow >= POW_MAX && skills.has("S")) return "S";
+      if (time + 1e-9 < gcdUntil) return "normal";
+      for (const node of conditions) {
+        if (node.action === "Skill_S") continue;
+        if (!turnConditionOk(node)) continue;
+        if (!selfConditionOk(node)) continue;
+        const target = pickTarget(node.target);
+        if (String(node.target || "").startsWith("Foe") && !target) continue;
+        if (!unitConditionOk(node, target)) continue;
+        if (node.action === "Attack") { chosenTarget = target; return "normal"; }
+        const slot = node.action === "Skill_A" ? "A" : node.action === "Skill_B" ? "B" : null;
+        if (!slot || !skills.has(slot)) continue;
+        const cost = slot === "A" ? costA : costB;
+        if (tp < cost) continue;
+        chosenTarget = target;
+        return slot;
       }
       return "normal";
     }
+
     while (!killed && time < 90) {
       const p0 = snapshot();
       const interval = chargeTime(p0.speed);
@@ -158,15 +232,16 @@
       tickEffects(playerEffects, interval);
       for (const st of states) if (st.alive) tickEffects(st.effects, interval);
       time = at;
-      tp = Math.min(200, tp + interval * 5);
+      tp = Math.min(totalTp, tp + interval * TP_REGEN_PER_SEC);
       const choice = chooseAction();
       const skill = choice === "normal" ? null : skills.get(choice);
       const p = snapshot();
       if (skill) {
-        const targets = skill.targets === "all" ? aliveStates() : ([firstAlive()].filter(Boolean));
+        const target = chosenTarget && chosenTarget.alive ? chosenTarget : firstAlive();
+        const targets = skill.targets === "all" ? aliveStates() : ([target].filter(Boolean));
         if (Number(skill.damage || 0) > 0) {
           for (const st of targets) {
-            const dmg = hitDamage(p.atk, Number(skill.damage), p.critMult, currentDef(st)) * p.dmgDealt * Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct")) * elementMultiplier(character.element, boss.element);
+            const dmg = hitDamage(p.atk, Number(skill.damage), p.critMult, currentDef(st)) * p.dmgDealt * Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct")) * elementMultiplier(character.element, st.element);
             applyDamage(st, dmg, "direct");
           }
         }
@@ -186,15 +261,26 @@
             for (const st of ds) st.dots.set(String(skill.slot), { rate: Number(skill.dot.rate), remaining: Number(skill.dot.duration) });
           }
         }
-        if (choice === "A") tp -= 20;
-        else if (choice === "B") tp -= 30;
+        lastUse.set(String(nodeActionKey(choice)), time);
+        gcdUntil = Math.max(gcdUntil, time + GCD_COOL_TIME);
+        if (choice === "A") tp -= costA;
+        else if (choice === "B") tp -= costB;
         else if (choice === "S") pow = 0;
+      } else {
+        const target = chosenTarget && chosenTarget.alive ? chosenTarget : firstAlive();
+        if (target) {
+          const dmg = hitDamage(p.atk, 1, p.critMult, currentDef(target)) * p.dmgDealt * Math.max(0, 1 + sumEffect(target.effects, "dmgTakenPct")) * elementMultiplier(character.element, target.element);
+          applyDamage(target, dmg, "normal");
+        }
       }
       if (killed) break;
       pow = Math.min(POW_MAX, pow + 150);
       actionIndex += 1;
     }
-    return { dps: +(effective / Math.max(1, killTime || time)).toFixed(1), effective: Math.round(effective), killed, killTime: killTime ? +killTime.toFixed(2) : null, direct: Math.round(direct), dot: Math.round(dot) };
+    function nodeActionKey(slot) {
+      return slot === "A" ? "Skill_A" : slot === "B" ? "Skill_B" : "Skill_S";
+    }
+    return { dps: +(effective / Math.max(1, killTime || time)).toFixed(1), effective: Math.round(effective), killed, killTime: killTime ? +killTime.toFixed(2) : null, direct: Math.round(direct), dot: Math.round(dot), normal: Math.round(normal) };
   }
 
   function chargeTime(spd) {
@@ -205,5 +291,5 @@
     return .41666666;
   }
 
-  return { POW_MAX, roundEven, grownInt, panelStats, bossAt, hitDamage, elementMultiplier, chargeTime, battleOutput };
+  return { POW_MAX, TP_START, TP_MAX, GCD_COOL_TIME, roundEven, grownInt, panelStats, bossAt, hitDamage, elementMultiplier, chargeTime, battleOutput };
 });
