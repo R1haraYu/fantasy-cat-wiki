@@ -863,8 +863,8 @@
     "data/meta.js": "ef00cf2c54d2b151d4be7124b9fa7a33ec297279305ee05c292831d2d5822970",
     "data/monsters.js": "b2564e6444ea49ad00896d262e54651aed43410f1951fecb25e1ac073694f0cb",
     "data/quests.js": "09ae7dcf7cbf72f75d17b256c30cd1898e46cd03cc482d3b77a3cb546cddd0fd",
-    "data/rank.js": "1d8ed04405b5f3fd6f66efdbca4db243bd214e72dfd931bcdd5fa13eb2c28878",
-    "data/rank_sim.js": "2ec6effda7730c218a90f096e50212a7ab5413443fd3504826ee1e8d495091c5",
+    "data/rank.js": "a7b175abc86a1170567d278547b6dd3d0f68486aedef610184d06a3b39a6ae3f",
+    "data/rank_sim.js": "dacda89b2d3f6673a65e528876d4c4d99943628a71a4fb15b51ac4db4010e545",
     "data/searchindex.js": "6531a5a53b5eecf40576d021832c3493325fa1f80f0e4250bbe97d00ec0a6438",
     "data/skills.js": "8a4b9912be96703731a2cf69aa65a85848f884cb0daf88ff864da0e8d7726c7a",
     "data/spine_extract_log.json": "15d1bf4a247c566db45bbbb9a008d42290ab3d166957ef1f906c0678286bcf46",
@@ -1863,7 +1863,7 @@
     "page-map.js": "4dd18557942b0944e847e223e5d38f66a4528791b3f6df74754e40bb84088953",
     "page-monsters.js": "184299fdd3f36fc9cee4222031e73790ab4a3a9fd61bad912ab5bd95ba8dddea",
     "page-quests.js": "b91154ce1a4b03f7ae2cd0bc58f81549fdafbe66a35ecbeb8224146eb9f968c6",
-    "page-ranking.js": "dcc47f8fd22a6947ddb7645bf785670bac8848738ab3e0f444ce3bec1fb35acb",
+    "page-ranking.js": "8148e71d14f06328ab81f78da06fc1b436010dbc94a6c4d2df40f951718c3181",
     "page-search.js": "5dec0e6c5636f9c77cde2292cd9a132733d5f62435b5f6f50bcff15a521f60c4",
     "page-stages.js": "5cd65a46a415825bde4ef45352932a6387d6e6a1ea23dc27d2844371c691f781",
     "page-story.js": "338cf37751814c128a56aca3e505ceb180613bd251ac99dccc391de2715930c4",
@@ -1873,7 +1873,7 @@
     "rank-core.js": "fc92e509d685493d4ab01f20a1b847cc7960e6b30bcdca5a10281e817fb46f02",
     "rank-sim.js": "7ef11002cb44d7d7fb579546bb8d9ce3335eb2545fa56933bf6ac667b42d824e",
     "rank.css": "bf6cdc73f76d2ae4e52f6e10131f5390bb4efb97beeab322779c3fe91881bfb6",
-    "ranking.html": "015da24fa16bce01a96a66ffa194df08b51bb4d082786143fa1bb6a43368c4aa",
+    "ranking.html": "5728eaca05d1428129af68ed2b17c9f0f420e52699bdc6a1d69b3e4211bafb5a",
     "search.html": "4532de43f0f6b7d35dd45f16e4c25a8e6e54004a18cba898dc75306692640e88",
     "site2.js": "1cd26e67688f1ab514049bdf9b25be2ce14ca597c78b1af347297aff555eae6f",
     "stages.html": "23ff91e2f372195d835eda9a9e1044456f4c0e1ef151fbace45714e1db5a2abd",
@@ -1884,5 +1884,5 @@
     "vendor/spine-player.min.js": "e9ce520a15946a3e8d345670d78262d7aa71b9b164135a5424fe99ba191ab671",
     "world.html": "e954b78b034e76379e63e015404aaa5a5923ad791ae71915f77a4d15678d3fc2"
   },
-  "version": "1.7.4"
+  "version": "1.7.5"
 }

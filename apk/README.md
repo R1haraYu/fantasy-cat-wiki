@@ -78,14 +78,14 @@ gradle -p apk -PwikiSiteDir=../.. assembleDebug
 Release：
 
 ```text
-https://github.com/R1haraYu/fantasy-cat-wiki/releases/tag/v1.7.3
+https://github.com/R1haraYu/fantasy-cat-wiki/releases/tag/v1.7.4
 ```
 
 GitHub Actions构建产物：
 
 ```text
-app-debug.apk        448,700,523 bytes
-wiki-site-1.7.3.zip  391,579,500 bytes
+app-debug.apk        448,711,503 bytes
+wiki-site-1.7.4.zip  391,585,902 bytes
 latest.json                  571 bytes
 ```
 
@@ -93,13 +93,13 @@ latest.json                  571 bytes
 
 ```text
 APK SHA-256:
-678DB6242ED867F16145ED6E776A576144FFBBCBB6A4F13C2D4B57C8E659C015
+6E5374F624D7E2F2CD54878106DED724CC3DEDD2CE8E329F0AE774F175B98B7F
 
 zip SHA-256:
-A8B5B35DBA622795E92EDC172D2479DB2F807D7CC6E0017888ACD15BDB975751
+77A8BE84336B392281F89483659F88E4B933C103F9EB0A1F7213C024D1B06745
 
 manifest SHA-256:
-BB2FE70E805AC64B8A171335FD57D7BF3150070CD91C6CAC708F73DA1C628720
+41A26B07CF8DE0ECA794813767707006CD959593E82874213FB38D037257612F
 ```
 
 更新清单公共地址：

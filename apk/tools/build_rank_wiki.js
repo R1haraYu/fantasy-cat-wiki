@@ -1,4 +1,8 @@
-/* Rebuild wiki ranking data from the current calculator core/data. */
+/* Rebuild wiki ranking data using the same TeamEngine path as the calculator.
+ *
+ * The old generator used the legacy RankCore.battleOutput model, which made
+ * Omega (and some other fast skills) rank far above the calculator result.
+ */
 const fs = require("fs");
 const vm = require("vm");
 const path = require("path");
@@ -19,33 +23,49 @@ function loadWindow(file, key) {
   return ctx.window[key];
 }
 
+function bootCalculator() {
+  const ctx = {
+    window: {}, console,
+    document: { title: "" },
+    localStorage: { getItem: () => null, setItem: () => {} },
+  };
+  vm.createContext(ctx);
+  const files = [
+    "data.js", "common.js", "store.js",
+    "special_scripts/ailo.js", "special_scripts/bai_xue.js",
+    "special_scripts/ariel.js", "special_scripts/veronica.js",
+    "special_scripts/holly.js",
+    "action_animations.js", "rank-core.js", "engine.js",
+    "boss_presets.js", "team_engine.js",
+  ];
+  for (const f of files) {
+    vm.runInContext(fs.readFileSync(path.join(CALC, f), "utf8"), ctx);
+  }
+  return ctx.window;
+}
+
+const calc = bootCalculator();
+const TEAM = calc.TeamEngine;
+const STORE = calc.RankStore;
+const state = STORE.load();
+const scene = STORE.normalizeScene(state.scene);
+const chars = STORE.allCharacters(state);
+TEAM.setCharacters(chars);
+const presetById = (id) => TEAM.PRESETS.find((p) => p.id === id) || TEAM.PRESETS[0];
+const enemyIds = (scene.enemies || []).slice(0, 4);
+const enemies = (enemyIds.length ? enemyIds : [TEAM.PRESETS[0].id]).map(presetById);
+TEAM.setCharacters(chars);
+
 const calcData = loadWindow(path.join(CALC, "data.js"), "RANK_DATA");
 const wiki = loadWindow(path.join(SITE, "data.js"), "CODEX") || [];
 const visible = new Set(wiki.filter((c) => !c.hidden).map((c) => Number(c.id)));
 const rawChars = JSON.parse(fs.readFileSync(path.join(ROOT, "01_GameData", "extracted", "rules_json_final", "CHARACTERTABLE.json"), "utf8"));
-const rawEnemies = JSON.parse(fs.readFileSync(path.join(ROOT, "01_GameData", "extracted", "rules_json_final", "ENEMYTABLE.json"), "utf8"));
 const rawById = new Map(rawChars.map((r) => [Number(r.Id), r]));
-const bossRow = rawEnemies.find((r) => r.EnemyId === "Enemy_UltimateChoompers_S01");
-if (!bossRow) throw new Error("boss row missing");
-
-const bossBase = {
-  name: bossRow.Name,
-  enemyId: bossRow.EnemyId,
-  hp: bossRow.Hp,
-  hpF: bossRow.Hp_f,
-  def: bossRow.Def,
-  defF: bossRow.Def_f,
-  atk: bossRow.Atk,
-  atkF: bossRow.Atk_f,
-  spd: bossRow.Spd,
-  element: 6,
-};
-const defaults = { output: 50 };
-const boss = core.bossAt(bossBase, defaults.output);
+const byId = new Map(chars.map((c) => [Number(c.id), c]));
 
 const characters = calcData.characters
-  .filter((c) => visible.has(Number(c.id)))
   .map((c) => {
+    const current = byId.get(Number(c.id)) || c;
     const row = rawById.get(Number(c.id));
     return {
       id: c.id,
@@ -58,16 +78,29 @@ const characters = calcData.characters
       avatar: `img/rank_avatar/${c.id}.png`,
       link: `index.html#/${c.id}`,
       base: core.panelStats(row, 80),
-      skills: c.dps?.skills || [],
-      tactics: c.tactics || { rules: [] },
+      skills: current.dps?.skills || c.dps?.skills || [],
+      tactics: current.tactics || c.tactics || { rules: [] },
     };
   });
 
-const rows = characters.map((c) => ({
-  ...c,
-  single: core.battleOutput(c, boss, 1),
-  group: core.battleOutput(c, boss, 4),
-}));
+function simplify(r) {
+  return {
+    dps: r ? r.dps : 0,
+    effective: r ? r.effective : 0,
+    killed: r ? !!r.bossKilled : false,
+    killTime: r ? r.killTime : null,
+    direct: 0,
+    dot: 0,
+    normal: 0,
+  };
+}
+
+const rows = characters.map((c) => {
+  const single = TEAM.simulateDps(c.id, enemies, scene.level, scene.element, scene.custom);
+  const group = TEAM.simulateDps(c.id, Array.from({ length: 4 }, () => enemies[0]), scene.level, scene.element, scene.custom);
+  return { ...c, single: simplify(single), group: simplify(group) };
+});
+
 function ranked(rows, getter) {
   return rows.slice()
     .sort((a, b) => getter(b) - getter(a) || b.id - a.id)
@@ -75,14 +108,23 @@ function ranked(rows, getter) {
 }
 const payload = {
   generated: new Date().toISOString(),
-  version: "V1.2.0",
+  version: "V1.2.1",
   title: "输出排行",
-  note: "80级0星实装角色；测试木桩为50级究极大食花；单人1目标、群体4目标；期望暴击，含命中/元素亲和/DoT。",
+  note: "与计算器使用同一TeamEngine：50级究极大食花；单体1目标、群体4目标；期望暴击，含命中/元素亲和/DoT/特殊角色机制。",
   config: {
     maxTime: 90,
-    boss,
-    single: { label: "单体", hp: boss.hp, def: boss.def, count: 1 },
-    group: { label: "群体", hp: boss.hp, def: boss.def, count: 4 },
+    boss: {
+      name: enemies[0].name,
+      enemyId: enemies[0].id,
+      level: scene.level,
+      hp: TEAM.bossStats(enemies[0], scene.level, scene.element, 0, scene.custom).hp,
+      def: TEAM.bossStats(enemies[0], scene.level, scene.element, 0, scene.custom).def,
+      atk: TEAM.bossStats(enemies[0], scene.level, scene.element, 0, scene.custom).atk,
+      spd: TEAM.bossStats(enemies[0], scene.level, scene.element, 0, scene.custom).spd,
+      element: scene.element,
+    },
+    single: { label: "单体", count: 1 },
+    group: { label: "群体", count: 4 },
   },
   counts: { characters: characters.length, visible: visible.size, output: characters.length },
   boards: {
@@ -95,12 +137,14 @@ const payload = {
 const sim = {
   generated: payload.generated,
   version: payload.version,
-  defaults,
-  boss: bossBase,
+  defaults: { output: 50 },
+  boss: payload.config.boss,
   chars: characters,
 };
 
 fs.writeFileSync(path.join(SITE, "data", "rank.js"), "window.RANK_WIKI = " + JSON.stringify(payload, null, 2) + ";\n", "utf8");
 fs.writeFileSync(path.join(SITE, "data", "rank_sim.js"), "window.RANK_SIM_DATA = " + JSON.stringify(sim) + ";\n", "utf8");
 fs.copyFileSync(path.join(CALC, "rank-core.js"), path.join(SITE, "rank-core.js"));
-console.log("wrote", characters.length, "characters;", "single top:", payload.boards.output.single[0].name, payload.boards.output.single[0].single.dps);
+console.log("wrote", characters.length, "characters;",
+  "single top:", payload.boards.output.single[0].name, payload.boards.output.single[0].single.dps,
+  "omega:", rows.find((r) => r.name === "欧米伽")?.single.dps);
