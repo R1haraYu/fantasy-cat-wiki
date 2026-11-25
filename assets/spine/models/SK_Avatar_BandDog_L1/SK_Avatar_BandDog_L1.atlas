@@ -1,0 +1,264 @@
+SK_Avatar_BandDog_L1.png
+size:2048,1024
+filter:Linear,Linear
+o 10
+bounds:107,998,32,22
+offsets:1,1,34,24
+o 100
+bounds:743,684,273,282
+offsets:14,0,314,295
+o 101
+bounds:775,4,266,296
+offsets:10,0,293,308
+rotate:270
+o 103
+bounds:1535,338,283,44
+offsets:1,1,285,46
+rotate:90
+o 104
+bounds:4,479,613,541
+o 105
+bounds:1249,181,276,220
+rotate:270
+o 106
+bounds:1444,16,189,148
+o 107
+bounds:1577,200,198,86
+rotate:90
+o 11
+bounds:4,453,46,68
+offsets:1,1,49,71
+o 12
+bounds:1092,738,37,32
+offsets:1,1,39,34
+o 13
+bounds:248,457,42,16
+offsets:1,1,43,17
+o 14
+bounds:184,1005,37,15
+offsets:0,3,39,18
+o 15
+bounds:1642,140,76,205
+o 16
+bounds:4,882,16,14
+offsets:1,1,18,16
+o 17
+bounds:4,992,95,28
+offsets:1,1,97,30
+o 18
+bounds:1064,168,55,120
+o 19
+bounds:1629,362,84,183
+o 20
+bounds:1010,4,57,59
+o 21
+bounds:502,1008,97,12
+o 22
+bounds:1316,712,93,29
+offsets:0,1,93,30
+o 23
+bounds:1449,206,50,104
+rotate:180
+o 24
+bounds:590,262,65,102
+o 25
+bounds:817,255,120,120
+o 26
+bounds:744,4,57,53
+o 27
+bounds:772,609,39,79
+o 28
+bounds:1241,937,43,83
+o 29
+bounds:1290,141,36,127
+rotate:90
+o 30
+bounds:1694,36,47,110
+o 31
+bounds:1308,532,37,123
+offsets:0,1,37,124
+rotate:90
+o 32
+bounds:1578,830,54,116
+o 33
+bounds:12,4,283,797
+rotate:90
+o 34
+bounds:1402,869,146,220
+rotate:270
+o 35
+bounds:1672,595,31,161
+o 36
+bounds:160,175,62,134
+rotate:90
+o 37
+bounds:492,218,293,802
+rotate:180
+o 38
+bounds:1436,118,141,212
+o 39
+bounds:1587,389,33,157
+o 40
+bounds:1406,969,51,112
+rotate:90
+o 41
+bounds:492,202,73,9
+o 42
+bounds:555,993,25,9
+offsets:1,1,26,10
+o 43
+bounds:296,462,25,9
+offsets:0,1,25,10
+o 44
+bounds:535,632,14,14
+offsets:1,1,16,16
+o 45
+bounds:643,1006,14,14
+offsets:1,1,16,16
+o 46
+bounds:58,466,11,13
+offsets:1,0,12,14
+o 47
+bounds:590,856,15,14
+offsets:1,1,17,17
+o 48
+bounds:4,431,15,14
+offsets:1,1,17,17
+o 49
+bounds:28,828,11,14
+o 50
+bounds:82,507,26,16
+offsets:1,1,28,18
+o 51
+bounds:147,1003,29,17
+offsets:1,1,31,19
+o 52
+bounds:4,907,5,8
+offsets:1,1,7,10
+o 53
+bounds:31,781,10,3
+offsets:1,1,13,5
+o 54
+bounds:31,815,7,5
+offsets:1,1,9,7
+o 55
+bounds:4,533,13,3
+offsets:1,1,15,5
+o 56
+bounds:58,507,16,9
+offsets:1,1,18,11
+o 57
+bounds:4,544,25,50
+o 58
+bounds:434,193,50,71
+o 59
+bounds:58,487,29,12
+o 60
+bounds:607,994,29,13
+o 61
+bounds:516,412,46,47
+o 62
+bounds:4,981,3,3
+offsets:1,2,5,7
+o 63
+bounds:122,517,14,23
+offsets:1,1,16,26
+o 64
+bounds:1581,4,111,114
+rotate:270
+o 65
+bounds:4,791,31,79
+o 66
+bounds:1203,312,52,50
+o 67
+bounds:1224,429,284,212
+rotate:90
+o 68_1
+bounds:1273,4,164,129
+o 69
+bounds:1013,714,71,79
+o 70
+bounds:121,4,144,44
+o 71
+bounds:530,490,46,134
+o 72
+bounds:4,147,101,154
+rotate:270
+o 73
+bounds:701,578,72,140
+o 74
+bounds:663,332,43,72
+o 75
+bounds:1679,669,154,70
+rotate:270
+o 76
+bounds:1682,874,146,84
+rotate:270
+o 77
+bounds:583,802,19,46
+o 78
+bounds:1268,551,213,82
+o 79
+bounds:282,221,263,149
+offsets:0,2,263,151
+rotate:90
+o 8
+bounds:660,122,93,46
+offsets:1,1,95,48
+o 80
+bounds:347,4,66,177
+rotate:90
+o 81
+bounds:1587,530,198,86
+rotate:90
+o 82
+bounds:1416,318,111,252
+o 83
+bounds:833,956,64,175
+rotate:90
+o 84
+bounds:4,524,110,249
+o 85
+bounds:4,610,7,12
+offsets:1,1,9,14
+o 86
+bounds:1472,605,47,80
+o 87
+bounds:273,13,94,36
+o 88
+bounds:533,4,110,233
+rotate:270
+o 89
+bounds:1627,831,64,175
+o 9
+bounds:1695,456,132,33
+rotate:90
+o 90
+bounds:428,279,109,268
+offsets:3,0,112,268
+rotate:180
+o 91
+bounds:1353,679,195,193
+rotate:270
+o 92
+bounds:1014,540,220,194
+o 93
+bounds:1079,4,300,223
+rotate:270
+o 94
+bounds:966,276,259,284
+o 95
+bounds:702,295,417,314
+rotate:90
+o 96
+bounds:1242,690,330,156
+rotate:90
+o 97
+bounds:1537,629,223,106
+rotate:270
+o 98
+bounds:1011,772,240,248
+offsets:22,0,289,263
+o 99
+bounds:4,221,280,284
+offsets:4,0,287,284

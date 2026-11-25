@@ -1,0 +1,81 @@
+name: Build offline Wiki APK
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: "1.7.3"
+      TAG: "v1.7.3"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.7"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build site manifest
+        run: |
+          python app/tools/build_site_manifest.py \
+            --site . \
+            --version "${VERSION}" \
+            --exclude apk --exclude .github --exclude .git \
+            --out app/app/src/main/assets/site_manifest.json
+
+      - name: Build APK
+        run: |
+          gradle -p app \
+            -PwikiSiteDir=../.. \
+            -PupdateManifestUrl="https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/latest.json" \
+            assembleDebug
+
+      - name: Stage APK
+        run: |
+          mkdir -p build-release
+          cp app/app/build/outputs/apk/debug/app-debug.apk build-release/app-debug.apk
+
+      - name: Build site zip + latest.json
+        run: |
+          python app/tools/make_release.py \
+            --site . \
+            --version "${VERSION}" \
+            --exclude apk --exclude .github --exclude .git \
+            --repo "${GITHUB_REPOSITORY}" \
+            --tag "${TAG}" \
+            --out build-release \
+            --apk build-release/app-debug.apk \
+            --apk-name app-debug.apk
+
+      - name: Verify release hashes and wiki-only scope
+        run: |
+          python app/tools/verify_release.py --release build-release
+          python app/tools/check_scope.py --release build-release
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name: "Wiki ${{ env.VERSION }}"
+          body: |
+            Offline wiki APK and hash-verified update package.
+          files: |
+            build-release/app-debug.apk
+            build-release/wiki-site-${{ env.VERSION }}.zip
+            build-release/latest.json
