@@ -73,6 +73,41 @@ apk/ 为Android工程
 gradle -p apk -PwikiSiteDir=../.. assembleDebug
 ```
 
+## 已发布到原Wiki仓库
+
+Release：
+
+```text
+https://github.com/R1haraYu/fantasy-cat-wiki/releases/tag/v1.7.3
+```
+
+GitHub Actions构建产物：
+
+```text
+app-debug.apk        448,700,523 bytes
+wiki-site-1.7.3.zip  391,579,500 bytes
+latest.json                  571 bytes
+```
+
+发布版哈希：
+
+```text
+APK SHA-256:
+678DB6242ED867F16145ED6E776A576144FFBBCBB6A4F13C2D4B57C8E659C015
+
+zip SHA-256:
+A8B5B35DBA622795E92EDC172D2479DB2F807D7CC6E0017888ACD15BDB975751
+
+manifest SHA-256:
+BB2FE70E805AC64B8A171335FD57D7BF3150070CD91C6CAC708F73DA1C628720
+```
+
+更新清单公共地址：
+
+```text
+https://github.com/R1haraYu/fantasy-cat-wiki/releases/latest/download/latest.json
+```
+
 ## 已构建离线APK
 
 ```text

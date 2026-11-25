@@ -9,7 +9,7 @@
   "use strict";
   const POW_MAX = 1000;
   const TP_START = 50;
-  const TP_MAX = 100;
+  const TP_MAX = 200;
   const TP_REGEN_PER_SEC = 5;
   const GCD_COOL_TIME = 1.5;
   const COST_A_DEFAULT = 20;
@@ -43,6 +43,7 @@
       spd: grownInt(row.Spd, row.Spd_f, steps),
       crit: grownInt(row.CrtChance, row.CrtChance_f, steps),
       critDmg: grownInt(row.CrtRatio, row.CrtRatio_f, steps),
+      accuracy: Number(row.Accuracy || 80),
     };
   }
 
@@ -63,11 +64,17 @@
   }
 
   const ELEMENT_CHAIN = [1, 2, 3, 4, 0, -1, -1];
-  function elementMultiplier(attacker, defender, advantage = 1.25) {
+  function missChance(accuracy) {
+    const t = Math.max(60, Math.min(100, Number(accuracy) || 100));
+    return Math.max(0, Math.min(1, 0.4 * Math.pow((100 - t) / 40, 1.5)));
+  }
+  function elementMultiplier(attacker, defender, advantage = 1.5, disadvantage = 0.5) {
     if (attacker == null || defender == null) return 1;
-    if (Number(attacker) === 6 || Number(defender) === 6) return 1;
-    if (ELEMENT_CHAIN[Number(attacker)] === Number(defender)) return advantage;
-    if (ELEMENT_CHAIN[Number(defender)] === Number(attacker)) return 1;
+    const a = Number(attacker), d = Number(defender);
+    if (a === 6 || d === 6) return 1;
+    // Log-derived direction: defender's chain points back at attacker -> advantage.
+    if (ELEMENT_CHAIN[d] === a) return advantage;
+    if (ELEMENT_CHAIN[a] === d) return disadvantage;
     return 1;
   }
 
@@ -83,12 +90,25 @@
     const tactics = character.tactics || {};
     const conditions = Array.isArray(tactics.conditions) ? tactics.conditions : [];
     const playerEffects = [];
+    const hitChance = 1 - missChance(character.base?.accuracy);
     const aliveStates = () => states.filter((s) => s.alive);
     const firstAlive = () => states.find((s) => s.alive) || null;
     const sumEffect = (list, stat) => (list || []).filter((e) => e.remaining > 0 && e.stat === stat).reduce((n, e) => n + Number(e.value || 0), 0);
+    const buffGroup = (effect) => {
+      if (!effect) return "";
+      if (effect.special === "golden_apple") return "golden_apple";
+      if (effect.special === "bubble_mark") return "bubble_mark";
+      if (effect.special === "decoy") return "decoy";
+      const name = String(effect.name || "");
+      if (["眩晕", "冻结", "睡眠", "麻痹"].includes(name)) return "hard_control";
+      if (name === "沉默" || name === "海神沉默") return "silence";
+      return "";
+    };
     const applyEffect = (list, effect) => {
       const duration = Number(effect.duration || 0);
       if (!duration) return;
+      const group = buffGroup(effect);
+      if (group) for (let i = list.length - 1; i >= 0; i -= 1) if (buffGroup(list[i]) === group) list.splice(i, 1);
       const idx = list.findIndex((e) => e.stat === effect.stat && e.name === effect.name && e.remaining > 0);
       if (idx >= 0) list.splice(idx, 1);
       list.push({ ...effect, remaining: duration });
@@ -100,13 +120,19 @@
 
     const costA = Number(tactics.costA != null ? tactics.costA : (character.costA != null ? character.costA : COST_A_DEFAULT));
     const costB = Number(tactics.costB != null ? tactics.costB : (character.costB != null ? character.costB : COST_B_DEFAULT));
-    const totalTp = Number(tactics.totalTp != null ? tactics.totalTp : TP_MAX);
+    const totalTp = Number(tactics.tpMax != null ? tactics.tpMax : (tactics.totalTp != null ? tactics.totalTp : TP_MAX));
+    const startTp = Number(tactics.tpStart != null ? tactics.tpStart : TP_START);
+    const tpRegen = Number(tactics.tpRegen != null ? tactics.tpRegen : TP_REGEN_PER_SEC);
+    const tpStrict = tactics.tpStrict !== false;
+    const tpAffordable = (cost) => tpStrict ? tp > cost : tp >= cost;
 
     let effective = 0, dot = 0, direct = 0, normal = 0;
     let killed = false, killTime = null;
-    let time = 0, tp = TP_START, pow = 0, actionIndex = 0, gcdUntil = 0;
+    let time = 0, tp = startTp, pow = 0, actionIndex = 0, gcdUntil = 0;
+    let tpRegenCarry = 0;
     let chosenTarget = null;
     const lastUse = new Map();
+    const cooldownUntil = new Map();
 
     function currentDef(st) { return st.def * (1 - Math.max(0, Math.min(.95, sumEffect(st.effects, "defPct")))); }
     function snapshot() {
@@ -134,7 +160,7 @@
           const useTime = Math.min(dt, ds.remaining);
           if (useTime <= 0) continue;
           const taken = Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct"));
-          applyDamage(st, st.maxHp * ds.rate * useTime * taken * elementMultiplier(character.element, st.element), "dot");
+          applyDamage(st, st.maxHp * ds.rate * useTime * taken, "dot");
           ds.remaining -= useTime;
           if (ds.remaining <= 0) st.dots.delete(key);
           if (!st.alive) break;
@@ -200,9 +226,15 @@
       }
       return true;
     }
+    function skillCooldownReady(slot) {
+      const skill = skills.get(slot);
+      const cd = skill ? Number(skill.cooldown || 0) : 0;
+      if (cd <= 0) return true;
+      return time + 1e-9 >= Number(cooldownUntil.get(slot) || 0);
+    }
     function chooseAction() {
       chosenTarget = null;
-      if (pow >= POW_MAX && skills.has("S")) return "S";
+      if (pow >= POW_MAX && skills.has("S") && skillCooldownReady("S")) return "S";
       if (time + 1e-9 < gcdUntil) return "normal";
       for (const node of conditions) {
         if (node.action === "Skill_S") continue;
@@ -214,8 +246,10 @@
         if (node.action === "Attack") { chosenTarget = target; return "normal"; }
         const slot = node.action === "Skill_A" ? "A" : node.action === "Skill_B" ? "B" : null;
         if (!slot || !skills.has(slot)) continue;
+        if (!skillCooldownReady(slot)) continue;
         const cost = slot === "A" ? costA : costB;
-        if (tp < cost) continue;
+        // TP can be configured as strict greater-than or non-strict.
+        if (!tpAffordable(cost)) continue;
         chosenTarget = target;
         return slot;
       }
@@ -232,7 +266,12 @@
       tickEffects(playerEffects, interval);
       for (const st of states) if (st.alive) tickEffects(st.effects, interval);
       time = at;
-      tp = Math.min(totalTp, tp + interval * TP_REGEN_PER_SEC);
+      // Whole-second TP ticks only.
+      tpRegenCarry += Math.max(0, interval);
+      while (tpRegenCarry >= 1) {
+        tp = Math.min(totalTp, tp + tpRegen);
+        tpRegenCarry -= 1;
+      }
       const choice = chooseAction();
       const skill = choice === "normal" ? null : skills.get(choice);
       const p = snapshot();
@@ -241,7 +280,7 @@
         const targets = skill.targets === "all" ? aliveStates() : ([target].filter(Boolean));
         if (Number(skill.damage || 0) > 0) {
           for (const st of targets) {
-            const dmg = hitDamage(p.atk, Number(skill.damage), p.critMult, currentDef(st)) * p.dmgDealt * Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct")) * elementMultiplier(character.element, st.element);
+            const dmg = hitDamage(p.atk, Number(skill.damage), p.critMult, currentDef(st)) * p.dmgDealt * hitChance * Math.max(0, 1 + sumEffect(st.effects, "dmgTakenPct")) * elementMultiplier(character.element, st.element);
             applyDamage(st, dmg, "direct");
           }
         }
@@ -262,6 +301,12 @@
           }
         }
         lastUse.set(String(nodeActionKey(choice)), time);
+        if (Number(skill.cooldown || 0) > 0) {
+          const effectDuration = skill.cooldownStart === "action_end"
+            ? 0
+            : (skill.effects || []).reduce((m, e) => Math.max(m, Number(e.duration || 0)), 0);
+          cooldownUntil.set(choice, time + effectDuration + Number(skill.cooldown));
+        }
         gcdUntil = Math.max(gcdUntil, time + GCD_COOL_TIME);
         if (choice === "A") tp -= costA;
         else if (choice === "B") tp -= costB;
@@ -269,12 +314,12 @@
       } else {
         const target = chosenTarget && chosenTarget.alive ? chosenTarget : firstAlive();
         if (target) {
-          const dmg = hitDamage(p.atk, 1, p.critMult, currentDef(target)) * p.dmgDealt * Math.max(0, 1 + sumEffect(target.effects, "dmgTakenPct")) * elementMultiplier(character.element, target.element);
+          const dmg = hitDamage(p.atk, 1, p.critMult, currentDef(target)) * p.dmgDealt * hitChance * Math.max(0, 1 + sumEffect(target.effects, "dmgTakenPct")) * elementMultiplier(character.element, target.element);
           applyDamage(target, dmg, "normal");
         }
       }
       if (killed) break;
-      pow = Math.min(POW_MAX, pow + 150);
+      if (choice !== "S") pow = Math.min(POW_MAX, pow + 150);
       actionIndex += 1;
     }
     function nodeActionKey(slot) {
@@ -291,5 +336,5 @@
     return .41666666;
   }
 
-  return { POW_MAX, TP_START, TP_MAX, GCD_COOL_TIME, roundEven, grownInt, panelStats, bossAt, hitDamage, elementMultiplier, chargeTime, battleOutput };
+  return { POW_MAX, TP_START, TP_MAX, GCD_COOL_TIME, roundEven, grownInt, panelStats, bossAt, hitDamage, missChance, elementMultiplier, chargeTime, battleOutput };
 });
