@@ -33,9 +33,19 @@ def main():
     ap.add_argument("--exclude", action="append", default=[])
     args = ap.parse_args()
 
-    site = Path(args.site)
-    out = Path(args.out)
+    site = Path(args.site).resolve()
+    out = Path(args.out).resolve()
     out.mkdir(parents=True, exist_ok=True)
+    # If the release directory is inside the site root (GitHub root-site
+    # layout), never include it in the package. Otherwise the zip can include
+    # itself and grow forever.
+    excludes = list(args.exclude)
+    try:
+        out_rel = out.relative_to(site).as_posix()
+        if out_rel != ".":
+            excludes.append(out_rel)
+    except ValueError:
+        pass
     manifest_path = out / MANIFEST
     if manifest_path.exists():
         manifest_path.unlink()
@@ -45,7 +55,7 @@ def main():
     tool = Path(__file__).with_name("build_site_manifest.py")
     cmd = ["python", str(tool), "--site", str(site), "--version", args.version,
            "--out", str(manifest_path)]
-    for e in args.exclude:
+    for e in excludes:
         cmd += ["--exclude", e]
     subprocess.run(cmd, check=True)
     manifest_sha = sha256_file(manifest_path)
@@ -61,7 +71,7 @@ def main():
             if not p.is_file():
                 continue
             rel = p.relative_to(site).as_posix()
-            if any(rel == e or rel.startswith(e.rstrip("/") + "/") for e in args.exclude):
+            if any(rel == e or rel.startswith(e.rstrip("/") + "/") for e in excludes):
                 continue
             z.write(p, rel)
     package_sha = sha256_file(zip_path)
