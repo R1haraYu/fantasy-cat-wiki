@@ -33,15 +33,15 @@ jobs:
 
       - name: Build site manifest
         run: |
-          python app/tools/build_site_manifest.py \
+          python apk/tools/build_site_manifest.py \
             --site . \
             --version "${VERSION}" \
             --exclude apk --exclude .github --exclude .git \
-            --out app/app/src/main/assets/site_manifest.json
+            --out apk/app/src/main/assets/site_manifest.json
 
       - name: Build APK
         run: |
-          gradle -p app \
+          gradle -p apk \
             -PwikiSiteDir=../.. \
             -PupdateManifestUrl="https://github.com/${GITHUB_REPOSITORY}/releases/latest/download/latest.json" \
             assembleDebug
@@ -49,11 +49,11 @@ jobs:
       - name: Stage APK
         run: |
           mkdir -p build-release
-          cp app/app/build/outputs/apk/debug/app-debug.apk build-release/app-debug.apk
+          cp apk/app/build/outputs/apk/debug/app-debug.apk build-release/app-debug.apk
 
       - name: Build site zip + latest.json
         run: |
-          python app/tools/make_release.py \
+          python apk/tools/make_release.py \
             --site . \
             --version "${VERSION}" \
             --exclude apk --exclude .github --exclude .git \
@@ -65,8 +65,8 @@ jobs:
 
       - name: Verify release hashes and wiki-only scope
         run: |
-          python app/tools/verify_release.py --release build-release
-          python app/tools/check_scope.py --release build-release
+          python apk/tools/verify_release.py --release build-release
+          python apk/tools/check_scope.py --release build-release
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2
