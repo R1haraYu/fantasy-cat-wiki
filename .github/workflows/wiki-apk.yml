@@ -13,14 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.1"
-      TAG: "v0.8.1"
+      VERSION: "0.8.2"
+      TAG: "v0.8.2"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        版本徽章改为软件版本号
-        更新前弹窗确认
-        增量更新只下载变更文件
-        更新日志显示
+        动态版本徽章更新到 0.8.2
+        首页版本号更新到 0.8.2
+        测试横幅首次显示，刷新后自动消失
     steps:
       - uses: actions/checkout@v4
 
