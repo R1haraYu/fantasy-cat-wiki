@@ -13,13 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.8"
-      TAG: "v0.8.8"
+      VERSION: "0.8.9"
+      TAG: "v0.8.9"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        角色展示区背景改为全屏填充
-        立绘与背景比例按游戏实机截图对齐
-        立绘中心位置保持不变，放大至实机相对尺寸
+        修复阿尔法等立绘过小问题
+        手机端按各角色模型归一化立绘视觉高度
+        保留实机背景全屏与比例基准
     steps:
       - uses: actions/checkout@v4
 

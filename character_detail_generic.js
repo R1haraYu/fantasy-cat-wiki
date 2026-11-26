@@ -268,9 +268,10 @@
   }
   function applyStageLayout(player, base) {
     if (!player || !player.canvas) return;
-    // Full-body portraits use the fixed game showroom frame (640x1024 at
-    // 1.2x). Only Q-version mini models keep the per-model stage layout.
-    if (!String(base).startsWith('SK_MiniAvatar')) { player.canvas.style.transform = ''; return; }
+    // Desktop keeps the fixed in-game showroom composition. Mobile applies
+    // per-model normalization because the extracted full-body skeletons use
+    // different native content sizes (e.g. Alpha/RedHat is much smaller).
+    if (!window.matchMedia('(max-width:900px)').matches) { player.canvas.style.transform = ''; return; }
     const cfg = (window.STAGE_LAYOUT || {})[base];
     player.canvas.style.transformOrigin = '50% 100%';
     if (!cfg) { player.canvas.style.transform = ''; return; }
