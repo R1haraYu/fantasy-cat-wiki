@@ -13,8 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "1.8.0"
-      TAG: "v1.8.0"
+      VERSION: "1.8.1"
+      TAG: "v1.8.1"
+      CHANGELOG: |
+        更新提示显示更新日志
+        更新前弹窗确认，不再自动下载
+        增量更新只下载变更文件
+        首页版本号改为软件版本号
     steps:
       - uses: actions/checkout@v4
 
@@ -61,7 +66,8 @@ jobs:
             --tag "${TAG}" \
             --out build-release \
             --apk build-release/app-debug.apk \
-            --apk-name app-debug.apk
+            --apk-name app-debug.apk \
+            --changelog "${CHANGELOG}"
 
       - name: Verify release hashes and wiki-only scope
         run: |

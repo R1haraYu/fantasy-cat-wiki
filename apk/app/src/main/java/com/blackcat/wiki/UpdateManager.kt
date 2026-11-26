@@ -37,7 +37,8 @@ class UpdateManager(
         val manifestUrl: String,
         val filesBaseUrl: String,
         val manifestBytes: ByteArray?,
-        val manifest: JSONObject?
+        val manifest: JSONObject?,
+        val changelog: String
     ) {
         fun summary(): String = if (incremental) {
             "增量更新：${changedFiles} 个文件，约 ${formatBytes(changedBytes)}"
@@ -147,7 +148,8 @@ class UpdateManager(
                     remoteVersion, remoteManifestSha, true,
                     changedFiles, changedBytes,
                     "", "", latest.optLong("packageBytes", 0L),
-                    manifestUrl, filesBaseUrl, manifestBytes, manifest
+                    manifestUrl, filesBaseUrl, manifestBytes, manifest,
+                    latest.optString("changelog", "")
                 ),
                 "发现 Wiki 新版本 $remoteVersion$apkNotice"
             )
@@ -163,7 +165,8 @@ class UpdateManager(
                 remoteVersion, remoteManifestSha, false,
                 0, 0, packageUrl, packageSha,
                 latest.optLong("packageBytes", 0L),
-                "", "", null, null
+                "", "", null, null,
+                latest.optString("changelog", "")
             ),
             "发现 Wiki 新版本 $remoteVersion$apkNotice"
         )

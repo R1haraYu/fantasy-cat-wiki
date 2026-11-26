@@ -29,6 +29,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--apk", default="")
     ap.add_argument("--apk-name", default="app-debug.apk")
+    ap.add_argument("--changelog", default="")
     ap.add_argument("--min-app-version", default="1.7.3")
     ap.add_argument("--exclude", action="append", default=[])
     args = ap.parse_args()
@@ -88,6 +89,7 @@ def main():
         "packageSha256": package_sha,
         "apkUrl": f"https://github.com/{args.repo}/releases/download/{args.tag}/{args.apk_name}",
         "apkSha256": apk_sha,
+        "changelog": args.changelog,
         "minAppVersion": args.min_app_version,
     }
     (out / "latest.json").write_text(

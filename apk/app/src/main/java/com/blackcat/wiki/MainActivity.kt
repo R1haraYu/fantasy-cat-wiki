@@ -108,10 +108,15 @@ class MainActivity : Activity() {
     private fun showUpdatePrompt(plan: UpdateManager.Plan) {
         if (isFinishing || isDestroyed) return
         prompting = true
+        val notes = if (plan.changelog.isBlank()) {
+            ""
+        } else {
+            "\n\n更新日志：\n" + plan.changelog
+        }
         AlertDialog.Builder(this)
             .setTitle("发现 Wiki 更新 ${plan.version}")
             .setMessage(
-                "${plan.summary()}\n\n" +
+                "${plan.summary()}$notes\n\n" +
                     "确认后才开始下载。下载期间会显示进度，完成后自动切换并清理旧版本。"
             )
             .setPositiveButton("下载并更新") { _, _ ->

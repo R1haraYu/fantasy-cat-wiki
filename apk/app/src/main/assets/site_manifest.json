@@ -1853,7 +1853,7 @@
     "img/weapon/T_Icon_Weapon_10033_00.png": "d16dace57fd644fb40f18b0aaf5e8dddeffe30c101d12ea093b64a9886ea0b30",
     "img/weapon/T_Icon_Weapon_10034_00.png": "edd758806e0530b758d0f38908a16d2a5ff4c840216e264cea6c8669811b3862",
     "img/weapon/T_Icon_Weapon_10035_00.png": "cef61b956aab5c8ca5148a85d103911b7164a694f106f7edf9dca18e7201044b",
-    "index.html": "62d000ea9e4e33d75455bc84ce5b1f132696d173727b058fdc9c5ec51277f886",
+    "index.html": "94ee9a44a093694cba308df7d2d6747842a56087d2550bd539c5e678037b9bed",
     "items.html": "ee3060c2875d92225ef9dc14eee4028094d5ea604cfb8cbbd027df36e7d5d531",
     "map.css": "fe6acdb80b10b8a2409e5a730b0c6e75158cd4e27f8848881503253f178d346a",
     "map.html": "b5c659ad42e288a804700459144783e631d94000a27ca8f23e014fba95c2dc41",
@@ -3738,7 +3738,7 @@
     "img/weapon/T_Icon_Weapon_10033_00.png": 31529,
     "img/weapon/T_Icon_Weapon_10034_00.png": 38383,
     "img/weapon/T_Icon_Weapon_10035_00.png": 39855,
-    "index.html": 4368,
+    "index.html": 4141,
     "items.html": 2467,
     "map.css": 6936,
     "map.html": 2241,
@@ -3769,5 +3769,5 @@
     "vendor/spine-player.min.js": 229325,
     "world.html": 2165
   },
-  "version": "1.7.9"
+  "version": "1.8.1"
 }
