@@ -13,15 +13,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.6"
-      TAG: "v0.8.6"
+      VERSION: "0.8.7"
+      TAG: "v0.8.7"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        全站数据对照游戏表重新核对
-        补全6个角色碎片道具
-        补全36种已出现怪物及出现地点
-        角色技能文本与等级改为游戏表原数据
-        补全活动/委托关卡缺失字段并同步搜索索引
+        手机端角色展示区背景改为全屏填充
+        角色区背景不再保留左右留白
     steps:
       - uses: actions/checkout@v4
 

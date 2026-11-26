@@ -34,7 +34,7 @@
     <p id="count" class="count"></p>
   </header>
   <div id="wiki-update-test" style="padding:8px 16px;background:#fff3cd;color:#664d03;text-align:center;font-size:13px;font-weight:600;border-bottom:1px solid #ffe69c;">
-    全站数据核对更新 · v0.8.6
+    手机端角色展示区背景全屏填充 · v0.8.7
   </div>
 
 
@@ -42,7 +42,7 @@
   <div class="v2-home">
     <section class="v2-hero">
       <div class="v2-hero-copy">
-        <p class="v2-kicker">CHARACTER ARCHIVE / VERSION 0.8.6</p>
+        <p class="v2-kicker">CHARACTER ARCHIVE / VERSION 0.8.7</p>
         <h1>幻想之都的<br><em>黑猫 Wiki</em></h1>
         <p>角色资料、属性技能、皮肤立绘与数据排行。把这座城市的每一次相遇，整理成可以随时翻阅的档案。</p>
         <div class="v2-actions">
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="v2-hero-art" id="birthdayHero">
-        <span class="v2-art-chip" id="heroChip">TODAY / 0.8.6</span>
+        <span class="v2-art-chip" id="heroChip">TODAY / 0.8.7</span>
         <div class="v2-hero-media" id="heroMedia"></div>
         <div class="v2-hero-caption" id="heroCaption"></div>
       </div>
@@ -84,7 +84,7 @@
     (() => {
       const box = document.getElementById('wiki-update-test');
       if (!box) return;
-      const key = 'wiki-update-test-seen-0.8.6';
+      const key = 'wiki-update-test-seen-0.8.7';
       if (localStorage.getItem(key)) box.remove();
       else localStorage.setItem(key, '1');
     })();
