@@ -845,8 +845,8 @@
     "assets/voice/A_Voice_10034_RareUp_03.wav": "78e8bd2dc3fdaf025d9a7e5c624dcc1cb1d7395fd6f1c371ea4f900b0a3813b0",
     "assets/voice/A_Voice_10034_RareUp_04.wav": "a9bff2f92fc12bada3ac96a028e7ac2277788ec6e9bee423efbcd9f7bbea2cad",
     "assets/voice/A_Voice_10034_S_Skill.wav": "d00716fa9fdc8e893a90849720ed6e87b5367e884be7a421084b77882c76f0de",
-    "birthday_hero.js": "d032c0086dd4c379e3582ea6ffc11e05f3866c07490fa1087378fc8506cd4401",
-    "character_detail.html": "53b5b7bec70ac151f3bb705b32313b3f3032c43e0cb89446b586ba3e82c8505b",
+    "birthday_hero.js": "42ec803a29c786fe25cfc6c4eef051b99a36f2d528026c84b3f0715ceb394529",
+    "character_detail.html": "06342c8b4359d8d2e3b1070ef9d0524456611580dbe17056bcd072ba35766144",
     "character_detail_generic.js": "04d432daf6928c057038712b04d01bb0a66c6c0737426852c3d6c9b8e51e302e",
     "data.js": "c518f0aed3a8edd2589bd0b951f1556d6849f1456e1e259d2de69fceac00bfca",
     "data/buffs.js": "f7faa67f96bc3304a2cfb18417965b6897071365379d8b8c3c8809f8a30ab558",
@@ -1853,7 +1853,7 @@
     "img/weapon/T_Icon_Weapon_10033_00.png": "d16dace57fd644fb40f18b0aaf5e8dddeffe30c101d12ea093b64a9886ea0b30",
     "img/weapon/T_Icon_Weapon_10034_00.png": "edd758806e0530b758d0f38908a16d2a5ff4c840216e264cea6c8669811b3862",
     "img/weapon/T_Icon_Weapon_10035_00.png": "cef61b956aab5c8ca5148a85d103911b7164a694f106f7edf9dca18e7201044b",
-    "index.html": "94ee9a44a093694cba308df7d2d6747842a56087d2550bd539c5e678037b9bed",
+    "index.html": "b90c11bf204757be4ed5d6ca33a6905e56bca41d22d5f2e0a38f4c17a110b994",
     "items.html": "ee3060c2875d92225ef9dc14eee4028094d5ea604cfb8cbbd027df36e7d5d531",
     "map.css": "fe6acdb80b10b8a2409e5a730b0c6e75158cd4e27f8848881503253f178d346a",
     "map.html": "b5c659ad42e288a804700459144783e631d94000a27ca8f23e014fba95c2dc41",
@@ -2730,8 +2730,8 @@
     "assets/voice/A_Voice_10034_RareUp_03.wav": 199244,
     "assets/voice/A_Voice_10034_RareUp_04.wav": 471268,
     "assets/voice/A_Voice_10034_S_Skill.wav": 236844,
-    "birthday_hero.js": 2489,
-    "character_detail.html": 37027,
+    "birthday_hero.js": 2611,
+    "character_detail.html": 37029,
     "character_detail_generic.js": 27286,
     "data.js": 64250,
     "data/buffs.js": 2304,
@@ -3738,7 +3738,7 @@
     "img/weapon/T_Icon_Weapon_10033_00.png": 31529,
     "img/weapon/T_Icon_Weapon_10034_00.png": 38383,
     "img/weapon/T_Icon_Weapon_10035_00.png": 39855,
-    "index.html": 4141,
+    "index.html": 4145,
     "items.html": 2467,
     "map.css": 6936,
     "map.html": 2241,
@@ -3769,5 +3769,5 @@
     "vendor/spine-player.min.js": 229325,
     "world.html": 2165
   },
-  "version": "1.8.1"
+  "version": "0.8.1"
 }

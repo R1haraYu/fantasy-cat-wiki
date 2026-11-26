@@ -13,12 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "1.8.2"
-      TAG: "v1.8.2"
+      VERSION: "0.8.1"
+      TAG: "v0.8.1"
       CHANGELOG: |
-        增量更新与更新日志测试
-        首页版本号更新到 1.8.2
-        测试横幅首次显示，刷新后自动消失
+        更新提示显示更新日志
+        更新前弹窗确认，不再自动下载
+        增量更新只下载变更文件
+        首页版本号改为软件版本号
     steps:
       - uses: actions/checkout@v4
 
@@ -66,7 +67,8 @@ jobs:
             --out build-release \
             --apk build-release/app-debug.apk \
             --apk-name app-debug.apk \
-            --changelog "${CHANGELOG}"
+            --changelog "${CHANGELOG}" \
+            --min-app-version "${VERSION}"
 
       - name: Verify release hashes and wiki-only scope
         run: |

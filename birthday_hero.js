@@ -5,6 +5,7 @@
   const media = document.getElementById("heroMedia");
   const caption = document.getElementById("heroCaption");
   const chip = document.getElementById("heroChip");
+  const WIKI_VERSION = "0.8.1";
   if (!hero || !media || !caption) return;
 
   const roster = (window.CODEX || []).filter((c) => !c.hidden);
@@ -40,7 +41,7 @@
     hero.classList.remove("is-community");
     setImage(imageFor(c), fallbackFor(c), c.name);
     caption.innerHTML = `<small>TODAY'S BIRTHDAY</small><b>今日是${c.name}的生日。</b><span>生日快乐。</span>`;
-    chip.textContent = birthdays.length > 1 ? `BIRTHDAY ${index + 1}/${birthdays.length}` : "BIRTHDAY / 2.0";
+    chip.textContent = birthdays.length > 1 ? `BIRTHDAY ${index + 1}/${birthdays.length}` : `VERSION / ${WIKI_VERSION}`;
   }
 
   function renderCommunity() {
@@ -48,7 +49,7 @@
     hero.classList.remove("is-birthday");
     setImage("img/brand/qq_group.webp", "", "幻想之都的黑猫官方QQ群");
     caption.innerHTML = `<small>OFFICIAL COMMUNITY</small><b>BUG反馈、建议、吹水 都可以来啊</b><span>官方QQ群 · 444215288</span>`;
-    chip.textContent = "OFFICIAL QQ / 2.0";
+    chip.textContent = `VERSION / ${WIKI_VERSION}`;
   }
 
   if (!birthdays.length) {
