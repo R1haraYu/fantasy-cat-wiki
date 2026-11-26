@@ -13,14 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.4"
-      TAG: "v0.8.4"
+      VERSION: "0.8.5"
+      TAG: "v0.8.5"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
         角色档案页按游戏实机 ShowRoom 构图重做
-        背景改为 800x1280 原生居中
-        立绘改为 640x1024 框，1.2 倍缩放
-        立绘底边中心位于 (540,570)
+        背景 800x1280 原生居中，立绘 640x1024 框 1.2 倍
+        立绘底边中心 (540,570)
+        手机端舞台改为实机 1080x2340 比例
     steps:
       - uses: actions/checkout@v4
 
