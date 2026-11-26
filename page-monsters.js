@@ -37,7 +37,7 @@ function monsterCard(m) {
   </a>`;
 }
 
-const APPEAR_KINDS = ["主线", "困难", "支线", "活动", "冒险者委托", "废墟"];
+const APPEAR_KINDS = ["主线", "困难", "支线", "活动", "冒险者委托"];
 
 function renderList() {
   const q = state.q.trim();

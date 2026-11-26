@@ -20,7 +20,6 @@
       <a href="items.html">道具</a>
       <a href="monsters.html">怪物</a>
       <a href="stages.html">关卡</a>
-      <a href="world.html">世界</a>
       <a href="map.html">地图</a>
       <a href="story.html">剧情</a>
       <a href="quests.html">任务</a>
@@ -34,7 +33,7 @@
     <p id="count" class="count"></p>
   </header>
   <div id="wiki-update-test" style="padding:8px 16px;background:#fff3cd;color:#664d03;text-align:center;font-size:13px;font-weight:600;border-bottom:1px solid #ffe69c;">
-    修复克萝依Q版立绘异常 · v0.8.10
+    删除世界页面与未实装废墟地名 · v0.8.11
   </div>
 
 
@@ -42,7 +41,7 @@
   <div class="v2-home">
     <section class="v2-hero">
       <div class="v2-hero-copy">
-        <p class="v2-kicker">CHARACTER ARCHIVE / VERSION 0.8.10</p>
+        <p class="v2-kicker">CHARACTER ARCHIVE / VERSION 0.8.11</p>
         <h1>幻想之都的<br><em>黑猫 Wiki</em></h1>
         <p>角色资料、属性技能、皮肤立绘与数据排行。把这座城市的每一次相遇，整理成可以随时翻阅的档案。</p>
         <div class="v2-actions">
@@ -51,7 +50,7 @@
         </div>
       </div>
       <div class="v2-hero-art" id="birthdayHero">
-        <span class="v2-art-chip" id="heroChip">TODAY / 0.8.10</span>
+        <span class="v2-art-chip" id="heroChip">TODAY / 0.8.11</span>
         <div class="v2-hero-media" id="heroMedia"></div>
         <div class="v2-hero-caption" id="heroCaption"></div>
       </div>
@@ -70,7 +69,7 @@
   <main id="app"></main>
   <footer class="footer">
     <p>《幻想之都的黑猫》攻略资料站 · 资料整理自游戏内容，属性与战斗数据仅供参考，请以游戏内实际内容为准。</p>
-    <p>页面：<a href="index.html">角色</a> · <a href="equipment.html">装备</a> · <a href="items.html">道具</a> · <a href="monsters.html">怪物</a> · <a href="stages.html">关卡</a> · <a href="world.html">世界</a>
+    <p>页面：<a href="index.html">角色</a> · <a href="equipment.html">装备</a> · <a href="items.html">道具</a> · <a href="monsters.html">怪物</a> · <a href="stages.html">关卡</a> ·
       <a href="map.html">地图</a> · <a href="story.html">剧情</a> · <a href="quests.html">任务</a> · <a href="systems.html">系统</a> · <a href="ranking.html">数据排行</a> · <a href="search.html">搜索</a></p>
   </footer>
   <script src="data.js?v=22"></script>
@@ -84,7 +83,7 @@
     (() => {
       const box = document.getElementById('wiki-update-test');
       if (!box) return;
-      const key = 'wiki-update-test-seen-0.8.10';
+      const key = 'wiki-update-test-seen-0.8.11';
       if (localStorage.getItem(key)) box.remove();
       else localStorage.setItem(key, '1');
     })();

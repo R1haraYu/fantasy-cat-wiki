@@ -13,13 +13,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.10"
-      TAG: "v0.8.10"
+      VERSION: "0.8.11"
+      TAG: "v0.8.11"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        修复克萝依Q版立绘 Animation bounds invalid 异常
-        Q版改为按骨架实际边界自适应
-        去除Q版重复缩放
+        删除世界页面及导航入口
+        怪物图鉴移除未实装的错乱废墟地点
     steps:
       - uses: actions/checkout@v4
 

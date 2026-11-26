@@ -5,7 +5,7 @@
   const media = document.getElementById("heroMedia");
   const caption = document.getElementById("heroCaption");
   const chip = document.getElementById("heroChip");
-  const WIKI_VERSION = "0.8.10";
+  const WIKI_VERSION = "0.8.11";
   if (!hero || !media || !caption) return;
 
   const roster = (window.CODEX || []).filter((c) => !c.hidden);
