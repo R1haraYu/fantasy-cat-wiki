@@ -1,8 +1,9 @@
-/* Wiki Site 2.0 — shared shell behaviour */
+/* Wiki Site — shared shell behaviour */
 (() => {
   "use strict";
   document.body.classList.add("v2");
 
+  const WIKI_VERSION = "0.8.1";
   const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
   const aliases = { "": "index.html", "/": "index.html" };
   const here = aliases[path] || path;
@@ -15,10 +16,10 @@
   if (brand && !brand.querySelector(".v2-version")) {
     const badge = document.createElement("span");
     badge.className = "v2-version";
-    badge.textContent = "2.0";
-    badge.title = "Wiki Site 2.0";
+    badge.textContent = WIKI_VERSION;
+    badge.title = "Wiki Site " + WIKI_VERSION;
     brand.appendChild(badge);
   }
 
-  if (!/ · 2\.0$/.test(document.title)) document.title += " · 2.0";
+  document.title = document.title.replace(/\s*·\s*2\.0$/, "") + " · " + WIKI_VERSION;
 })();
