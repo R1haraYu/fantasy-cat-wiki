@@ -63,7 +63,11 @@ const rawChars = JSON.parse(fs.readFileSync(path.join(ROOT, "01_GameData", "extr
 const rawById = new Map(rawChars.map((r) => [Number(r.Id), r]));
 const byId = new Map(chars.map((c) => [Number(c.id), c]));
 
+// Wiki ranking must only contain characters visible on the wiki.
+// The calculator can include hidden/unreleased test characters, but the
+// public wiki must not.
 const characters = calcData.characters
+  .filter((c) => visible.has(Number(c.id)))
   .map((c) => {
     const current = byId.get(Number(c.id)) || c;
     const row = rawById.get(Number(c.id));
@@ -108,7 +112,7 @@ function ranked(rows, getter) {
 }
 const payload = {
   generated: new Date().toISOString(),
-  version: "V1.2.1",
+  version: "V1.2.2",
   title: "输出排行",
   note: "与计算器使用同一TeamEngine：50级究极大食花；单体1目标、群体4目标；期望暴击，含命中/元素亲和/DoT/特殊角色机制。",
   config: {

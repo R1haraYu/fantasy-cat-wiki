@@ -1,6 +1,6 @@
 window.RANK_WIKI = {
-  "generated": "2026-11-25T09:41:19.482Z",
-  "version": "V1.2.1",
+  "generated": "2026-11-26T00:47:13.090Z",
+  "version": "V1.2.2",
   "title": "输出排行",
   "note": "与计算器使用同一TeamEngine：50级究极大食花；单体1目标、群体4目标；期望暴击，含命中/元素亲和/DoT/特殊角色机制。",
   "config": {
@@ -25,9 +25,9 @@ window.RANK_WIKI = {
     }
   },
   "counts": {
-    "characters": 36,
+    "characters": 29,
     "visible": 29,
-    "output": 36
+    "output": 29
   },
   "boards": {
     "output": {
@@ -616,316 +616,6 @@ window.RANK_WIKI = {
           "rank": 4
         },
         {
-          "id": 10025,
-          "name": "爱洛",
-          "role": "support",
-          "roleLabel": "辅助",
-          "element": 0,
-          "elementName": "王剑",
-          "elementSymbol": "剑",
-          "avatar": "img/rank_avatar/10025.png",
-          "link": "index.html#/10025",
-          "base": {
-            "hp": 7432,
-            "atk": 1319,
-            "defense": 316,
-            "mind": 563,
-            "spd": 126,
-            "crit": 0.14000000059604645,
-            "critDmg": 1.5,
-            "accuracy": 81
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "荆棘诅咒",
-              "damage": 0,
-              "targets": "all",
-              "dot": {
-                "rate": 0.01,
-                "duration": 3,
-                "targets": "all",
-                "name": "撕裂"
-              },
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "荆棘",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0,
-                  "duration": 10,
-                  "target": "self",
-                  "special": "normal_aoe"
-                }
-              ],
-              "desc": "爱洛与“噩兆”身边围绕着不祥的荆棘。每次普通攻击都可以对敌方全体造成伤害，持续10秒，并赋予敌方全体【撕裂】效果，使其每秒失去1%的生命值，持续3秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "冥夜窥望",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "攻击提升",
-                  "kind": "buff",
-                  "stat": "atkPct",
-                  "value": 0.58,
-                  "duration": 10,
-                  "target": "self"
-                }
-              ],
-              "desc": "在黑夜中窥视梦境。使自身攻击力提升58%，持续10秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "梦魇潜影",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "梦魇",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0,
-                  "duration": 13,
-                  "target": "self",
-                  "special": "extra_attack_2x"
-                }
-              ],
-              "desc": "撕裂梦境与现实的边界，吞噬敌方的精神。“噩兆”每次攻击都对目标敌方造成相当于自身攻击力双倍的伤害，持续13秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10024.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 348,
-            "effective": 19222,
-            "killed": true,
-            "killTime": 55.24,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 1312,
-            "effective": 76888,
-            "killed": true,
-            "killTime": 58.6,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 5
-        },
-        {
-          "id": 10016,
-          "name": "贝塔",
-          "role": "dps",
-          "roleLabel": "输出",
-          "element": 0,
-          "elementName": "王剑",
-          "elementSymbol": "剑",
-          "avatar": "img/rank_avatar/10016.png",
-          "link": "index.html#/10016",
-          "base": {
-            "hp": 4855,
-            "atk": 886,
-            "defense": 251,
-            "mind": 436,
-            "spd": 118,
-            "crit": 0.14000000059604645,
-            "critDmg": 1.5,
-            "accuracy": 80
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "速战速决",
-              "damage": 2.5,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "行动敏捷是贝塔的最大优势。对防御力最低的敌方单位造成相当于自身攻击力250%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "刺客的技巧",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "敏捷",
-                  "kind": "buff",
-                  "stat": "spdPct",
-                  "value": 0.3,
-                  "duration": 8,
-                  "target": "self"
-                },
-                {
-                  "name": "暴伤",
-                  "kind": "buff",
-                  "stat": "critDmgPct",
-                  "value": 0.32,
-                  "duration": 8,
-                  "target": "self"
-                }
-              ],
-              "desc": "锁定目标，执行任务。赋予自身【敏捷】效果，使自身速度提高30%，持续8秒，并赋予自身【暴伤】效果，使自身暴击伤害提高32%，持续8秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "冷厉追猎",
-              "damage": 3.1,
-              "targets": "single",
-              "dot": {
-                "rate": 0.01,
-                "duration": 10,
-                "targets": "single",
-                "name": "撕裂"
-              },
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "于暗夜中隐藏身形，冷酷而迅速地解决对手。对防御力最低的敌方单位造成相当于自身攻击力310%的伤害。若目标生命值低于50%，则额外赋予其【撕裂】效果，使其每秒损失1%的生命值，持续10秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10015.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Time25Sec",
-                "self": "Any",
-                "target": "Foe_LowestDef",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe_LowestDef",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 347.5,
-            "effective": 19222,
-            "killed": true,
-            "killTime": 55.32,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 354.2,
-            "effective": 31724,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 6
-        },
-        {
           "id": 10001,
           "name": "艾琳娜",
           "role": "special",
@@ -1093,7 +783,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 7
+          "rank": 5
         },
         {
           "id": 10023,
@@ -1231,7 +921,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 8
+          "rank": 6
         },
         {
           "id": 10029,
@@ -1376,7 +1066,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 9
+          "rank": 7
         },
         {
           "id": 10027,
@@ -1517,7 +1207,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 10
+          "rank": 8
         },
         {
           "id": 10003,
@@ -1651,7 +1341,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 11
+          "rank": 9
         },
         {
           "id": 10034,
@@ -1812,7 +1502,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 12
+          "rank": 10
         },
         {
           "id": 10028,
@@ -1968,7 +1658,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 13
+          "rank": 11
         },
         {
           "id": 10020,
@@ -2116,7 +1806,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 14
+          "rank": 12
         },
         {
           "id": 10010,
@@ -2255,7 +1945,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 15
+          "rank": 13
         },
         {
           "id": 10031,
@@ -2393,7 +2083,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 16
+          "rank": 14
         },
         {
           "id": 10035,
@@ -2538,7 +2228,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 17
+          "rank": 15
         },
         {
           "id": 10004,
@@ -2665,7 +2355,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 18
+          "rank": 16
         },
         {
           "id": 10002,
@@ -2820,145 +2510,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 19
-        },
-        {
-          "id": 10015,
-          "name": "莉莉丝",
-          "role": "dps",
-          "roleLabel": "输出",
-          "element": 1,
-          "elementName": "圣杯",
-          "elementSymbol": "杯",
-          "avatar": "img/rank_avatar/10015.png",
-          "link": "index.html#/10015",
-          "base": {
-            "hp": 4851,
-            "atk": 798,
-            "defense": 255,
-            "mind": 442,
-            "spd": 110,
-            "crit": 0.14000000059604645,
-            "critDmg": 1.5,
-            "accuracy": 70
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "旅行与演奏",
-              "damage": 2.6,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "在旅行中见识过各种形形色色的人，明白对不同的人要演奏不同的乐章。对敌方的随机单体造成相当于自身攻击力260%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "似曾相识的听众",
-              "damage": 2.2,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "锐利",
-                  "kind": "buff",
-                  "stat": "critPct",
-                  "value": 0.15,
-                  "duration": 10,
-                  "target": "self"
-                }
-              ],
-              "desc": "人群中有位观众，似乎在哪里见过他。对敌方的随机单体造成相当于自身攻击力220%的伤害，并赋予自身【锐利】效果，使自身暴击率提升15%。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "小提琴协奏曲",
-              "damage": 2.76,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0.22,
-              "defDownDuration": 15,
-              "effects": [
-                {
-                  "name": "破甲",
-                  "kind": "debuff",
-                  "stat": "defPct",
-                  "value": 0.22,
-                  "duration": 15,
-                  "target": "enemy_single"
-                }
-              ],
-              "desc": "使人心情放松、感到愉悦的小提琴独奏曲。对敌方的随机单体造成相当于自身攻击力276%的伤害，并赋予其【破甲】效果，使其防御力降低22%，持续15秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10014.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "TurnStep6",
-                "self": "Any",
-                "target": "Foe_Random",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe_Random",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe_Random",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 231.2,
-            "effective": 19222,
-            "killed": true,
-            "killTime": 83.13,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 224.7,
-            "effective": 20097,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 20
+          "rank": 17
         },
         {
           "id": 10009,
@@ -3092,7 +2644,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 21
+          "rank": 18
         },
         {
           "id": 10033,
@@ -3230,7 +2782,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 22
+          "rank": 19
         },
         {
           "id": 10032,
@@ -3368,144 +2920,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 23
-        },
-        {
-          "id": 10013,
-          "name": "阿尔乔姆",
-          "role": "dps",
-          "roleLabel": "输出",
-          "element": 3,
-          "elementName": "星穹",
-          "elementSymbol": "星",
-          "avatar": "img/rank_avatar/10013.png",
-          "link": "index.html#/10013",
-          "base": {
-            "hp": 6401,
-            "atk": 680,
-            "defense": 251,
-            "mind": 527,
-            "spd": 107,
-            "crit": 0.12250000238418579,
-            "critDmg": 1.5,
-            "accuracy": 76
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "昂扬的斗志",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "暴伤",
-                  "kind": "buff",
-                  "stat": "critDmgPct",
-                  "value": 0.28,
-                  "duration": 10,
-                  "target": "self"
-                },
-                {
-                  "name": "集中",
-                  "kind": "buff",
-                  "stat": "critPct",
-                  "value": 0.16,
-                  "duration": 10,
-                  "target": "self"
-                }
-              ],
-              "desc": "站在高处就应该拿出气势！赋予自身【暴伤】和【集中】效果，使自身暴击伤害提高28%，暴击率提升16%，持续10秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "威风凛凛",
-              "damage": 3,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "以让人敬畏的形象震慑敌人。对敌方单体造成相当于自身攻击力300%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": true
-            },
-            {
-              "slot": "S",
-              "name": "唤醒黎明的悠风",
-              "damage": 1.93,
-              "targets": "all",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "清澈柔美的声音唤醒心中的斗志。对敌方全体造成相当于自身攻击力193%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10012.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 169.3,
-            "effective": 15078,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 256.8,
-            "effective": 22868,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 24
+          "rank": 20
         },
         {
           "id": 10008,
@@ -3643,7 +3058,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 25
+          "rank": 21
         },
         {
           "id": 10026,
@@ -3809,7 +3224,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 26
+          "rank": 22
         },
         {
           "id": 10018,
@@ -3947,7 +3362,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 27
+          "rank": 23
         },
         {
           "id": 10019,
@@ -4101,152 +3516,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 28
-        },
-        {
-          "id": 10014,
-          "name": "艾玛",
-          "role": "healer",
-          "roleLabel": "疗愈",
-          "element": 1,
-          "elementName": "圣杯",
-          "elementSymbol": "杯",
-          "avatar": "img/rank_avatar/10014.png",
-          "link": "index.html#/10014",
-          "base": {
-            "hp": 6445,
-            "atk": 409,
-            "defense": 405,
-            "mind": 564,
-            "spd": 109,
-            "crit": 0.22050000727176666,
-            "critDmg": 1.5,
-            "accuracy": 68
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "欢乐午后",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0.18,
-              "defDownDuration": 15,
-              "effects": [
-                {
-                  "name": "防护",
-                  "kind": "buff",
-                  "stat": "defPct",
-                  "value": 0.18,
-                  "duration": 15,
-                  "target": "all_allies"
-                }
-              ],
-              "desc": "欢乐的午后就应该是休息的时间。赋予我方全体【防护】效果，使我方全体防御力提高18%，持续15秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "单簧管独奏",
-              "damage": 1.76,
-              "targets": "all",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "温柔的单簧管独奏也能保护大家。对敌方全体造成相当于自身攻击力176%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "月光照亮街角",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "英勇",
-                  "kind": "buff",
-                  "stat": "atkPct",
-                  "value": 0.37,
-                  "duration": 24,
-                  "target": "all_allies"
-                }
-              ],
-              "desc": "单簧管的音色深沉厚重但又温暖柔和。赋予我方全体【英勇】效果，使我方全体攻击力提高37%，持续24秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10013.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Ally",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Ally",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Ally",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 84.2,
-            "effective": 7405,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 142.5,
-            "effective": 12525,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 29
+          "rank": 24
         },
         {
           "id": 10011,
@@ -4391,7 +3661,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 30
+          "rank": 25
         },
         {
           "id": 10022,
@@ -4529,7 +3799,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 31
+          "rank": 26
         },
         {
           "id": 10007,
@@ -4668,7 +3938,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 32
+          "rank": 27
         },
         {
           "id": 10006,
@@ -4814,303 +4084,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 33
-        },
-        {
-          "id": 10012,
-          "name": "维罗妮卡",
-          "role": "tank",
-          "roleLabel": "坦克",
-          "element": 0,
-          "elementName": "王剑",
-          "elementSymbol": "剑",
-          "avatar": "img/rank_avatar/10012.png",
-          "link": "index.html#/10012",
-          "base": {
-            "hp": 7543,
-            "atk": 243,
-            "defense": 717,
-            "mind": 836,
-            "spd": 102,
-            "crit": 0.07000000029802322,
-            "critDmg": 1.5,
-            "accuracy": 60
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "演出准备阶段",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0.27,
-              "defDownDuration": 12,
-              "effects": [
-                {
-                  "name": "防护",
-                  "kind": "buff",
-                  "stat": "defPct",
-                  "value": 0.27,
-                  "duration": 12,
-                  "target": "self"
-                }
-              ],
-              "desc": "在演奏前做好一切准备工作。赋予自身【防护】效果，使自身防御力提高27%，持续12秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "军鼓擂响",
-              "damage": 2.91,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "敲响军鼓给对方极强的压迫感。对敌方单体造成相当于自身攻击力291%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": true
-            },
-            {
-              "slot": "S",
-              "name": "跟随鼓声前进！",
-              "damage": 3.38,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "诱导",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0,
-                  "duration": 12,
-                  "target": "self",
-                  "special": "decoy"
-                }
-              ],
-              "desc": "在鼓声中前行的人就应该无所畏惧！对敌方单体造成相当于自身攻击力338%的伤害，并赋予自身【诱导】效果，使自身成为敌方的唯一目标，持续12秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10011.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 44.4,
-            "effective": 3899,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 44.4,
-            "effective": 3899,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 34
-        },
-        {
-          "id": 10036,
-          "name": "爱丽儿",
-          "role": "healer",
-          "roleLabel": "疗愈",
-          "element": 2,
-          "elementName": "权杖",
-          "elementSymbol": "杖",
-          "avatar": "img/rank_avatar/10036.png",
-          "link": "index.html#/10036",
-          "base": {
-            "hp": 8464,
-            "atk": 681,
-            "defense": 418,
-            "mind": 1365,
-            "spd": 100,
-            "crit": 0.03500000014901161,
-            "critDmg": 1.5,
-            "accuracy": 70
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "气泡标记",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "气泡标记",
-                  "kind": "debuff",
-                  "stat": "specialPct",
-                  "value": 1,
-                  "duration": 20,
-                  "target": "enemy_single",
-                  "special": "bubble_mark"
-                }
-              ],
-              "desc": "以气泡标记最后排的敌方单位20秒。我方全体都会优先攻击【气泡标记】的敌人，直至敌人死亡或标记时间结束。场上同时只会存在一个标记。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "水浪共鸣",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "气泡打击",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0.27,
-                  "duration": 180,
-                  "target": "self",
-                  "special": "bubble_strike"
-                }
-              ],
-              "desc": "自身获得【气泡打击】效果，攻击【气泡标记】的敌人时赋予其易伤，持续至战斗结束。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "海神的天平",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "海神的天平",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0.27,
-                  "duration": 20,
-                  "target": "self",
-                  "special": "poseidon_balance"
-                }
-              ],
-              "desc": "随机触发四种海神天平效果之一，持续20秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10035.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Foe_LowestPos",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe_LowestPos",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe_LowestPos",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 43.4,
-            "effective": 3800,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 37.3,
-            "effective": 3270,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 35
+          "rank": 28
         },
         {
           "id": 10024,
@@ -5255,171 +4229,10 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 36
+          "rank": 29
         }
       ],
       "group": [
-        {
-          "id": 10025,
-          "name": "爱洛",
-          "role": "support",
-          "roleLabel": "辅助",
-          "element": 0,
-          "elementName": "王剑",
-          "elementSymbol": "剑",
-          "avatar": "img/rank_avatar/10025.png",
-          "link": "index.html#/10025",
-          "base": {
-            "hp": 7432,
-            "atk": 1319,
-            "defense": 316,
-            "mind": 563,
-            "spd": 126,
-            "crit": 0.14000000059604645,
-            "critDmg": 1.5,
-            "accuracy": 81
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "荆棘诅咒",
-              "damage": 0,
-              "targets": "all",
-              "dot": {
-                "rate": 0.01,
-                "duration": 3,
-                "targets": "all",
-                "name": "撕裂"
-              },
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "荆棘",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0,
-                  "duration": 10,
-                  "target": "self",
-                  "special": "normal_aoe"
-                }
-              ],
-              "desc": "爱洛与“噩兆”身边围绕着不祥的荆棘。每次普通攻击都可以对敌方全体造成伤害，持续10秒，并赋予敌方全体【撕裂】效果，使其每秒失去1%的生命值，持续3秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "冥夜窥望",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "攻击提升",
-                  "kind": "buff",
-                  "stat": "atkPct",
-                  "value": 0.58,
-                  "duration": 10,
-                  "target": "self"
-                }
-              ],
-              "desc": "在黑夜中窥视梦境。使自身攻击力提升58%，持续10秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "梦魇潜影",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "梦魇",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0,
-                  "duration": 13,
-                  "target": "self",
-                  "special": "extra_attack_2x"
-                }
-              ],
-              "desc": "撕裂梦境与现实的边界，吞噬敌方的精神。“噩兆”每次攻击都对目标敌方造成相当于自身攻击力双倍的伤害，持续13秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10024.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 348,
-            "effective": 19222,
-            "killed": true,
-            "killTime": 55.24,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 1312,
-            "effective": 76888,
-            "killed": true,
-            "killTime": 58.6,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 1
-        },
         {
           "id": 10005,
           "name": "阿尔法",
@@ -5559,7 +4372,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 2
+          "rank": 1
         },
         {
           "id": 10030,
@@ -5720,7 +4533,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 3
+          "rank": 2
         },
         {
           "id": 10003,
@@ -5854,7 +4667,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 4
+          "rank": 3
         },
         {
           "id": 10017,
@@ -6006,7 +4819,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 5
+          "rank": 4
         },
         {
           "id": 10010,
@@ -6145,7 +4958,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 6
+          "rank": 5
         },
         {
           "id": 10021,
@@ -6274,7 +5087,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 7
+          "rank": 6
         },
         {
           "id": 10034,
@@ -6435,7 +5248,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 8
+          "rank": 7
         },
         {
           "id": 10029,
@@ -6580,7 +5393,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 9
+          "rank": 8
         },
         {
           "id": 10023,
@@ -6718,7 +5531,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 10
+          "rank": 9
         },
         {
           "id": 10009,
@@ -6852,7 +5665,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 11
+          "rank": 10
         },
         {
           "id": 10027,
@@ -6993,7 +5806,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 12
+          "rank": 11
         },
         {
           "id": 10028,
@@ -7149,7 +5962,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 13
+          "rank": 12
         },
         {
           "id": 10001,
@@ -7319,156 +6132,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 14
-        },
-        {
-          "id": 10016,
-          "name": "贝塔",
-          "role": "dps",
-          "roleLabel": "输出",
-          "element": 0,
-          "elementName": "王剑",
-          "elementSymbol": "剑",
-          "avatar": "img/rank_avatar/10016.png",
-          "link": "index.html#/10016",
-          "base": {
-            "hp": 4855,
-            "atk": 886,
-            "defense": 251,
-            "mind": 436,
-            "spd": 118,
-            "crit": 0.14000000059604645,
-            "critDmg": 1.5,
-            "accuracy": 80
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "速战速决",
-              "damage": 2.5,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "行动敏捷是贝塔的最大优势。对防御力最低的敌方单位造成相当于自身攻击力250%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "刺客的技巧",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "敏捷",
-                  "kind": "buff",
-                  "stat": "spdPct",
-                  "value": 0.3,
-                  "duration": 8,
-                  "target": "self"
-                },
-                {
-                  "name": "暴伤",
-                  "kind": "buff",
-                  "stat": "critDmgPct",
-                  "value": 0.32,
-                  "duration": 8,
-                  "target": "self"
-                }
-              ],
-              "desc": "锁定目标，执行任务。赋予自身【敏捷】效果，使自身速度提高30%，持续8秒，并赋予自身【暴伤】效果，使自身暴击伤害提高32%，持续8秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "冷厉追猎",
-              "damage": 3.1,
-              "targets": "single",
-              "dot": {
-                "rate": 0.01,
-                "duration": 10,
-                "targets": "single",
-                "name": "撕裂"
-              },
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "于暗夜中隐藏身形，冷酷而迅速地解决对手。对防御力最低的敌方单位造成相当于自身攻击力310%的伤害。若目标生命值低于50%，则额外赋予其【撕裂】效果，使其每秒损失1%的生命值，持续10秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10015.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Time25Sec",
-                "self": "Any",
-                "target": "Foe_LowestDef",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe_LowestDef",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 347.5,
-            "effective": 19222,
-            "killed": true,
-            "killTime": 55.32,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 354.2,
-            "effective": 31724,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 15
+          "rank": 13
         },
         {
           "id": 10035,
@@ -7613,7 +6277,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 16
+          "rank": 14
         },
         {
           "id": 10020,
@@ -7761,7 +6425,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 17
+          "rank": 15
         },
         {
           "id": 10031,
@@ -7899,7 +6563,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 18
+          "rank": 16
         },
         {
           "id": 10008,
@@ -8037,144 +6701,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 19
-        },
-        {
-          "id": 10013,
-          "name": "阿尔乔姆",
-          "role": "dps",
-          "roleLabel": "输出",
-          "element": 3,
-          "elementName": "星穹",
-          "elementSymbol": "星",
-          "avatar": "img/rank_avatar/10013.png",
-          "link": "index.html#/10013",
-          "base": {
-            "hp": 6401,
-            "atk": 680,
-            "defense": 251,
-            "mind": 527,
-            "spd": 107,
-            "crit": 0.12250000238418579,
-            "critDmg": 1.5,
-            "accuracy": 76
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "昂扬的斗志",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "暴伤",
-                  "kind": "buff",
-                  "stat": "critDmgPct",
-                  "value": 0.28,
-                  "duration": 10,
-                  "target": "self"
-                },
-                {
-                  "name": "集中",
-                  "kind": "buff",
-                  "stat": "critPct",
-                  "value": 0.16,
-                  "duration": 10,
-                  "target": "self"
-                }
-              ],
-              "desc": "站在高处就应该拿出气势！赋予自身【暴伤】和【集中】效果，使自身暴击伤害提高28%，暴击率提升16%，持续10秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "威风凛凛",
-              "damage": 3,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "以让人敬畏的形象震慑敌人。对敌方单体造成相当于自身攻击力300%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": true
-            },
-            {
-              "slot": "S",
-              "name": "唤醒黎明的悠风",
-              "damage": 1.93,
-              "targets": "all",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "清澈柔美的声音唤醒心中的斗志。对敌方全体造成相当于自身攻击力193%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10012.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 169.3,
-            "effective": 15078,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 256.8,
-            "effective": 22868,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 20
+          "rank": 17
         },
         {
           "id": 10033,
@@ -8312,7 +6839,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 21
+          "rank": 18
         },
         {
           "id": 10004,
@@ -8439,145 +6966,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 22
-        },
-        {
-          "id": 10015,
-          "name": "莉莉丝",
-          "role": "dps",
-          "roleLabel": "输出",
-          "element": 1,
-          "elementName": "圣杯",
-          "elementSymbol": "杯",
-          "avatar": "img/rank_avatar/10015.png",
-          "link": "index.html#/10015",
-          "base": {
-            "hp": 4851,
-            "atk": 798,
-            "defense": 255,
-            "mind": 442,
-            "spd": 110,
-            "crit": 0.14000000059604645,
-            "critDmg": 1.5,
-            "accuracy": 70
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "旅行与演奏",
-              "damage": 2.6,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "在旅行中见识过各种形形色色的人，明白对不同的人要演奏不同的乐章。对敌方的随机单体造成相当于自身攻击力260%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "似曾相识的听众",
-              "damage": 2.2,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "锐利",
-                  "kind": "buff",
-                  "stat": "critPct",
-                  "value": 0.15,
-                  "duration": 10,
-                  "target": "self"
-                }
-              ],
-              "desc": "人群中有位观众，似乎在哪里见过他。对敌方的随机单体造成相当于自身攻击力220%的伤害，并赋予自身【锐利】效果，使自身暴击率提升15%。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "小提琴协奏曲",
-              "damage": 2.76,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0.22,
-              "defDownDuration": 15,
-              "effects": [
-                {
-                  "name": "破甲",
-                  "kind": "debuff",
-                  "stat": "defPct",
-                  "value": 0.22,
-                  "duration": 15,
-                  "target": "enemy_single"
-                }
-              ],
-              "desc": "使人心情放松、感到愉悦的小提琴独奏曲。对敌方的随机单体造成相当于自身攻击力276%的伤害，并赋予其【破甲】效果，使其防御力降低22%，持续15秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10014.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "TurnStep6",
-                "self": "Any",
-                "target": "Foe_Random",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe_Random",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe_Random",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 231.2,
-            "effective": 19222,
-            "killed": true,
-            "killTime": 83.13,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 224.7,
-            "effective": 20097,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 23
+          "rank": 19
         },
         {
           "id": 10002,
@@ -8732,7 +7121,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 24
+          "rank": 20
         },
         {
           "id": 10018,
@@ -8870,7 +7259,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 25
+          "rank": 21
         },
         {
           "id": 10032,
@@ -9008,7 +7397,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 26
+          "rank": 22
         },
         {
           "id": 10019,
@@ -9162,7 +7551,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 27
+          "rank": 23
         },
         {
           "id": 10026,
@@ -9328,152 +7717,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 28
-        },
-        {
-          "id": 10014,
-          "name": "艾玛",
-          "role": "healer",
-          "roleLabel": "疗愈",
-          "element": 1,
-          "elementName": "圣杯",
-          "elementSymbol": "杯",
-          "avatar": "img/rank_avatar/10014.png",
-          "link": "index.html#/10014",
-          "base": {
-            "hp": 6445,
-            "atk": 409,
-            "defense": 405,
-            "mind": 564,
-            "spd": 109,
-            "crit": 0.22050000727176666,
-            "critDmg": 1.5,
-            "accuracy": 68
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "欢乐午后",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0.18,
-              "defDownDuration": 15,
-              "effects": [
-                {
-                  "name": "防护",
-                  "kind": "buff",
-                  "stat": "defPct",
-                  "value": 0.18,
-                  "duration": 15,
-                  "target": "all_allies"
-                }
-              ],
-              "desc": "欢乐的午后就应该是休息的时间。赋予我方全体【防护】效果，使我方全体防御力提高18%，持续15秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "单簧管独奏",
-              "damage": 1.76,
-              "targets": "all",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "温柔的单簧管独奏也能保护大家。对敌方全体造成相当于自身攻击力176%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "月光照亮街角",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "英勇",
-                  "kind": "buff",
-                  "stat": "atkPct",
-                  "value": 0.37,
-                  "duration": 24,
-                  "target": "all_allies"
-                }
-              ],
-              "desc": "单簧管的音色深沉厚重但又温暖柔和。赋予我方全体【英勇】效果，使我方全体攻击力提高37%，持续24秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10013.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Ally",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Ally",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Ally",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 84.2,
-            "effective": 7405,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 142.5,
-            "effective": 12525,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 29
+          "rank": 24
         },
         {
           "id": 10011,
@@ -9618,7 +7862,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 30
+          "rank": 25
         },
         {
           "id": 10022,
@@ -9756,7 +8000,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 31
+          "rank": 26
         },
         {
           "id": 10024,
@@ -9901,7 +8145,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 32
+          "rank": 27
         },
         {
           "id": 10007,
@@ -10040,7 +8284,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 33
+          "rank": 28
         },
         {
           "id": 10006,
@@ -10186,303 +8430,7 @@ window.RANK_WIKI = {
             "dot": 0,
             "normal": 0
           },
-          "rank": 34
-        },
-        {
-          "id": 10012,
-          "name": "维罗妮卡",
-          "role": "tank",
-          "roleLabel": "坦克",
-          "element": 0,
-          "elementName": "王剑",
-          "elementSymbol": "剑",
-          "avatar": "img/rank_avatar/10012.png",
-          "link": "index.html#/10012",
-          "base": {
-            "hp": 7543,
-            "atk": 243,
-            "defense": 717,
-            "mind": 836,
-            "spd": 102,
-            "crit": 0.07000000029802322,
-            "critDmg": 1.5,
-            "accuracy": 60
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "演出准备阶段",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0.27,
-              "defDownDuration": 12,
-              "effects": [
-                {
-                  "name": "防护",
-                  "kind": "buff",
-                  "stat": "defPct",
-                  "value": 0.27,
-                  "duration": 12,
-                  "target": "self"
-                }
-              ],
-              "desc": "在演奏前做好一切准备工作。赋予自身【防护】效果，使自身防御力提高27%，持续12秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "军鼓擂响",
-              "damage": 2.91,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [],
-              "desc": "敲响军鼓给对方极强的压迫感。对敌方单体造成相当于自身攻击力291%的伤害。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": true
-            },
-            {
-              "slot": "S",
-              "name": "跟随鼓声前进！",
-              "damage": 3.38,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "诱导",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0,
-                  "duration": 12,
-                  "target": "self",
-                  "special": "decoy"
-                }
-              ],
-              "desc": "在鼓声中前行的人就应该无所畏惧！对敌方单体造成相当于自身攻击力338%的伤害，并赋予自身【诱导】效果，使自身成为敌方的唯一目标，持续12秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10011.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 44.4,
-            "effective": 3899,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 44.4,
-            "effective": 3899,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 35
-        },
-        {
-          "id": 10036,
-          "name": "爱丽儿",
-          "role": "healer",
-          "roleLabel": "疗愈",
-          "element": 2,
-          "elementName": "权杖",
-          "elementSymbol": "杖",
-          "avatar": "img/rank_avatar/10036.png",
-          "link": "index.html#/10036",
-          "base": {
-            "hp": 8464,
-            "atk": 681,
-            "defense": 418,
-            "mind": 1365,
-            "spd": 100,
-            "crit": 0.03500000014901161,
-            "critDmg": 1.5,
-            "accuracy": 70
-          },
-          "skills": [
-            {
-              "slot": "A",
-              "name": "气泡标记",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "气泡标记",
-                  "kind": "debuff",
-                  "stat": "specialPct",
-                  "value": 1,
-                  "duration": 20,
-                  "target": "enemy_single",
-                  "special": "bubble_mark"
-                }
-              ],
-              "desc": "以气泡标记最后排的敌方单位20秒。我方全体都会优先攻击【气泡标记】的敌人，直至敌人死亡或标记时间结束。场上同时只会存在一个标记。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "B",
-              "name": "水浪共鸣",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "气泡打击",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0.27,
-                  "duration": 180,
-                  "target": "self",
-                  "special": "bubble_strike"
-                }
-              ],
-              "desc": "自身获得【气泡打击】效果，攻击【气泡标记】的敌人时赋予其易伤，持续至战斗结束。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            },
-            {
-              "slot": "S",
-              "name": "海神的天平",
-              "damage": 0,
-              "targets": "single",
-              "dot": null,
-              "defDown": 0,
-              "defDownDuration": 0,
-              "effects": [
-                {
-                  "name": "海神的天平",
-                  "kind": "buff",
-                  "stat": "specialPct",
-                  "value": 0.27,
-                  "duration": 20,
-                  "target": "self",
-                  "special": "poseidon_balance"
-                }
-              ],
-              "desc": "随机触发四种海神天平效果之一，持续20秒。",
-              "cooldown": 0,
-              "cooldownType": 0,
-              "cooldownStart": "effect_end",
-              "useMovement": false
-            }
-          ],
-          "tactics": {
-            "script": "BTAC_10035.LUA",
-            "maxTp": 200,
-            "costA": 20,
-            "costB": 30,
-            "conditions": [
-              {
-                "turn": "FirstTurn",
-                "self": "Any",
-                "target": "Self",
-                "unit": "Any",
-                "action": "Skill_B"
-              },
-              {
-                "turn": "Time20Sec",
-                "self": "Any",
-                "target": "Foe_LowestPos",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Time15Sec",
-                "self": "Any",
-                "target": "Foe_LowestPos",
-                "unit": "Any",
-                "action": "Skill_A"
-              },
-              {
-                "turn": "Manual",
-                "self": "Any",
-                "target": "Foe_LowestPos",
-                "unit": "Any",
-                "action": "Skill_S"
-              }
-            ],
-            "tpStart": 50,
-            "tpMax": 200,
-            "tpRegen": 5,
-            "tpStrict": true
-          },
-          "single": {
-            "dps": 43.4,
-            "effective": 3800,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "group": {
-            "dps": 37.3,
-            "effective": 3270,
-            "killed": false,
-            "killTime": null,
-            "direct": 0,
-            "dot": 0,
-            "normal": 0
-          },
-          "rank": 36
+          "rank": 29
         }
       ]
     }

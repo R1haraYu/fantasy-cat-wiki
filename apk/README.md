@@ -78,14 +78,14 @@ gradle -p apk -PwikiSiteDir=../.. assembleDebug
 Release：
 
 ```text
-https://github.com/R1haraYu/fantasy-cat-wiki/releases/tag/v1.7.4
+https://github.com/R1haraYu/fantasy-cat-wiki/releases/tag/v1.7.5
 ```
 
 GitHub Actions构建产物：
 
 ```text
 app-debug.apk        448,711,503 bytes
-wiki-site-1.7.4.zip  391,585,902 bytes
+wiki-site-1.7.5.zip  391,585,902 bytes
 latest.json                  571 bytes
 ```
 
@@ -93,13 +93,13 @@ latest.json                  571 bytes
 
 ```text
 APK SHA-256:
-6E5374F624D7E2F2CD54878106DED724CC3DEDD2CE8E329F0AE774F175B98B7F
+B75055A2D924774B8064D02E80492661F81CC376A1063CFBD709E24631662651
 
 zip SHA-256:
-77A8BE84336B392281F89483659F88E4B933C103F9EB0A1F7213C024D1B06745
+66709673A9A3E553EAC9C7A982DA3B690A2C860217952E2606A117AC28557C87
 
 manifest SHA-256:
-41A26B07CF8DE0ECA794813767707006CD959593E82874213FB38D037257612F
+9E1C5A64C648D5BB0B9F5EB5EA9B94AB9AEDDD7B818D480733424D7FCA4D3A0D
 ```
 
 更新清单公共地址：
@@ -217,7 +217,7 @@ files/wiki/current.json
 
 ```text
 更新成功后删除旧下载版本
-不会累积 v1.7.2 / v1.7.3 / v1.7.4 多份
+不会累积 v1.7.2 / v1.7.3 / v1.7.5 多份
 ```
 
 注意：APK内的基线assets无法在运行中删除；能保证的是：

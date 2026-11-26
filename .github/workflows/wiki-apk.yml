@@ -13,8 +13,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "1.7.5"
-      TAG: "v1.7.5"
+      VERSION: "1.7.6"
+      TAG: "v1.7.6"
     steps:
       - uses: actions/checkout@v4
 
