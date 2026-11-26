@@ -1853,7 +1853,7 @@
     "img/weapon/T_Icon_Weapon_10033_00.png": "d16dace57fd644fb40f18b0aaf5e8dddeffe30c101d12ea093b64a9886ea0b30",
     "img/weapon/T_Icon_Weapon_10034_00.png": "edd758806e0530b758d0f38908a16d2a5ff4c840216e264cea6c8669811b3862",
     "img/weapon/T_Icon_Weapon_10035_00.png": "cef61b956aab5c8ca5148a85d103911b7164a694f106f7edf9dca18e7201044b",
-    "index.html": "9679780d8268356b4c3f7eaa5055c36686dfe984e052d4232acfd0add8190551",
+    "index.html": "790a5b67a2caff5aa89e1acb843ec61709c2bd39ae1137b2619dea99388f4a84",
     "items.html": "ee3060c2875d92225ef9dc14eee4028094d5ea604cfb8cbbd027df36e7d5d531",
     "map.css": "fe6acdb80b10b8a2409e5a730b0c6e75158cd4e27f8848881503253f178d346a",
     "map.html": "b5c659ad42e288a804700459144783e631d94000a27ca8f23e014fba95c2dc41",
@@ -1884,5 +1884,5 @@
     "vendor/spine-player.min.js": "e9ce520a15946a3e8d345670d78262d7aa71b9b164135a5424fe99ba191ab671",
     "world.html": "e954b78b034e76379e63e015404aaa5a5923ad791ae71915f77a4d15678d3fc2"
   },
-  "version": "1.7.7"
+  "version": "1.7.8"
 }
