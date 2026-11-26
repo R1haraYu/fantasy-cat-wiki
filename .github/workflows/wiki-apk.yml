@@ -13,14 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.3"
-      TAG: "v0.8.3"
+      VERSION: "0.8.4"
+      TAG: "v0.8.4"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        补全奈亚 NPC Spine 立绘
-        修复阿拉丁 L1 贴图尺寸导致的撕裂
-        补全多页 atlas 缺失贴图
-        全量校正 110 个 Spine 立绘的缩放与位置
+        角色档案页按游戏实机 ShowRoom 构图重做
+        背景改为 800x1280 原生居中
+        立绘改为 640x1024 框，1.2 倍缩放
+        立绘底边中心位于 (540,570)
     steps:
       - uses: actions/checkout@v4
 

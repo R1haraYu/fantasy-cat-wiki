@@ -3,7 +3,7 @@
   "use strict";
   document.body.classList.add("v2");
 
-  const WIKI_VERSION = "0.8.3";
+  const WIKI_VERSION = "0.8.4";
   const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
   const aliases = { "": "index.html", "/": "index.html" };
   const here = aliases[path] || path;

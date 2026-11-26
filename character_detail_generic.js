@@ -201,6 +201,20 @@
     const tab = document.querySelector('.nav button[data-tab="' + query.get('tab') + '"]'); if (tab) tab.click();
   }
 
+  function fitShowroom() {
+    const stage = document.querySelector('.stage');
+    const room = document.getElementById('showroom');
+    if (!stage || !room) return;
+    const s = Math.max(stage.clientWidth / 1080, stage.clientHeight / 2340);
+    const x = (stage.clientWidth - 1080 * s) / 2;
+    const y = (stage.clientHeight - 2340 * s) / 2;
+    room.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+  fitShowroom();
+  window.addEventListener('resize', fitShowroom);
+  requestAnimationFrame(fitShowroom);
+  setTimeout(fitShowroom, 250);
+
   // Stage: every character/skin can use an extracted Spine full/mini model when available.
   let fullPlayer = null, miniPlayer = null;
   let fullBase = '';
@@ -254,6 +268,9 @@
   }
   function applyStageLayout(player, base) {
     if (!player || !player.canvas) return;
+    // Full-body portraits use the fixed game showroom frame (640x1024 at
+    // 1.2x). Only Q-version mini models keep the per-model stage layout.
+    if (!String(base).startsWith('SK_MiniAvatar')) { player.canvas.style.transform = ''; return; }
     const cfg = (window.STAGE_LAYOUT || {})[base];
     player.canvas.style.transformOrigin = '50% 100%';
     if (!cfg) { player.canvas.style.transform = ''; return; }
@@ -267,7 +284,7 @@
       fullPlayer = new window.spine.SpinePlayer('spine-full', {
         skelUrl: spinePath(base) + '.skel', atlasUrl: spinePath(base) + '.atlas',
         showControls: false, premultipliedAlpha: false, backgroundColor: '#00000000',
-        alpha: true, width: 640, height: 940
+        alpha: true, width: 640, height: 1024
       });
       fullBase = base;
       applyStageLayout(fullPlayer, base);
