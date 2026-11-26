@@ -813,7 +813,7 @@ window.CHARACTER_ASSETS = {
     "weaponIcon": "img/weapon/T_Icon_Weapon_10033_00.png",
     "art": "img/avatar_skin/T_Icon_Avatar_10033_00.png",
     "rarity": 1,
-    "spine": "",
+    "spine": "SK_NPC_BoyCheshire",
     "mini": "SK_MiniAvatar_CatCheshire_01"
    },
    {

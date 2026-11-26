@@ -13,13 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.2"
-      TAG: "v0.8.2"
+      VERSION: "0.8.3"
+      TAG: "v0.8.3"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        动态版本徽章更新到 0.8.2
-        首页版本号更新到 0.8.2
-        测试横幅首次显示，刷新后自动消失
+        补全奈亚 NPC Spine 立绘
+        修复阿拉丁 L1 贴图尺寸导致的撕裂
+        补全多页 atlas 缺失贴图
+        全量校正 110 个 Spine 立绘的缩放与位置
     steps:
       - uses: actions/checkout@v4
 

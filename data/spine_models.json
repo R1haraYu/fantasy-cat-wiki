@@ -109,7 +109,8 @@
     "P_UI_Avatar_10026_10": "SK_Avatar_Anna_L2",
     "P_UI_Avatar_10029_10": "SK_Avatar_FoxGirl_L2",
     "P_UI_Avatar_10023_10": "SK_Avatar_PrincessPea_L2",
-    "P_UI_Avatar_10019_10": "SK_Avatar_YeYing_L2"
+    "P_UI_Avatar_10019_10": "SK_Avatar_YeYing_L2",
+    "P_UI_NPC_BoyCheshire": "SK_NPC_BoyCheshire"
   },
   "models": [
     "SK_Avatar_Aladdin_L1",
@@ -220,6 +221,7 @@
     "SK_MiniAvatar_SnowWhite_01",
     "SK_MiniAvatar_Winifred_01",
     "SK_MiniAvatar_WolfGirl_Skin_01",
-    "SK_MiniAvatar_Wolfgirl_01"
+    "SK_MiniAvatar_Wolfgirl_01",
+    "SK_NPC_BoyCheshire"
   ]
 }

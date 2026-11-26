@@ -287,6 +287,7 @@
         alpha: true, width: 420, height: 560
       });
       miniBase = base;
+      applyStageLayout(miniPlayer, base);
       window.__charPlayers = window.__charPlayers || {}; window.__charPlayers.mini = miniPlayer;
       waitAndLoop(miniPlayer);
       setTimeout(buildActions, 900);
