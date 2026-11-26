@@ -108,7 +108,7 @@ function render() {
   count.textContent = `${MAPS.length} 张地图 · ${total} 个点位`;
   app.innerHTML = `
     <h1 class="page-title">地图</h1>
-    <p class="lead">按区域查找城镇 NPC、宝箱、采集点与修复点。</p>
+    <p class="lead">按区域查找城镇 NPC、宝箱、采集点与修复点。点位位置为按游戏地图人工标注，非拆包坐标。</p>
     <div class="map-tabs-wrap">${mapTabs()}</div>
     <div class="map-toolbar">
       <label class="map-search"><span>搜索点位 / NPC</span><input id="map-q" type="search" placeholder="名字、类型、奖励…" autocomplete="off" value="${esc(state.q)}"></label>
@@ -125,7 +125,7 @@ function render() {
           </div>
           <div class="map-zoom"><button id="map-zoom-out" type="button">−</button><button id="map-zoom-in" type="button">+</button></div>
         </div>
-        <div class="map-legend"><span><i class="lg npc"></i>NPC</span><span><i class="lg chest"></i>宝箱</span><span><i class="lg gather"></i>采集点</span><span><i class="lg repair"></i>修复点</span><em>浅色 = 可通行道路</em></div>
+        <div class="map-legend"><span><i class="lg npc"></i>NPC</span><span><i class="lg chest"></i>宝箱</span><span><i class="lg gather"></i>采集点</span><span><i class="lg repair"></i>修复点</span><em>位置为Wiki人工标注</em></div>
       </section>
       <aside class="map-side">
         <div class="map-side-head"><b>${esc(map.name)}</b><span>${rows.length} / ${map.markers.length}</span></div>

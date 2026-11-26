@@ -37,7 +37,7 @@ function monsterCard(m) {
   </a>`;
 }
 
-const APPEAR_KINDS = ["主线", "困难", "支线", "活动", "冒险者委托"];
+const APPEAR_KINDS = ["主线", "困难", "支线", "活动", "冒险者委托", "废墟"];
 
 function renderList() {
   const q = state.q.trim();
@@ -55,7 +55,7 @@ function renderList() {
   const elements = [...new Set(MONSTERS.map((m) => m.element))];
   app.innerHTML = `
     <h1 class="page-title">怪物</h1>
-    <p class="lead">全部 ${MONSTERS.length} 种怪物的属性、技能与出现地点。</p>
+    <p class="lead">收录 ${MONSTERS.length} 种在游戏表中实际出现过的怪物，展示属性、技能与出现地点。</p>
     <div class="toolbar">
       <label>搜索<input id="f-q" value="${esc(state.q)}" placeholder="名称 / 代号" autocomplete="off"></label>
       <label>类型<select id="f-type">${options([["boss", "首领"], ["normal", "普通"]].map((x) => x[1]), state.type === "boss" ? "首领" : state.type === "normal" ? "普通" : "")}</select></label>

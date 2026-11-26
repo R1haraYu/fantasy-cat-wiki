@@ -97,7 +97,7 @@
     </section>`;
   }
   function scenarioLine() {
-    return "测试木桩：1-1-1 的 50 级究极大食花 · 属性无";
+    return "模拟木桩：50级究极大食花（非实际关卡）· 属性无";
   }
   function render() {
     activeRows = outputData()[activeOutput];

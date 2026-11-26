@@ -13,14 +13,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.5"
-      TAG: "v0.8.5"
+      VERSION: "0.8.6"
+      TAG: "v0.8.6"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        角色档案页按游戏实机 ShowRoom 构图重做
-        背景 800x1280 原生居中，立绘 640x1024 框 1.2 倍
-        立绘底边中心 (540,570)
-        手机端舞台改为实机 1080x2340 比例
+        全站数据对照游戏表重新核对
+        补全6个角色碎片道具
+        补全36种已出现怪物及出现地点
+        角色技能文本与等级改为游戏表原数据
+        补全活动/委托关卡缺失字段并同步搜索索引
     steps:
       - uses: actions/checkout@v4
 
