@@ -95,14 +95,32 @@ class SiteRepository(private val context: Context) {
                     return WebResourceResponse(mimeOf(rel), null, FileInputStream(file))
                 }
             }
-        } else {
-            try {
-                return WebResourceResponse(mimeOf(rel), null, context.assets.open(rel))
-            } catch (_: Exception) {
-                // fall through to 404
-            }
+        }
+        // An incremental update directory only contains changed files. Any
+        // unchanged file falls through to the APK's bundled baseline.
+        try {
+            return WebResourceResponse(mimeOf(rel), null, context.assets.open(rel))
+        } catch (_: Exception) {
+            // fall through to 404
         }
         return notFound()
+    }
+
+    /** Copy all files currently in the active overlay (if any) into staging. */
+    fun copyActiveTo(target: File) {
+        val dir = active().directory ?: return
+        copyDirectory(dir, target)
+    }
+
+    fun activeDirectory(): File? = active().directory
+
+    private fun copyDirectory(src: File, dst: File) {
+        dst.mkdirs()
+        src.listFiles()?.forEach { f ->
+            val out = File(dst, f.name)
+            if (f.isDirectory) copyDirectory(f, out)
+            else f.inputStream().use { input -> out.outputStream().use { output -> input.copyTo(output) } }
+        }
     }
 
     fun activate(staging: File, version: String, manifestSha256: String): File {

@@ -13,13 +13,13 @@ android {
         applicationId = "com.blackcat.wiki"
         minSdk = 26
         targetSdk = 34
-        versionCode = 17700
-        versionName = "1.7.7"
+        versionCode = 17900
+        versionName = "1.7.9"
 
         val updateUrl = (project.findProperty("updateManifestUrl") as String?)
             ?: "https://github.com/R1haraYu/fantasy-cat-wiki/releases/latest/download/latest.json"
         buildConfigField("String", "UPDATE_MANIFEST_URL", "\"$updateUrl\"")
-        buildConfigField("String", "APP_VERSION", "\"1.7.7\"")
+        buildConfigField("String", "APP_VERSION", "\"1.7.9\"")
     }
 
     buildFeatures {

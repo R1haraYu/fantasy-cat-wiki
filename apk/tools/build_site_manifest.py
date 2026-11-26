@@ -20,6 +20,7 @@ def sha256_file(path: Path) -> str:
 
 def build_manifest(site: Path, version: str, excludes=()) -> dict:
     files = {}
+    sizes = {}
     for p in sorted(site.rglob("*")):
         if not p.is_file():
             continue
@@ -29,9 +30,11 @@ def build_manifest(site: Path, version: str, excludes=()) -> dict:
         if any(rel == e or rel.startswith(e.rstrip("/") + "/") for e in excludes):
             continue
         files[rel] = sha256_file(p)
+        sizes[rel] = p.stat().st_size
     return {
         "version": version,
         "files": files,
+        "sizes": sizes,
     }
 
 

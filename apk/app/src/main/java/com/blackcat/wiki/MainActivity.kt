@@ -1,6 +1,8 @@
 package com.blackcat.wiki
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -19,6 +21,8 @@ class MainActivity : Activity() {
 
     private var lastCheckAt = 0L
     private var checking = false
+    private var prompting = false
+    private var lastPromptedVersion = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,30 +78,94 @@ class MainActivity : Activity() {
     }
 
     private fun checkForUpdates(force: Boolean) {
-        if (checking) return
+        if (checking || prompting) return
         val now = System.currentTimeMillis()
         if (!force && now - lastCheckAt < 30_000) return
         checking = true
         lastCheckAt = now
         if (force) {
+            lastPromptedVersion = ""
             Toast.makeText(this, "正在检查Wiki更新…", Toast.LENGTH_SHORT).show()
         }
-        UpdateManager(this, site).checkAsync { result ->
+        UpdateManager(this, site).checkAsync { check ->
             checking = false
             runOnUiThread {
-                Log.i("BlackCatWiki", "update: updated=${result.updated}, message=${result.message}")
-                if (result.updated) {
-                    Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
-                    // Do not let the WebView keep an old script/data cache after
-                    // switching the active site directory.
-                    webView.clearCache(true)
-                    webView.clearHistory()
-                    webView.loadUrl(START_URL)
-                } else if (force || !result.message.startsWith("已是最新")) {
-                    Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
+                Log.i("BlackCatWiki", "check: ${check.message}")
+                val plan = check.plan
+                if (plan == null) {
+                    if (force || !check.message.startsWith("已是最新")) {
+                        Toast.makeText(this, check.message, Toast.LENGTH_LONG).show()
+                    }
+                    return@runOnUiThread
                 }
+                if (!force && plan.version == lastPromptedVersion) return@runOnUiThread
+                lastPromptedVersion = plan.version
+                showUpdatePrompt(plan)
             }
         }
+    }
+
+    private fun showUpdatePrompt(plan: UpdateManager.Plan) {
+        if (isFinishing || isDestroyed) return
+        prompting = true
+        AlertDialog.Builder(this)
+            .setTitle("发现 Wiki 更新 ${plan.version}")
+            .setMessage(
+                "${plan.summary()}\n\n" +
+                    "确认后才开始下载。下载期间会显示进度，完成后自动切换并清理旧版本。"
+            )
+            .setPositiveButton("下载并更新") { _, _ ->
+                prompting = false
+                startDownload(plan)
+            }
+            .setNegativeButton("稍后") { _, _ ->
+                prompting = false
+                Toast.makeText(this, "已暂缓更新；长按页面可再次检查", Toast.LENGTH_SHORT).show()
+            }
+            .setOnCancelListener {
+                prompting = false
+                Toast.makeText(this, "已暂缓更新；长按页面可再次检查", Toast.LENGTH_SHORT).show()
+            }
+            .show()
+    }
+
+    private fun startDownload(plan: UpdateManager.Plan) {
+        if (isFinishing || isDestroyed) return
+        val progress = ProgressDialog(this).apply {
+            setTitle("正在更新 Wiki")
+            setMessage("准备中…")
+            isIndeterminate = true
+            setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+            max = 100
+            setCancelable(false)
+            show()
+        }
+        UpdateManager(this, site).downloadAsync(
+            plan,
+            { percent, message ->
+                runOnUiThread {
+                    if (percent < 0) {
+                        progress.isIndeterminate = true
+                        progress.setMessage(message)
+                    } else {
+                        progress.isIndeterminate = false
+                        progress.progress = percent.coerceIn(0, 100)
+                        progress.setMessage(message)
+                    }
+                }
+            },
+            { result ->
+                runOnUiThread {
+                    progress.dismiss()
+                    Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
+                    if (result.updated) {
+                        webView.clearCache(true)
+                        webView.clearHistory()
+                        webView.loadUrl(START_URL)
+                    }
+                }
+            }
+        )
     }
 
     override fun onBackPressed() {
@@ -112,8 +180,8 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         webView.onResume()
-        // Release updates published while the app was in the background are
-        // picked up when the user returns to the app.
+        // Check metadata again when the user returns to the app. This never
+        // downloads automatically; a prompt is shown if an update exists.
         checkForUpdates(force = false)
     }
 
