@@ -13,13 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.9"
-      TAG: "v0.8.9"
+      VERSION: "0.8.10"
+      TAG: "v0.8.10"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        修复阿尔法等立绘过小问题
-        手机端按各角色模型归一化立绘视觉高度
-        保留实机背景全屏与比例基准
+        修复克萝依Q版立绘 Animation bounds invalid 异常
+        Q版改为按骨架实际边界自适应
+        去除Q版重复缩放
     steps:
       - uses: actions/checkout@v4
 

@@ -240,6 +240,47 @@
       player.__skinApplied = true;
     } catch (e) {}
   }
+  function restoreSkinAttachments(skeleton) {
+    try {
+      const skin = skeleton && skeleton.skin;
+      const attachments = skin && skin.attachments;
+      if (!attachments) return;
+      for (const key of Object.keys(attachments)) {
+        const index = Number(key);
+        const slot = skeleton.slots[index];
+        if (!slot) continue;
+        const names = attachments[key] || {};
+        let name = slot.data && slot.data.attachmentName;
+        if (!name || !names[name]) name = Object.keys(names)[0];
+        if (!name) continue;
+        const attachment = skin.getAttachment(index, name);
+        if (attachment) slot.setAttachment(attachment);
+      }
+    } catch (e) {}
+  }
+  // SpinePlayer resets to setup pose before calculating animation bounds.
+  // Some mini skeletons store all attachments in the skin and have no setup
+  // attachments (e.g. SK_MiniAvatar_Chloe_01); without restoring the skin the
+  // bounds become invalid and the player shows "Animation bounds are invalid".
+  (function patchSpineViewport() {
+    try {
+      const proto = window.spine && window.spine.SpinePlayer && window.spine.SpinePlayer.prototype;
+      const original = proto && proto.calculateAnimationViewport;
+      if (!original || proto.__skinViewportPatched) return;
+      proto.calculateAnimationViewport = function (animation, viewport) {
+        const skeleton = this.skeleton;
+        if (!skeleton) return original.call(this, animation, viewport);
+        const originalSetup = skeleton.setToSetupPose;
+        skeleton.setToSetupPose = function () {
+          originalSetup.call(this);
+          restoreSkinAttachments(this);
+        };
+        try { return original.call(this, animation, viewport); }
+        finally { skeleton.setToSetupPose = originalSetup; }
+      };
+      proto.__skinViewportPatched = true;
+    } catch (e) {}
+  })();
   function playLoop(player) {
     if (!player || !player.skeleton || !player.skeleton.data) return false;
     applyModelSkin(player);
@@ -268,6 +309,10 @@
   }
   function applyStageLayout(player, base) {
     if (!player || !player.canvas) return;
+    // Q-version players now get their viewport directly from the skeleton
+    // bounds. Applying the old stage-layout scale on top would double-scale
+    // and clip the character.
+    if (String(base).startsWith('SK_MiniAvatar')) { player.canvas.style.transform = ''; return; }
     // Desktop keeps the fixed in-game showroom composition. Mobile applies
     // per-model normalization because the extracted full-body skeletons use
     // different native content sizes (e.g. Alpha/RedHat is much smaller).
