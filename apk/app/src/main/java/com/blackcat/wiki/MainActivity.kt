@@ -3,8 +3,8 @@ package com.blackcat.wiki
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -16,6 +16,9 @@ import android.widget.Toast
 class MainActivity : Activity() {
     private lateinit var webView: WebView
     private lateinit var site: SiteRepository
+
+    private var lastCheckAt = 0L
+    private var checking = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,17 +62,39 @@ class MainActivity : Activity() {
                     return true
                 }
             }
+            // Long-press anywhere to force a manual update check.
+            setOnLongClickListener {
+                checkForUpdates(force = true)
+                true
+            }
         }
         setContentView(webView)
         webView.loadUrl(START_URL)
+        checkForUpdates(force = true)
+    }
 
+    private fun checkForUpdates(force: Boolean) {
+        if (checking) return
+        val now = System.currentTimeMillis()
+        if (!force && now - lastCheckAt < 30_000) return
+        checking = true
+        lastCheckAt = now
+        if (force) {
+            Toast.makeText(this, "正在检查Wiki更新…", Toast.LENGTH_SHORT).show()
+        }
         UpdateManager(this, site).checkAsync { result ->
+            checking = false
             runOnUiThread {
+                Log.i("BlackCatWiki", "update: updated=${result.updated}, message=${result.message}")
                 if (result.updated) {
                     Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
-                    webView.reload()
-                } else if (!result.message.startsWith("已是最新")) {
-                    Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
+                    // Do not let the WebView keep an old script/data cache after
+                    // switching the active site directory.
+                    webView.clearCache(true)
+                    webView.clearHistory()
+                    webView.loadUrl(START_URL)
+                } else if (force || !result.message.startsWith("已是最新")) {
+                    Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -87,6 +112,9 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         webView.onResume()
+        // Release updates published while the app was in the background are
+        // picked up when the user returns to the app.
+        checkForUpdates(force = false)
     }
 
     override fun onDestroy() {

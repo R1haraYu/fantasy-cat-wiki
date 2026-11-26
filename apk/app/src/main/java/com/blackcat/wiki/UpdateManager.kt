@@ -25,6 +25,7 @@ class UpdateManager(
             val result = try {
                 checkNow()
             } catch (e: Exception) {
+                android.util.Log.e("BlackCatWiki", "update check failed", e)
                 Result(false, "离线使用：${e.message ?: "更新检查失败"}")
             }
             callback(result)
@@ -74,6 +75,7 @@ class UpdateManager(
             return Result(false, "latest.json缺少packageUrl/packageSha256")
         }
 
+        android.util.Log.i("BlackCatWiki", "update available: ${active.version} -> $remoteVersion")
         val download = site.zipFile()
         downloadFile(packageUrl, download)
         val actualPackageSha = SiteRepository.sha256(download)
@@ -169,7 +171,7 @@ class UpdateManager(
             val conn = (current.openConnection() as HttpURLConnection).apply {
                 instanceFollowRedirects = true
                 connectTimeout = 20_000
-                readTimeout = 60_000
+                readTimeout = 120_000
                 setRequestProperty("User-Agent", "BlackCatWiki/${BuildConfig.APP_VERSION}")
             }
             try {
