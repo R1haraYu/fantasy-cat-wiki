@@ -13,13 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.15"
-      TAG: "v0.8.15"
+      VERSION: "0.8.16"
+      TAG: "v0.8.16"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        排行榜同步11/27角色数值
-        爱洛加入输出排行
-        重新计算单体/群体输出榜
+        P0-P2 多分辨率/机型适配
+        WebView 视口与安全区修正
+        角色页/排行榜/平板与折叠屏响应式优化
+        Spine 高 DPR 画布资源上限
     steps:
       - uses: actions/checkout@v4
 

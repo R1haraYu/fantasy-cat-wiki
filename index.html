@@ -2,11 +2,12 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>角色 · 幻想之都的黑猫</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="theme2.css?v=3">
   <script src="site2.js?v=3" defer></script>
+<link rel="stylesheet" href="responsive.css?v=1">
 </head>
 <body class="v2">
   <header class="topbar">
@@ -33,7 +34,7 @@
     <p id="count" class="count"></p>
   </header>
   <div id="wiki-update-test" style="padding:8px 16px;background:#fff3cd;color:#664d03;text-align:center;font-size:13px;font-weight:600;border-bottom:1px solid #ffe69c;">
-    排行榜重算 · v0.8.15
+    多机型适配 P0-P2 · v0.8.16
   </div>
 
 
@@ -41,7 +42,7 @@
   <div class="v2-home">
     <section class="v2-hero">
       <div class="v2-hero-copy">
-        <p class="v2-kicker">CHARACTER ARCHIVE / VERSION 0.8.15</p>
+        <p class="v2-kicker">CHARACTER ARCHIVE / VERSION 0.8.16</p>
         <h1>幻想之都的<br><em>黑猫 Wiki</em></h1>
         <p>角色资料、属性技能、皮肤立绘与数据排行。把这座城市的每一次相遇，整理成可以随时翻阅的档案。</p>
         <div class="v2-actions">
@@ -50,7 +51,7 @@
         </div>
       </div>
       <div class="v2-hero-art" id="birthdayHero">
-        <span class="v2-art-chip" id="heroChip">TODAY / 0.8.15</span>
+        <span class="v2-art-chip" id="heroChip">TODAY / 0.8.16</span>
         <div class="v2-hero-media" id="heroMedia"></div>
         <div class="v2-hero-caption" id="heroCaption"></div>
       </div>
@@ -83,7 +84,7 @@
     (() => {
       const box = document.getElementById('wiki-update-test');
       if (!box) return;
-      const key = 'wiki-update-test-seen-0.8.15';
+      const key = 'wiki-update-test-seen-0.8.16';
       if (localStorage.getItem(key)) box.remove();
       else localStorage.setItem(key, '1');
     })();

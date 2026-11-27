@@ -1,0 +1,325 @@
+
+/* =========================================================
+   Responsive / safe-area layer (2026-11-27)
+   Loaded after page CSS. P0-P2 adaptations.
+   ========================================================= */
+:root {
+  color-scheme: light;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip;
+}
+
+body.v2 {
+  min-height: 100svh;
+}
+
+/* ---------- P0: page shell + safe area ---------- */
+body.v2 .topbar {
+  padding-top: calc(15px + var(--safe-top));
+  padding-left: max(24px, calc((100vw - 1280px) / 2), var(--safe-left));
+  padding-right: max(24px, calc((100vw - 1280px) / 2), var(--safe-right));
+}
+
+body.v2 .footer {
+  padding-left: max(24px, calc((100vw - 1280px) / 2), var(--safe-left));
+  padding-right: max(24px, calc((100vw - 1280px) / 2), var(--safe-right));
+  padding-bottom: calc(42px + var(--safe-bottom));
+}
+
+body.v2 #app,
+body.v2 .page,
+body.v2 .footer {
+  width: min(1280px, calc(100% - clamp(24px, 5vw, 48px)));
+}
+
+body.v2 .topbar > *,
+body.v2 .v2-hero > *,
+body.v2 .card,
+body.v2 .panel,
+body.v2 .grid-cards > *,
+body.v2 .content > *,
+body.v2 .rank-panel {
+  min-width: 0;
+}
+
+body.v2 .skill p,
+body.v2 .info-text,
+body.v2 .card-text,
+body.v2 .rank-player,
+body.v2 .timeline p {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- P1: ranking on narrow screens ---------- */
+@media (max-width: 560px) {
+  .rank-table-wrap {
+    overflow-x: visible;
+  }
+
+  .rank-table {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    border-collapse: separate;
+  }
+
+  .rank-table thead {
+    display: none;
+  }
+
+  .rank-table tbody {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .rank-table tr {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    gap: 2px 10px;
+    width: 100%;
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--v2-line);
+    background: rgba(255, 252, 244, .38);
+  }
+
+  .rank-table tr:last-child {
+    border-bottom: 0;
+  }
+
+  .rank-table td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .rank-table td:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    align-self: center;
+  }
+
+  .rank-table td:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .rank-table td:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .rank-table td:nth-child(4) {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: right;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .rank-table td:nth-child(4)::before {
+    content: "总伤 ";
+  }
+
+  .rank-table td:nth-child(5) {
+    grid-column: 3;
+    grid-row: 2;
+    text-align: right;
+    font-size: 19px;
+    line-height: 1.15;
+  }
+
+  .rank-table td:nth-child(5)::before {
+    content: "DPS ";
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: .06em;
+  }
+
+  .rank-table td:nth-child(6) {
+    grid-column: 2 / 4;
+    grid-row: 3;
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .rank-table td:nth-child(6)::before {
+    content: "击杀 ";
+  }
+
+  .rank-table td:nth-child(7) {
+    display: none;
+  }
+
+  .rank-table .rank-place {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .rank-player-name {
+    font-size: 15px;
+  }
+
+  .rank-panel-head {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .rank-panel-head span {
+    font-size: 10px;
+  }
+}
+
+/* ---------- P1/P2: character detail on tablets/phones ---------- */
+@media (max-width: 900px) {
+  html,
+  body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .app {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .stage {
+    height: min(calc(100vw * 2.1666667), 100svh);
+  }
+
+  .skill p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    font-size: clamp(10px, 2.9vw, 12px);
+    line-height: 1.55;
+  }
+
+  .skill h4 {
+    font-size: clamp(12px, 3.2vw, 14px);
+  }
+
+  .info-text,
+  .kv-list li,
+  .skin-body p,
+  .skin-desc {
+    font-size: clamp(11px, 3vw, 13px);
+  }
+
+  .tag,
+  .side-actions a,
+  .side-actions button {
+    font-size: clamp(9px, 2.5vw, 11px);
+  }
+
+  .stage-copy strong {
+    font-size: clamp(22px, 6vw, 30px);
+  }
+}
+
+/* ---------- P2: tablet and wide-screen layout ---------- */
+@media (min-width: 761px) and (max-width: 980px) {
+  body.v2 .v2-hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  body.v2 .v2-hero-art {
+    width: 100%;
+    max-width: 620px;
+    min-height: 300px;
+  }
+}
+
+@media (min-width: 1600px) {
+  body.v2 #app,
+  body.v2 .page {
+    width: min(1440px, calc(100% - 72px));
+  }
+}
+
+/* ---------- P2: landscape phones ---------- */
+@media (max-height: 540px) and (orientation: landscape) {
+  body.v2 .v2-hero {
+    grid-template-columns: 1fr 1fr;
+    padding-top: 24px;
+  }
+
+  body.v2 .v2-hero-art {
+    min-height: 240px;
+  }
+
+  body.v2 .topbar {
+    position: relative;
+  }
+}
+
+/* ---------- P2: avoid Android forced-dark recoloring ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light;
+  }
+}
+
+/* ---------- P2: image decoding hints ---------- */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- P0/P2: character page mobile header safe area ---------- */
+@media (max-width: 900px) {
+  .side {
+    padding-top: calc(12px + var(--safe-top));
+    padding-left: calc(14px + var(--safe-left));
+    padding-right: calc(14px + var(--safe-right));
+  }
+
+  .content {
+    padding-left: calc(14px + var(--safe-left));
+    padding-right: calc(14px + var(--safe-right));
+    padding-bottom: calc(24px + var(--safe-bottom));
+  }
+}
+
+/* ---------- P2: mobile navigation ergonomics ---------- */
+@media (max-width: 760px) {
+  body.v2 .codex-nav {
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.v2 .codex-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.v2 .codex-nav a {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  body.v2 .nav button {
+    min-height: 38px;
+  }
+}

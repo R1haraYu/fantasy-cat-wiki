@@ -3,7 +3,7 @@
   "use strict";
   document.body.classList.add("v2");
 
-  const WIKI_VERSION = "0.8.15";
+  const WIKI_VERSION = "0.8.16";
   const path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
   const aliases = { "": "index.html", "/": "index.html" };
   const here = aliases[path] || path;
@@ -22,4 +22,18 @@
   }
 
   document.title = document.title.replace(/\s*·\s*2\.0$/, "") + " · " + WIKI_VERSION;
+
+  // Mark below-fold images as lazy and hint async decoding. This runs for
+  // both static markup and cards rendered later by page scripts.
+  function markLazyImages() {
+    document.querySelectorAll("img:not([decoding])").forEach((img) => {
+      img.decoding = "async";
+      if (!img.loading && img.getBoundingClientRect().top > window.innerHeight) {
+        img.loading = "lazy";
+      }
+    });
+  }
+  markLazyImages();
+  new MutationObserver(markLazyImages).observe(document.documentElement, { childList: true, subtree: true });
+  window.addEventListener("load", markLazyImages, { once: true });
 })();

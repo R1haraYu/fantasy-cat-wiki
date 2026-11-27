@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>角色图鉴 · 幻想之都的黑猫</title>
 <style>
 :root{--ink:#203028;--muted:#7d806f;--gold:#b08a4e;--gold2:#d9c19a;--line:#e2d5c0;--paper:#f7efe2;--card:#fffaf0;--green:#1b3027;--green2:#2d4a3c}
@@ -113,7 +113,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
 .voice-line .voice-play{margin-left:auto;flex:none;width:24px;height:24px;border:1px solid rgba(176,138,78,.45);border-radius:50%;background:rgba(255,250,240,.72);color:#8b6a39;font:9px/1 Georgia,serif;padding:0;display:inline-grid;place-items:center;cursor:pointer;line-height:1}
 .voice-line .voice-play:hover{background:#e4d0a7;color:#21362a}
 
-@media(max-width:760px){
+@media(max-width:900px){
   html,body{height:auto;overflow:auto}
   .app{display:flex;flex-direction:column;height:auto;min-height:100vh}
   .side{order:1;width:100%;height:auto;min-height:0;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:7px;padding:12px 14px;overflow:visible;border-right:0;border-bottom:1px solid rgba(218,194,151,.18)}
@@ -202,7 +202,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
 .voice-line .voice-play{margin-left:auto;flex:none;width:24px;height:24px;border:1px solid rgba(176,138,78,.45);border-radius:50%;background:rgba(255,250,240,.72);color:#8b6a39;font:9px/1 Georgia,serif;padding:0;display:inline-grid;place-items:center;cursor:pointer;line-height:1}
 .voice-line .voice-play:hover{background:#e4d0a7;color:#21362a}
 
-@media(max-width:760px){
+@media(max-width:900px){
   html,body{height:auto;overflow:auto}
   .app{display:flex;flex-direction:column;height:auto;min-height:100vh}
   .side{order:1;width:100%;height:auto;min-height:0;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:7px;padding:12px 14px;overflow:visible;border-right:0;border-bottom:1px solid rgba(218,194,151,.18)}
@@ -312,7 +312,7 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
     <div class="spine-box spine-full" id="spine-full-l2" hidden></div>
   </div>
   <div class="showroom-fill" aria-hidden="true"></div>
-  <div class="stage-top"><span>HERO PORTRAIT / 0.8.15</span><span class="live"><i></i><span id="stageLive">SPINE / LIVE 2D</span></span></div>
+  <div class="stage-top"><span>HERO PORTRAIT / 0.8.16</span><span class="live"><i></i><span id="stageLive">SPINE / LIVE 2D</span></span></div>
   <div class="mode-switch" id="modeSwitch"><button class="on" data-mode="full">立绘</button><button data-mode="mini">Q版</button></div>
   <div class="stage-skin-switch" id="stageSkinSwitch"></div>
   <div class="spine-box spine-mini" id="spine-mini" hidden></div>
@@ -331,5 +331,6 @@ h1{margin:5px 0 0;font:600 36px/1.08 "STSong","Songti SC",serif;letter-spacing:.
   </div>
 </div>
 <script src="data.js?v=21"></script><script src="data/characters_extra.js?v=21"></script><script src="data/character_assets.js?v=21"></script><script src="data/characters_voice.js?v=21"></script><script src="data/stage_layout.js?v=3"></script><script src="vendor/spine-player.min.js"></script><script src="character_detail_generic.js?v=23"></script>
+<link rel="stylesheet" href="responsive.css?v=1">
 </body></html>
 </html>

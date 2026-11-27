@@ -513,7 +513,7 @@
       const rows = visible.filter((c) => !word || `${c.name} ${c.element} ${c.job}`.toLowerCase().includes(word));
       list.innerHTML = rows.map((c) => {
         const a = (ASSETS[String(c.id)] || {}).icon || '';
-        return '<button type="button" class="switch-card" data-id="' + c.id + '">' + (a ? '<img src="' + esc(a) + '" alt="">' : '<span style="height:76px;display:block"></span>') + '<span>' + esc(c.name) + '</span></button>';
+        return '<button type="button" class="switch-card" data-id="' + c.id + '">' + (a ? '<img src="' + esc(a) + '" alt="" loading="lazy" decoding="async">' : '<span style="height:76px;display:block"></span>') + '<span>' + esc(c.name) + '</span></button>';
       }).join('');
       list.querySelectorAll('[data-id]').forEach((b) => b.addEventListener('click', () => { location.href = 'character_detail.html?id=' + b.dataset.id; }));
     }

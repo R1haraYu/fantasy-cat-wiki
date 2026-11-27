@@ -40,6 +40,12 @@ class MainActivity : Activity() {
                 databaseEnabled = true
                 allowFileAccess = false
                 allowContentAccess = false
+                useWideViewPort = true
+                loadWithOverviewMode = true
+                setSupportZoom(false)
+                builtInZoomControls = false
+                displayZoomControls = false
+                textZoom = 100
                 cacheMode = WebSettings.LOAD_DEFAULT
                 mediaPlaybackRequiresUserGesture = false
                 mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
