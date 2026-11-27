@@ -13,13 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.14"
-      TAG: "v0.8.14"
+      VERSION: "0.8.15"
+      TAG: "v0.8.15"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        采用方案B：深绿角色徽章APP图标
-        新增自适应图标、各密度mipmap与圆形图标
-        APK版本码升级
+        排行榜同步11/27角色数值
+        爱洛加入输出排行
+        重新计算单体/群体输出榜
     steps:
       - uses: actions/checkout@v4
 
