@@ -13,13 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.13"
-      TAG: "v0.8.13"
+      VERSION: "0.8.14"
+      TAG: "v0.8.14"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        爱洛角色详情页实装
-        全角色基础数值/技能与游戏表复核
-        物品图鉴隐藏未实装角色灵魂水晶
+        采用方案B：深绿角色徽章APP图标
+        新增自适应图标、各密度mipmap与圆形图标
+        APK版本码升级
     steps:
       - uses: actions/checkout@v4
 
