@@ -1,4 +1,4 @@
-const ITEMS = window.ITEMS || [];
+const ITEMS = (window.ITEMS || []).filter((item) => !item.hidden);
 const META = window.SITE_META || {};
 const listEl = document.getElementById("list");
 const countEl = document.getElementById("count");
