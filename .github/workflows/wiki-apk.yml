@@ -13,12 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION: "0.8.11"
-      TAG: "v0.8.11"
+      VERSION: "0.8.12"
+      TAG: "v0.8.12"
       MIN_APP_VERSION: "0.8.1"
       CHANGELOG: |
-        删除世界页面及导航入口
-        怪物图鉴移除未实装的错乱废墟地点
+        同步11/27游戏热更数据
+        新增12件家庭Livehouse/扑家工作室家具
+        角色基础数值、爱洛技能、装备部件文本同步
+        家园图标与搜索索引同步
     steps:
       - uses: actions/checkout@v4
 
